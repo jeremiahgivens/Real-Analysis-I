@@ -70,17 +70,71 @@
 
 \begin{document}
 \section*{Problem 1}
-Let $I = [a_1, b_1] \times [a_2, b_2]$, a closed interval in $\mathbb{R}^2$. Given $\epsilon >0$, construct an interval $I_\epsilon$ such that 
+Let $I = [a_1, b_1] \times [a_2, b_2]$, a closed interval in $\mathbb{R}^2$. Given $\epsilon >0$, construct an interval $I_\epsilon$ such that the following conditions hold:
 \begin{enumerate}
 \item $I \subset \mathring{I_\epsilon}$
 \item $v(I_\epsilon) - v(I) < \epsilon$.
 \end{enumerate}
-\subsection{Solution}
-\begin{enumerate}
+\subsection*{Solution}
 Define a new interval
 \begin{align*}
-I_\epsilon &= 
+I_\epsilon &= [a_1 - \delta, b_1 + \delta] \times [a_2 - \delta, b_2 + \delta]
 \end{align*}
+for some $\delta > 0$. This clearly satisfies condition (1). Now, we must find an upper bound on $\delta$ such that condition 2 holds. Thus, we must find the value of $\delta$ such that 
+\begin{align}
+v(I_\epsilon) &= v(I) + \epsilon.
+\end{align}
+By definition, we have
+\begin{align*}
+v(I) &= (b_1 - a_1)(b_2 - a_2),
+\end{align*}
+and 
+\begin{align*}
+v(I_\epsilon)&= ((b_1 + \delta) - (a_1 - \delta))((b_2 + \delta) - (a_2 - \delta))\\
+&= (b_1 - a_1 + 2 \delta)(b_2 - a_2 + 2 \delta)\\
+&= 4 \delta^2 + 2\delta(b_1 + b_2 - a_1 - a_2) + v(I).
+\end{align*}
+Combining this with equation (1), we have
+\begin{align*}
+4 \delta^2 + 2\delta(b_1 + b_2 - a_1 - a_2) + v(I) &= v(I) + \epsilon\\
+4 \delta^2 + 2\delta(b_1 + b_2 - a_1 - a_2) - \epsilon = 0.
+\end{align*}
+For brevity, we define
+\begin{align*}
+B &= 2(b_1 + b_2 - a_1 - a_2),
+\end{align*}
+so that we have
+\begin{align*}
+4 \delta^2 + B\delta - \epsilon = 0.
+\end{align*}
+Using the quadratic formula, we have
+\begin{align*}
+\delta &= \frac{-B \pm \sqrt{B^2 + 16 \epsilon}}{8}.
+\end{align*}
+Thus, choosing $\delta$ such that 
+\begin{align*}
+\delta &< \frac{-B \pm \sqrt{B^2 + 16 \epsilon}}{8},
+\end{align*}
+we have satisfied condition 2.
+
+\section*{Problem 2}
+Use the result in Problem 1 to show that given a sequence $\{I_k\}_{k=1}^\infty$ in $\mathbb{R}^2$ and $\epsilon > 0$, there exists a sequence of intervals $\{I_k^\epsilon\}_{k=1}^\infty$ such that 
+\begin{enumerate}
+\item $I_k \subset \mathring{I_k^\epsilon}$, $k=1,2,...$.
+\item $\sum_{k=1}^\infty v(I_k^\epsilon) < \sum_{k=1}^\infty v(I_k) + \epsilon$
 \end{enumerate}
+\subsection*{Solution}
+From our solution to Problem 1, we can create an interval $I_k^\epsilon$ such that condition 1 holds and
+\begin{align*}
+v(I_k^\epsilon) < v(I_k) + 2^{-k} \epsilon
+\end{align*}
+for all $k \in \mathbb{N}$. Thus, summing over all $k$, we have
+\begin{align*}
+\sum_{k=1}^\infty v(I_k^\epsilon) &< \sum_{k=1}^\infty (v(I_k) +  2^{-k} \epsilon)\\
+&= \sum_{k=1}^\infty v(I_k) +  \sum_{k=1}^\infty 2^{-k} \epsilon\\
+&= \sum_{k=1}^\infty v(I_k) +  \epsilon \sum_{k=1}^\infty 2^{-k} \\
+&= \sum_{k=1}^\infty v(I_k) + \epsilon,
+\end{align*}
+and we have shown that $\{I_k^\epsilon\}_{k=1}^\infty$ satisfies condition 2.
 
 \end{document}
