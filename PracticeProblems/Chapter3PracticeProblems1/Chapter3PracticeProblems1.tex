@@ -17,6 +17,19 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{case}{Case}
 
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
   \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
   #1 % the function
@@ -130,11 +143,57 @@ v(I_k^\epsilon) < v(I_k) + 2^{-k} \epsilon
 \end{align*}
 for all $k \in \mathbb{N}$. Thus, summing over all $k$, we have
 \begin{align*}
-\sum_{k=1}^\infty v(I_k^\epsilon) &< \sum_{k=1}^\infty (v(I_k) +  2^{-k} \epsilon)\\
+\sum_{k=1}^\infty v(I_k^\epsilon) &\leq \sum_{k=1}^\infty (v(I_k) +  2^{-k} \epsilon)\\
 &= \sum_{k=1}^\infty v(I_k) +  \sum_{k=1}^\infty 2^{-k} \epsilon\\
 &= \sum_{k=1}^\infty v(I_k) +  \epsilon \sum_{k=1}^\infty 2^{-k} \\
 &= \sum_{k=1}^\infty v(I_k) + \epsilon,
 \end{align*}
 and we have shown that $\{I_k^\epsilon\}_{k=1}^\infty$ satisfies condition 2.
+
+\section*{Problem 3}
+Use the definition of the outer measure to show:
+\begin{enumerate}
+\item Let $E \subseteq \mathbb{R}^2$ be countable. Then
+\begin{align*}
+|E|_e = 0.
+\end{align*}
+\item Let E be the edge (4 boundaries) of  an interval $I \subseteq \mathbb{R}^2$. Then 
+\begin{align*}
+|E|_e = 0.
+\end{align*}
+\end{enumerate}
+\subsection*{Solution}
+\begin{proof}
+\proofpart{1}{} Since $E$ is countable, it can be denoted as 
+\begin{align*}
+E = \{x_k: k \in \mathbb{N}\}.
+\end{align*}
+By definition of outer measure, we have $|E|_e \geq 0$. Let $\epsilon > 0$. Define a cover $\{I_k \}$ of $E$ such that $I_k$ is an interval centered at $x_k$ with $v(I_k) = \epsilon 2^{-k}$. Then, we have
+\begin{align*}
+|E|_e &\leq \sum_{k =1}^\infty v(I_k)\\
+&= \sum_{k =1}^\infty \epsilon 2^{-k}\\
+&= \epsilon.
+\end{align*}
+Thus, we have proven 1.
+\proofpart{2}{} Let $I = [a_1, b_1] \times [a_2, b_2]$, and let $\epsilon > 0$. The boundary of $I$ is given by
+\begin{align*}
+\partial I &= ([a_1, b_1] \times \{a_2\}) \cup ([a_1, b_1] \times \{b_2\}) \cup (\{a_1\} \times [a_2, b_2]) \cup (\{b_1\} \times [a_2, b_2]).
+\end{align*}
+Define \begin{align*}
+\delta_v = \frac{\epsilon}{4(b_1 - a_1)}\\
+\delta_h = \frac{\epsilon}{4(b_2 - a_2)}.
+\end{align*}
+Then, we can define a finite cover for $I$:
+\begin{align*}
+C = \{[a_1, b_1] \times [a_2 - \frac{\delta_v}{2}, a_2 + \frac{\delta_v}{2}], [a_1, b_1] \times [b_2 - \frac{\delta_v}{2}, b_2 + \frac{\delta_v}{2}], [a_1 - \frac{\delta_h}{2}, a_1 + \frac{\delta_h}{2}] \times [a_2, b_2],\\ [b_1 - \frac{\delta_h}{2}, b_1 + \frac{\delta_h}{2}] \times [a_2, b_2]\}.
+\end{align*}
+By design, we have $v(i) = \frac{\epsilon}{4}$ for all $i \in C$. Thus, we have 
+\begin{align*}
+0 &\leq |\partial I|_e\\
+&\leq \sum_{i \in C} v(i)\\
+&= \epsilon.
+\end{align*}
+Since $\epsilon$ was arbitrary, our proof is complete.
+\end{proof}
 
 \end{document}
