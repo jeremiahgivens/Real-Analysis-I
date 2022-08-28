@@ -1,0 +1,234 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis I}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 1}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Let $I_1$ and $I_2$ be two intervals in $\mathbb{R}^2$. Show the following elementary fact: $I_1 \cup I_2$ is a union of finitely many non-overlapping intervals $J_k$ for $k = 1,...,N$, with 
+\begin{align*}
+\sum_{k=1}^N v(J_k) \leq v(I_1) + v(I_2).
+\end{align*}
+\subsection*{Solution}
+We will solve this problem by proving the more general case:
+\begin{theorem}
+Let $I_1$ and $I_2$ be two intervals in $\mathbb{R}^n$. Then, $I_1 \cup I_2$ is a union of finitely many non-overlapping intervals $J_k$ for $k = 1,...,N$, with 
+\begin{align*}
+\sum_{k=1}^N v(J_k) \leq v(I_1) + v(I_2).
+\end{align*}
+\end{theorem}
+\begin{proof}
+Let $x \in \mathbb{R}^n$, and let $x_i$ denote the $i^\text{th}$ component of $x$.  Since $I_1$ and $I_2$ are both intervals, we will write them as
+\begin{align*}
+I_k &= \prod_{i = 1}^n [a^k_i , b^k_i].
+\end{align*} 
+
+From elementary set theory, we have 
+\begin{align*}
+I_1\cup I_2 &=  (I_1  - I_2) \cup I_2
+\end{align*}
+In this way, we have written $I_1\cup I_2$ as a union of finitely many non-overlapping sets. Thus, if we can write each of these sets as a finite union of non-overlapping intervals, our proof will be complete. 
+
+Since $I_2$ is already an interval,  all we have to show is that $I_1 - I_2$ can be written as a finite union of intervals. We have
+\begin{align*}
+x \in I_1 - I_2 &\iff x \in I_1 \land x \not \in I_2\\
+&\iff (\forall i \in \{1,...,n\})(a^1_i \leq x_i \leq b^1_i) \land (\exists i \in \{1,...,n\})(x_i < a^2_i  \land x > b^2_i).
+\end{align*}
+This leads us to a very straightforward way of partitioning $I_1 - I_2$ into a finite number of non overlapping intervals: For each $i \in \{1,...,n\}$, we have at most a choice of three 1-dimensional intervals: 
+\begin{align*}
+L^i_1 &= [a_i^1 \leq x_i \leq b_i^1]\\
+L^i_2 &= [a_i^1 \leq x_i \leq \min \{a_i^2, b_i^1\}]\\
+L^i_3 &= [\max\{a_i^1, b_i^2\} \leq x_i \leq b_i^1].
+\end{align*}
+We note, that depending on the exact overlap of $I_1$ and $I_2$, some of these 1-dimensional intervals may be empty (in which case, we discard). To prevent duplicates, we note that if $a_i^2 \geq b_i^1$, we will remove $L_i^2$, as this would mean $L_i^2 = L_i^1$. Likewise, in the event that $a_i^1 \geq b_i^2$,  remove $L^i_3$. 
+
+Now, by taking cartesian products of the form
+\begin{align*}
+\prod_{i=1}^n L^i \text{ for } L^i \in \{L^i_1, L^i_2, L^i_3\}
+\end{align*}
+and removing 
+\begin{align*}
+\prod_{i=1}^n L^i_1,
+\end{align*}
+we have created a set of at most $3^n - 1$ non-overlapping intervals who's union is equal to $I_1  - I_2$.  We will call this number of intervals $N-1$, and define $J_N = I_2$.
+
+Putting all of this together, we can create a union of finitely many non-overlapping intervals $J_k$ for $k \in\{ 1,...,N\}$ such that 
+\begin{align*}
+I_1 \cup I_2 = \sum_{k=1}^{N} J_k.
+\end{align*}
+
+Now all that remains is to show
+\begin{align*}
+\sum_{k=1}^N v(J_k) \leq v(I_1) + v(I_2).
+\end{align*}
+We note right away, that since $J_N = I_2$, this amounts to showing 
+\begin{align*}
+\sum_{k=1}^{N-1} v(J_k) \leq v(I_1).
+\end{align*}
+Conveniently,  this follows directly from the fact that $I_2$ is a superset of a finite union of non-overlapping intervals:
+\begin{align*}
+I_2 \supseteq \bigcup_{k=1}^{N-1} J_k.
+\end{align*}
+Thus, our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+\proofpart{(i)}{} Show that if $f:[a,b] \to \mathbb{R}$ is continuous where $-\infty < a < b < \infty$, the its graph $E = \{(x, f(x): x \in [a, b] \}$ as a subset of $\mathbb{R}^2$ has the Lebesgue measure zero.
+
+\proofpart{(ii)}{} Show that if $f:\mathbb{R} \to \mathbb{R}$ is uniformly continuous then its graph $E = \{(x, f(x): x \in \mathbb{R} \}$ as a subset of $\mathbb{R}^2$ has the Lebesgue measure zero.
+
+\subsection*{Solution}
+Before we jump into the proof, we will prove a useful lemma.
+\begin{lemma}
+If $f:[a,b] \to \mathbb{R}$ is continuous, then $f$ is uniformly continuous.
+\end{lemma}
+
+\begin{proof}
+Suppose that $f$ is not uniformly continuous. Then,
+\begin{align*}
+(\exists \epsilon > 0)(\forall \delta > 0)(\exists x,y \in [a, b])(|x - y| < \delta \land |f(x) - f(y)| \geq \epsilon).
+\end{align*}
+Fix this $\epsilon$. Using the axiom of choice, we can construct two sequences $\{x_k\}$ and $\{y_k\}$ such that 
+\begin{align*}
+|x_k - y_k| < \frac{1}{k} \land |f(x_k) - f(y_k)| \geq \epsilon
+\end{align*}
+for all $k$. By sequential compactness of $[a, b]$, there exists a convergent subsequence $\{x_{k_j} \}$ of $\{x_k\}$ that converges to some $x \in [a, b]$.  Let $ \epsilon_0 > 0$.  Since $\{x_{k_j} \}$ converges to $x$, there exists some $N \in \mathbb{N}$ such that 
+\begin{align*}
+|x_{k_j} - x| < \frac{\epsilon_0}{2}
+\end{align*}
+for all $j \geq N$. Choose $K$ such that $1/K < \frac{\epsilon_0}{2}$ and $K \geq N$. Then, we have for all $j \geq K$
+\begin{align*}
+|y_{k_j} - x| &\leq |y_{k_j} - x_{k_j}| + |x_{k_j} - x|\\
+&< \frac{\epsilon_0}{2} + \frac{\epsilon_0}{2}\\
+&<\epsilon_0.
+\end{align*}
+Thus, we have shown that $\{ y_{k_j} \}$ converges to $x$ as well. 
+
+By construction of $\{ y_{k_j} \}$, we have $\{f(y_{k_j}) \}$ is not Cauchy, and more precisely we have 
+\begin{align*}
+\lim_{j \to \infty} f(y_{k_j}) \not= f(x).
+\end{align*}
+Thus, we have shown that $f$ is not continuous, and we have proven the contrapositive of the lemma.
+\end{proof}
+
+We will now begin the main proof.
+\begin{proof}
+\proofpart{(i)}{}
+Suppose $f:[a,b] \to \mathbb{R}$ is continuous where $-\infty < a < b < \infty$. Then, by Lemma 1, $f$ is uniformly continuous on $[a, b]$. Let $\epsilon > 0$. Then, by Lemma 1, $f$ is uniformly continuous on $[a, b]$, and there exists a $\delta > 0$ such that for all $x, y \in [a, b]$,
+\begin{align*}
+|x - y| < \delta \implies |f(x) - f(f)| < \frac{\epsilon}{b - a}.
+\end{align*}
+Let $\{x_0, ..., x_N\}$ be a partition of $[a, b]$ such that $|x_k - x_{k-1}| < \delta$ for all $k \in \mathbb{N}$. Define 
+\begin{align*}
+m_k &= \min\{f(x)| x_{k-1} \leq x < x\} \text{, and}\\
+M_k &= \max\{f(x)| x_{k-1} \leq x < x\}.
+\end{align*}
+Then, we have
+\begin{align*}
+\{[x_{k-1}, x_k] \times [m_k, M_k] | k \in \{1, ..., N\} \}
+\end{align*}
+forms a covering (made of closed intervals) of the graph, $G$, of $f$. By the definition of outer measure, we have
+\begin{align*}
+|G|_e &\leq \sum_{k=1}^N |[x_{k-1}, x_k] \times [m_k, M_k]|_e\\
+&= \sum_{k=1}^N (x_k - x_{k - 1}) (M_k - m_k)\\
+&< \sum_{k=1}^N (x_k - x_{k - 1})\frac{\epsilon}{b - a} \\
+&= \frac{\epsilon}{b - a}\sum_{k=1}^N (x_k - x_{k - 1})\\
+&= \frac{\epsilon}{b - a} (b - a) &&\text{By definition of a partition}\\
+&= \epsilon. 
+\end{align*}
+Taking the limit as $\epsilon$ goes to $0$, we have the desired result.
+\proofpart{(ii)}{}
+Suppose $f:\mathbb{R} \to \mathbb{R}$ is uniformly continuous. For every integer $a$, define 
+\begin{align*}
+p_a = \{(x, f(x))| a-1 \leq x \leq a\}.
+\end{align*}
+By part (i), each of these sets has measure zero. Then, we can write the graph of $f$ as a countable union of measurable sets with measure zero:
+\begin{align*}
+\{(x, f(x)) | x \in \mathbb{R} \} &= \bigcup_{a \in \mathbb{Z}} p_a.
+\end{align*}
+Thus, by Theorem 3.12 in our textbook,
+\begin{align*}
+|\{(x, f(x) )| x \in \mathbb{R} \}| &\leq \sum{a \in \mathbb{Z}} |p_a|\\
+&= 0.
+\end{align*}
+\end{proof}
+
+\end{document}
