@@ -182,11 +182,13 @@ for all $j \geq N$. Choose $K$ such that $1/K < \frac{\epsilon_0}{2}$ and $K \ge
 \end{align*}
 Thus, we have shown that $\{ y_{k_j} \}$ converges to $x$ as well. 
 
-By construction of $\{ y_{k_j} \}$, we have $\{f(y_{k_j}) \}$ is not Cauchy, and more precisely we have 
+Now we assume, for sake of contradiction, that $\{f(y_{k_j}) \}$ and $\{f(x_{k_j}) \}$ converge to $f(x)$. Then, there exists a $J \in \mathbb{N}$ such that $|f(x_{k_J}) - f(x)| < \frac{\epsilon}{2}$ and $|f(y_{k_J}) - f(x)| < \frac{\epsilon}{2}$. Finally, utilizing the triangle inequality, we have
 \begin{align*}
-\lim_{j \to \infty} f(y_{k_j}) \not= f(x).
+|f(x_{k_J}) - f(y_{k_J})| &\leq |f(x_{k_J}) - f(x)| + |f(y_{k_J}) - f(x)|\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon,
 \end{align*}
-Thus, we have shown that $f$ is not continuous, and we have proven the contrapositive of the lemma.
+and we have reached a contradiction. Thus, $f$ is not continuous, and we have proven the contrapositive.
 \end{proof}
 
 We will now begin the main proof.
@@ -227,8 +229,9 @@ By part (i), each of these sets has measure zero. Then, we can write the graph o
 Thus, by Theorem 3.12 in our textbook,
 \begin{align*}
 |\{(x, f(x) )| x \in \mathbb{R} \}| &\leq \sum{a \in \mathbb{Z}} |p_a|\\
-&= 0.
+&= 0,
 \end{align*}
+and our proof is complete.
 \end{proof}
 
 \end{document}
