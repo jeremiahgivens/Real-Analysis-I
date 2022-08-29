@@ -194,9 +194,9 @@ and we have reached a contradiction. Thus, $f$ is not continuous, and we have pr
 We will now begin the main proof.
 \begin{proof}
 \proofpart{(i)}{}
-Suppose $f:[a,b] \to \mathbb{R}$ is continuous where $-\infty < a < b < \infty$. Then, by Lemma 1, $f$ is uniformly continuous on $[a, b]$. Let $\epsilon > 0$. Then, by Lemma 1, $f$ is uniformly continuous on $[a, b]$, and there exists a $\delta > 0$ such that for all $x, y \in [a, b]$,
+Suppose $f:[a,b] \to \mathbb{R}$ is continuous where $-\infty < a < b < \infty$. Let $\epsilon > 0$. By Lemma 1, $f$ is uniformly continuous on $[a, b]$, and there exists a $\delta > 0$ such that for all $x, y \in [a, b]$,
 \begin{align*}
-|x - y| < \delta \implies |f(x) - f(f)| < \frac{\epsilon}{b - a}.
+|x - y| < \delta \implies |f(x) - f(y)| < \frac{\epsilon}{b - a}.
 \end{align*}
 Let $\{x_0, ..., x_N\}$ be a partition of $[a, b]$ such that $|x_k - x_{k-1}| < \delta$ for all $k \in \mathbb{N}$. Define 
 \begin{align*}
@@ -233,5 +233,39 @@ Thus, by Theorem 3.12 in our textbook,
 \end{align*}
 and our proof is complete.
 \end{proof}
+
+\section*{Problem 3}
+Let $A = \{r_1, r_2, ...\}$ be the set of rational numbers in $(0, 1)$. Given $\epsilon \in (0, 1)$, let 
+\begin{align*}
+A_k &= (r_k - \frac{\epsilon}{2^k}, r_k + \frac{\epsilon}{2^k}) \cap (0, 1), &&k=1,2,\ldots,
+\end{align*} 
+and 
+\begin{align*}
+E = \bigcup_{k=1}^\infty A_k.
+\end{align*}
+Compute $|E|$ and $|\partial E|$.
+
+\subsection*{Solution}
+\proofpart{1}{Finding the closure of $E$}
+We note first that since $E$ is a countable union of open sets, $E$ is open, and is thus disjoint from it's boundary. Let $x \in [0, 1]$. Since the rational numbers are dense in the real numbers, we have 
+\begin{align*}
+(\forall \delta > 0)(\exists r \in \mathbb{Q})(|x - r| < \delta).
+\end{align*}
+Let us construct a sequence...
+
+\proofpart{2}{Finding the upper bound of $|E|$}
+We have infinitely many points close to 0, infinitely many points close to 1, and infinitely many in the middle.
+
+Let $B_0 \subseteq A$ be defined as
+\begin{align*}
+B_0 &= \{r_k \in A| r_k < \frac{\epsilon}{2^k} \}.
+\end{align*}
+Then, for each $r_{k_j} \in B_0$, we have
+\begin{align*}
+A_{k_j} &= (0, r_{k_j} + \frac{\epsilon}{2^{k_j}})\\
+&\subseteq (0, \frac{\epsilon}{2^{k_j}} + \frac{\epsilon}{2^{k_j}})\\
+&= (0, \frac{2 \epsilon}{2^{k_j}})\\
+&\subseteq (0, \frac{2 \epsilon}{2^{j}}) &&\text{because } k_j \geq j
+\end{align*}
 
 \end{document}
