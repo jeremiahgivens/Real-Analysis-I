@@ -228,7 +228,7 @@ By part (i), each of these sets has measure zero. Then, we can write the graph o
 \end{align*}
 Thus, by Theorem 3.12 in our textbook,
 \begin{align*}
-|\{(x, f(x) )| x \in \mathbb{R} \}| &\leq \sum{a \in \mathbb{Z}} |p_a|\\
+|\{(x, f(x) )| x \in \mathbb{R} \}| &\leq \sum_{a \in \mathbb{Z}} |p_a|\\
 &= 0,
 \end{align*}
 and our proof is complete.
@@ -246,26 +246,34 @@ E = \bigcup_{k=1}^\infty A_k.
 Compute $|E|$ and $|\partial E|$.
 
 \subsection*{Solution}
-\proofpart{1}{Finding the closure of $E$}
-We note first that since $E$ is a countable union of open sets, $E$ is open, and is thus disjoint from it's boundary. Let $x \in [0, 1]$. Since the rational numbers are dense in the real numbers, we have 
+We make two assumptions: $\epsilon \in (0, \frac{1}{2})$, and we are just supposed to show that $|\partial E| > 0$.
+\proofpart{1}{Finding $|\bar{E}|$}
+Let $x \in [0, 1]$. Let $\delta > 0$. Since the rational numbers are dense in the real numbers, we have 
 \begin{align*}
-(\forall \delta > 0)(\exists r \in \mathbb{Q})(|x - r| < \delta).
+(\exists r_k \in A)(|x - r_k| < \delta) &\iff B(x; \delta) \cap E \not= \emptyset\\
+&\iff x \in \bar{E} && \text{Since }\delta \text{ was arbitrary}.
 \end{align*}
-Let us construct a sequence...
+Thus, we have
+\begin{align*}
+\bar{E} = [0, 1] &\implies |\bar{E}| = 1.
+\end{align*} 
 
 \proofpart{2}{Finding the upper bound of $|E|$}
-We have infinitely many points close to 0, infinitely many points close to 1, and infinitely many in the middle.
-
-Let $B_0 \subseteq A$ be defined as
+We have
 \begin{align*}
-B_0 &= \{r_k \in A| r_k < \frac{\epsilon}{2^k} \}.
+|E| &\leq \sum_{k=1}^\infty |[r_k - \frac{\epsilon}{2^k}, r_k + \frac{\epsilon}{2^k}]|\\
+&= \sum_{k=1}^\infty \frac{2 \epsilon}{2^k}\\
+&= 2 \epsilon\\
+&< 2 \left(\frac{1}{2}\right)\\
+&= 1.
 \end{align*}
-Then, for each $r_{k_j} \in B_0$, we have
+
+\proofpart{3}{Showing that $|\partial E| > 0$}
+Since $E$ is a countable union of open sets, $E$ is open, and is thus measurable and disjoint from it's boundary. Since $\bar{E}$ and $E$ are both measurable, we have from theorem 3.19 in our textbook that $\partial E$ is measurable. Furthermore, from lemma 3.16 in our textbook,
 \begin{align*}
-A_{k_j} &= (0, r_{k_j} + \frac{\epsilon}{2^{k_j}})\\
-&\subseteq (0, \frac{\epsilon}{2^{k_j}} + \frac{\epsilon}{2^{k_j}})\\
-&= (0, \frac{2 \epsilon}{2^{k_j}})\\
-&\subseteq (0, \frac{2 \epsilon}{2^{j}}) &&\text{because } k_j \geq j
+|\bar{E}| &= |E| + |\partial E|\\
+|\partial E| &= |\bar{E}| - |E|\\
+&> 0 && \text{Since } |\bar{E}| = 1 > |E|.
 \end{align*}
 
 \end{document}
