@@ -153,7 +153,7 @@ Thus, our proof is complete.
 \section*{Problem 2}
 \proofpart{(i)}{} Show that if $f:[a,b] \to \mathbb{R}$ is continuous where $-\infty < a < b < \infty$, the its graph $E = \{(x, f(x): x \in [a, b] \}$ as a subset of $\mathbb{R}^2$ has the Lebesgue measure zero.
 
-\proofpart{(ii)}{} Show that if $f:\mathbb{R} \to \mathbb{R}$ is uniformly continuous then its graph $E = \{(x, f(x): x \in \mathbb{R} \}$ as a subset of $\mathbb{R}^2$ has the Lebesgue measure zero.
+\proofpart{(ii)}{} Show that if $f:\mathbb{R} \to \mathbb{R}$ is continuous then its graph $E = \{(x, f(x): x \in \mathbb{R} \}$ as a subset of $\mathbb{R}^2$ has the Lebesgue measure zero.
 
 \subsection*{Solution}
 Before we jump into the proof, we will prove a useful lemma.
@@ -218,7 +218,7 @@ forms a covering (made of closed intervals) of the graph, $G$, of $f$. By the de
 \end{align*}
 Taking the limit as $\epsilon$ goes to $0$, we have the desired result.
 \proofpart{(ii)}{}
-Suppose $f:\mathbb{R} \to \mathbb{R}$ is uniformly continuous. For every integer $a$, define 
+Suppose $f:\mathbb{R} \to \mathbb{R}$ is continuous. For every integer $a$, define 
 \begin{align*}
 p_a = \{(x, f(x))| a-1 \leq x \leq a\}.
 \end{align*}
@@ -235,7 +235,7 @@ and our proof is complete.
 \end{proof}
 
 \section*{Problem 3}
-Let $A = \{r_1, r_2, ...\}$ be the set of rational numbers in $(0, 1)$. Given $\epsilon \in (0, 1)$, let 
+Let $A = \{r_1, r_2, ...\}$ be the set of rational numbers in $(0, 1)$. Given $\epsilon \in (0, \frac{1}{2})$, let 
 \begin{align*}
 A_k &= (r_k - \frac{\epsilon}{2^k}, r_k + \frac{\epsilon}{2^k}) \cap (0, 1), &&k=1,2,\ldots,
 \end{align*} 
@@ -243,10 +243,9 @@ and
 \begin{align*}
 E = \bigcup_{k=1}^\infty A_k.
 \end{align*}
-Compute $|E|$ and $|\partial E|$.
+Show that $0 < |E| < 2 \epsilon$ and $|\partial E| > 0$.
 
 \subsection*{Solution}
-We make two assumptions: $\epsilon \in (0, \frac{1}{2})$, and we are just supposed to show that $|\partial E| > 0$.
 \proofpart{1}{Finding $|\bar{E}|$}
 Let $x \in [0, 1]$. Let $\delta > 0$. Since the rational numbers are dense in the real numbers, we have 
 \begin{align*}
@@ -258,7 +257,7 @@ Thus, we have
 \bar{E} = [0, 1] &\implies |\bar{E}| = 1.
 \end{align*} 
 
-\proofpart{2}{Finding the upper bound of $|E|$}
+\proofpart{2}{Finding the upper and lower bounds of $|E|$}
 We have
 \begin{align*}
 |E| &\leq \sum_{k=1}^\infty |[r_k - \frac{\epsilon}{2^k}, r_k + \frac{\epsilon}{2^k}]|\\
@@ -267,6 +266,15 @@ We have
 &< 2 \left(\frac{1}{2}\right)\\
 &= 1.
 \end{align*}
+Furthermore, we have
+\begin{align*}
+A_1 \subseteq E \implies |A_1| \leq |E|.
+\end{align*}
+Now, the exact measure of $|A_1|$ depends on the enumeration of the rationals chosen, but we have an easy lower bound:
+\begin{align*}
+\frac{\epsilon}{2} \leq |A_1| \leq |E|.
+\end{align*}
+Thus, since $\epsilon > 0$, we have shown $|E| > 0$.
 
 \proofpart{3}{Showing that $|\partial E| > 0$}
 Since $E$ is a countable union of open sets, $E$ is open, and is thus measurable and disjoint from it's boundary. Since $\bar{E}$ and $E$ are both measurable, we have from theorem 3.19 in our textbook that $\partial E$ is measurable. Furthermore, from lemma 3.16 in our textbook,
@@ -275,5 +283,55 @@ Since $E$ is a countable union of open sets, $E$ is open, and is thus measurable
 |\partial E| &= |\bar{E}| - |E|\\
 &> 0 && \text{Since } |\bar{E}| = 1 > |E|.
 \end{align*}
+
+\section*{Problem 4}
+\proofpart{(i)}{}
+\begin{theorem}
+If $E \subset \mathbb{R}^n$ is such that $|E| = 0$, then $\mathring{E} = \emptyset$.
+\end{theorem}
+
+\proofpart{(ii)}{}
+\begin{theorem}
+If $E \subset [0, 1]$ is Lebesgue measurable with $|E| = 1$, then $E$ is dense in $[0, 1]$.
+\end{theorem}
+
+\subsection*{Solution}
+\proofpart{(i)}{}
+\begin{proof}
+Suppose that $\mathring{E} \not = \emptyset$.  Let $x \in \mathring{E}$. Then, since the interior is an open set, we have
+\begin{align*}
+(\exists \epsilon > 0)(B(x; \epsilon) \subseteq E).
+\end{align*}
+Define the open interval centered at $x$:
+\begin{align*}
+I = \prod_{k=1}^n (x_k - \frac{\epsilon}{\sqrt{n}},  x_k + \frac{\epsilon}{\sqrt{n}}).
+\end{align*}
+By design, we have 
+\begin{align*}
+I \subseteq B(x; \epsilon) &\implies I \subseteq E.
+\end{align*}
+Thus,  by sub-additivity of the Lebesgue measure, we have
+\begin{align*}
+0 &< |I|\\
+&= \frac{2n\epsilon}{ \sqrt{n}}\\
+&\leq |E|.
+\end{align*}
+With this, we have proven the contrapositive, and our proof is complete.
+\end{proof}
+
+\proofpart{(ii)}{}
+\begin{proof}
+Suppose $E$ is not dense in $[0, 1]$. Then, 
+\begin{align*}
+(\exists x \in [0, 1])(\exists \epsilon > 0)(B(x; \epsilon) \cap E = \emptyset).
+\end{align*}
+Fix this $x$ and $\epsilon$. Then,
+\begin{align*}
+E \subseteq [0, 1] \cap B(x; \epsilon)^C &\implies |E|_e \leq |[0, 1] \cap B(x; \epsilon)^C |_e\\
+&\implies |E|_e \leq 1 - \epsilon\\
+&\implies |E|_e < 1,
+\end{align*}
+and we have proven the contrapositive. 
+\end{proof}
 
 \end{document}
