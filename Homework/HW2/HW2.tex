@@ -1,0 +1,238 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis I}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 1}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+If $E \subseteq [0, 1]$ has measure $1$, then $E$ is dense in $[0, 1]$.
+\end{theorem}
+\subsection*{Solution}
+\begin{proof}
+Suppose $E$ is not dense in $[0, 1]$. Then, 
+\begin{align*}
+(\exists x \in [0, 1])(\exists \epsilon > 0)(B(x; \epsilon) \cap E = \emptyset).
+\end{align*}
+Fix this $x$ and $\epsilon$. Then,
+\begin{align*}
+E \subseteq [0, 1] \cap B(x; \epsilon)^C &\implies |E|_e \leq |[0, 1] \cap B(x; \epsilon)^C |_e\\
+&\implies |E|_e \leq 1 - \epsilon\\
+&\implies |E|_e < 1,
+\end{align*}
+and we have proven the contrapositive. 
+\end{proof}
+
+\section*{Problem 2}
+Let $F$ be a proper closed subset in $[0, 1]$. Show that $|F| < 1$.
+
+\subsection*{Solution}
+\begin{proof}
+Since $F$ is a proper subset in $[0, 1]$, 
+\begin{align*}
+(\exists x \in [0, 1])(x \not\in F).
+\end{align*}
+Fix this $x$. Since $F$ is closed,  $x$ is not a boundary point of $F$, which means
+\begin{align*}
+(\exists \epsilon > 0)(B(x; \epsilon) \cap F = \emptyset) &\implies (\exists \epsilon > 0)(F \subseteq ([0,1] - B(x; \epsilon))).
+\end{align*}
+Fixing this $\epsilon$, we have 
+\begin{align*}
+|F| &\leq |[0,1] - B(x; \epsilon)|\\
+&\leq 1 - \epsilon\\
+&< 1,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $E_k \subseteq [0, 1]$ be measurable with $\sum_{k=1}^N |E_k| > N - 1$. Then 
+\begin{align*}
+| \bigcap_{k=1}^N E_k| > 0.
+\end{align*}
+\end{theorem}
+\begin{proof}
+We have 
+\begin{align*}
+[0, 1] =  \bigcap_{k=1}^N E_k + [0, 1]\backslash \bigcap_{k=1}^N E_k &\implies 1 = \left|\bigcap_{k=1}^N E_k \right| + \left|[0, 1]\backslash \bigcap_{k=1}^N E_k \right|.
+\end{align*}
+Thus, it will suffice to show that 
+\begin{align*}
+\left|[0, 1]\backslash \bigcap_{k=1}^N E_k \right| < 1.
+\end{align*}
+We have
+\begin{align*}
+\left|[0, 1]\backslash \bigcap_{k=1}^N E_k \right| &= \left|[0, 1]\cap \left( \bigcap_{k=1}^N E_k \right)^c \right|\\
+&= \left|[0, 1]\cap \bigcup_{k=1}^N E^c_k  \right| &&\text{De Morgan' Laws}\\
+&= \left| \bigcup_{k=1}^N [0, 1] \cap E^c_k  \right|\\
+&\leq \sum_{k=1}^N |[0, 1] \cap E^c_k| &&\text{Subadditivity}\\
+&= \sum_{k=1}^N 1 - |E_k|\\
+&= N - \sum_{k=1}^N |E_k|\\
+&< N - (N - 1) &&\text{By initial assumption}\\
+&= 1.
+\end{align*}
+With this, our proof is complete.
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+If $E_1$ and $E_2$ are measurable, then
+\begin{align*}
+|E_1 \cup E_2| + |E_1 \cap E_2| = |E_1| + |E_2|.
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+We will assume that $E_1$ and $E_2$ have finite measure, because otherwise the proof is trivial. We can write $E_1$ as the union of two disjoint measurable sets
+\begin{align*}
+E_1 = (E_1 - E_2) \cup (E_1 \cap E_2),
+\end{align*}
+and additivity gives us
+\begin{align}
+|E_1| = |E_1 - E_2| + |E_1 \cap E_2|.
+\end{align}
+By symmetry, we also have
+\begin{align}
+|E_2| = |E_2 - E_1| + |E_1 \cap E_2|.
+\end{align}
+Now, in a similar fashion, we can write $E_1 \cup E_2$ as a union of disjoint measurable sets
+\begin{align*}
+E_1 \cup E_2 = (E_1 - E_2) \cup (E_1 \cap E_2) \cup (E_2 - E_1).
+\end{align*}
+Then
+\begin{align*}
+|E_1 \cup E_2| &= |(E_1 - E_2) \cup (E_1 \cap E_2) \cup (E_2 - E_1)|\\
+&= |E_1 - E_2| + |E_1 \cap E_2| + |E_2 - E_1|\\
+&= |E_1| - |E_1 \cap E_2| + |E_1 \cap E_2| + |E_2| - |E_1 \cap E_2| &&\text{by (1) and (2)}\\
+&= |E_1| + |E_2| - |E_1 \cap E_2| .
+\end{align*}
+Adding $|E_1 \cap E_2|$ to both sides gives us the desired result. 
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+Suppose that the measurable sets $A_1, A_2, \dotsc$ are "almost disjoint" in the sense that $|A_i \cap A_j| = 0$ if $ i \not = j$. Then,
+\begin{align*}
+\left| \bigcup_{k=1}^\infty A_k \right| &= \sum_{k=1}^\infty |A_k|.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We will proceed by induction.  As the result is trivial if any of these sets have infinite measure, we will assume they all have finite measure. Using the results of the previous problem, we have
+\begin{align*}
+A_1 \cup A_2 &= |A_1| + |A_2| - |A_1 \cap A_2|\\
+&= |A_1| + |A_2|,
+\end{align*}
+and the base case holds.
+
+Now suppose that for some $N > 1$ we have 
+\begin{align}
+\left| \bigcup_{k=1}^N A_k \right| &= \sum_{k=1}^N |A_k|.
+\end{align}
+We have 
+\begin{align*}
+\left| \bigcup_{k=1}^{N+1} A_k \right| &= \left| A_{N+1} \cup \left(\bigcup_{k=1}^N A_k \right) \right|\\
+&= |A_{N+1}| + \left| \bigcup_{k=1}^N A_k \right| -   \left| A_{N+1} \cap \left(\bigcup_{k=1}^N A_k \right) \right| &&\text{By results of previous problem}\\
+&= |A_{N+1}| + \sum_{k=1}^N |A_k| - \left| \bigcup_{k=1}^N A_k \cap A_{N+1} \right|  &&\text{By (3)}\\
+&=\sum_{k=1}^{N + 1} |A_k| - \left| \bigcup_{k=1}^N A_k \cap A_{N+1} \right| \\
+&= \sum_{k=1}^{N + 1} |A_k|. &&\text{Countable union of sets of measure zero}
+\end{align*}
+Since this is true for all $N > 1$, we can conclude 
+\begin{align*}
+\left| \bigcup_{k=1}^\infty A_k \right| &= \sum_{k=1}^\infty |A_k|,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 6}
+Define the inner measure of $E$ by $|E|_i = \sup|F|$, where the supremum is taken over all closed subsets $F$ of $E$. Show that (i) $|E|_i \leq |E|_e$,  and (ii) if $|E|_e < + \infty$, then $E$ is measurable if and only if $|E|_i = |E|_e$.
+\begin{proof}
+\proofpart{(i)}{} Suppose, for sake of contradiction, that $|E|_i > |E|_e$. Define $\delta > 0$ by $\delta = |E|_i - |E|_e$. By definition of supremum, there exists a closed $F \subseteq E$ such that 
+\begin{align*}
+|F| > |E|_i - \delta.
+\end{align*}
+Then, we have $|F| > |E|_e$, which contradicts the monotonicity of the outer measure. Thus, we have proven (i).
+
+\proofpart{(ii)}{}
+\end{proof}
+\end{document}
