@@ -233,6 +233,22 @@ Define the inner measure of $E$ by $|E|_i = \sup|F|$, where the supremum is take
 \end{align*}
 Then, we have $|F| > |E|_e$, which contradicts the monotonicity of the outer measure. Thus, we have proven (i).
 
-\proofpart{(ii)}{}
+\proofpart{(ii)}{} Suppose that $|E|_e < +\infty$. By Lemma 3.22, we have that $E$ is measurable if and only if for every $\epsilon > 0$, there exists a closed $F \subseteq E$ such that $|E - F| < \epsilon$. 
+
+Suppose first that $E$ is measurable. Let $\epsilon > 0$. Then, by Lemma 3.22, there exists a closed $F \subseteq E$ such that $|E - F| < \epsilon$. Furthermore, since $E$ and $F$ are measurable, we know that $E - F$ is also measurable,  and
+\begin{align*}
+|E| &= |E - F| + |F|\\
+&< \epsilon + |F|.
+\end{align*}
+Since $\epsilon$ was arbitrary, we can conclude that $|E| = |E|_e \leq F$ for every closed $F \subseteq E$. Thus, by definition of supremum, we can conclude that $|E|_e \leq |E|_i$. Combining this with the result of part (i), we have $|E|_e = |E|_i$.
+
+Now suppose that $|E|_e = |E|_i$, and let $\epsilon >0$. Then, by definition of supremum, there exists a closed $F \subseteq E$ such that $|E|_e - |F| < \epsilon$.  Now, using the fact that $F$ is measurable, the Caratheodory property tells us that
+\begin{align*}
+|E|_e &= |E \cap F|_e + |E - F|_e\\
+&= |F| + |E - F|_e &&\text{Since } F \subseteq E\\
+|E - F|_e &= |F| - |E|_e&&\text{We can do this because all three terms are finite.}\\
+&< \epsilon.
+\end{align*}
+Thus, by Lemma 3.22, $E$ is measurable.
 \end{proof}
 \end{document}
