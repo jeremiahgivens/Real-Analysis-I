@@ -251,4 +251,83 @@ Now suppose that $|E|_e = |E|_i$, and let $\epsilon >0$. Then, by definition of 
 \end{align*}
 Thus, by Lemma 3.22, $E$ is measurable.
 \end{proof}
+
+\section*{Problem 8}
+We will prove a more general statement, but we will first need some simple Lemmas.
+\begin{lemma}
+Let $f: \mathbb{R}^m \to \mathbb{R}^n$, and let $E \in \mathbb{R}^n$. Then $f^{-1}(E)^c = f^{-1}(E^c)$.
+\end{lemma}
+
+\begin{proof}
+We have 
+\begin{align*}
+x \in f^{-1}(E)^c &\iff x \not\in f^{-1}(E)\\
+&\iff f(x) \not \in E\\
+&\iff f(x) \in E^c\\
+&\iff x \in f^{-1}(E^c).
+\end{align*}
+Thus,  $f^{-1}(E)^c = f^{-1}(E^c)$.
+\end{proof}
+
+\begin{lemma}
+Let $f: \mathbb{R}^m \to \mathbb{R}^n$, and let $E_2, E_2 \in \mathbb{R}^n$. Then $f^{-1}(E_1 \cup E_2) = f^{-1}(E_1) \cup f^{-1}(E_2)$.
+\end{lemma}
+
+\begin{proof}
+Jumping right in, we see
+\begin{align*}
+x \in f^{-1}(E_1 \cup E_2) &\iff f(x) \in E_1 \cup E_2\\
+&\iff f(x) \in E_1 \lor f(x) \in E_2\\
+&\iff x \in f^{-1}(E_1) \lor x \in f^{-1}(E_2)\\
+&\iff x \in f^{-1}(E_1) \cup \in f^{-1}(E_2).
+\end{align*}
+With this, we have proven that $f^{-1}(E_1 \cup E_2) = f^{-1}(E_1) \cup f^{-1}(E_2)$.
+\end{proof}
+
+\begin{theorem}
+Let $f: \mathbb{R}^m \to \mathbb{R}^n$ be continuous. Then the inverse image $f^{-1}(B)$ of a Borel set $B$ is a Borel set.
+\end{theorem}
+
+\begin{proof}
+Let $S = \{E \in \mathbb{R}^n| f^{-1}(E) \text{ is a Borel set} \}$.  Let $\Tau_m$ and $\Tau_n$ be the topologies on $\mathbb{R}^m$ and $\mathbb{R}^n$ respectively. 
+We have
+\begin{align*}
+E \in \Tau_n &\implies f^{-1}(E) \in \Tau_m &&\text{By definition of continuity}\\
+&\implies E \in S.
+\end{align*}
+Since this is true for all $E \in \Tau_n$, we have that $\Tau_n \subseteq S$. Thus, all we have to do is show that $S$ is a sigma algebra, and our job will be complete.
+
+We will start by showing that $S$ is closed under complements. Let $\Sigma$ be the Borel sets in $\mathbb{R}^m$. We have
+\begin{align*}
+E \in S &\implies f^{-1}(E) \in \Sigma\\
+&\implies f^{-1}(E)^c \in \Sigma &&\text{Since } \Sigma \text{ is a sigma algebra}\\
+&\implies f^{-1}(E^c) \in \Sigma &&\text{By Lemma 1}\\
+&\implies E^c \in S.
+\end{align*}
+Thus, we have shown that $S$ is closed under complements.
+
+To show that $S$ is closed under countable union, we will proceed by induction. Let $\{E_k\}_{k=1}^\infty \subset S$.  For the base case, Lemma 2 immediately yields
+\begin{align*}
+f^{-1}(E_1 \cup E_2) = f^{-1}(E_1) \cup f^{-1}(E_2) &\implies f^{-1}(E_1 \cup E_2) \in \Sigma &&\text{Since } \Sigma \text{ is a sigma algebra}\\
+&\implies E_1 \cup E_2 \in S.
+\end{align*}
+Now, suppose for some $N \geq 2$, that 
+\begin{align}
+\bigcup_{k =1}^N E_k \in S.
+\end{align}
+We have
+\begin{align*}
+\bigcup_{k =1}^{N+1} E_k &= E_{N+1} \cup \left( \bigcup_{k =1}^N E_k \right).
+\end{align*}
+Then, since this is a union of two sets in $S$, it follows from the base case that 
+\begin{align*}
+\bigcup_{k =1}^{N + 1} E_k \in S.
+\end{align*}
+Since this is true for any $N$, the inductive principle tells us that 
+\begin{align*}
+\bigcup_{k =1}^{\infty} E_k \in S.
+\end{align*}
+
+Therefore, we have shown that $S$ is a sigma algebra containing the open sets. Since the Borel sigma algebra is the smallest sigma algebra containing the open sets, we have that $\Sigma \subseteq S$, and we can conclude that the inverse image $f^{-1}(B)$ of a Borel set $B$ is a Borel set.
+\end{proof}
 \end{document}
