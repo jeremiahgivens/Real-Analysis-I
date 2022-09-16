@@ -337,8 +337,73 @@ Let $E \in \mathbb{R}^n$ with $|E|_e > 0$, and let $0 < \theta < 1$. Show that t
 \end{theorem}
 
 \begin{proof}
-Define $Q(r) \subseteq \mathbb{R}^n$ to be the closed interval with edge length $r$ centered at the origin. With this, define the function $f:(0, \infty) \to \mathbb{R}$ by $f(r) = |Q(r) \cap E|_e$. We will show that this function is monotone increasing and continuous.
+Define $Q(r) \subseteq \mathbb{R}^n$ to be the closed interval with edge length $r$ centered at the origin. With this, define the function $f:[0, \infty) \to \mathbb{R}$ by $f(r) = |Q(r) \cap E|_e$. We will show that this function is continuous.
 
-Let $0 < r < r_0 < \infty$.
+To show that f is continuous, we first let $0 \leq r \leq r_0 < \infty$. Then
+\begin{align*}
+f(r_0) &= |Q(r_0) \cap E|_e\\
+&= |(Q(r_0) \cap E) \cap Q(r)|_e + |(Q(r_0) \cap E) - Q(r)|_e &&\text{Since } Q(r) \text{ is measurable}\\
+&= |Q(r) \cap E|_e + |E\cap(Q(r_0) - Q(r))|_e &&\text{Since } Q(r) \subseteq Q(r_0)\\
+&\leq f(r) + |Q(r_0) - Q(r)| &&\text{By monotonicity of outer measure}\\
+&= f(r) + r_0^n - r^n\\
+f(r_0) - f(r) &\leq r_0^n - r^n.
+\end{align*}
+Thus, by symmetry, we have that for all $r, r_0 \in (0, \infty)$
+\begin{align*}
+|f(r_0) - f(r)| &\leq |r_0^n - r^n|.
+\end{align*}
+
+Now, let $\epsilon > 0$ and let $r_0 \in (0, \infty)$. We want to find a bound on $r \in (0, \infty)$ such that $|f(r_0) - f(r)| < \epsilon$. Suppose first that $r \leq r_0$. Then
+\begin{align*}
+|r_0^n - r^n| < \epsilon &\implies r_0^n - r^n < \epsilon\\
+&\implies r^n > r_0^n - \epsilon\\
+&\implies r > (r_0^n - \epsilon)^{1/n}.
+\end{align*}
+In a similar manner, if $r \geq r_0$, we have
+\begin{align*}
+|r_0^n - r^n| < \epsilon &\implies r^n - r_0^n < \epsilon\\
+&\implies r^n < \epsilon + r_0^n\\
+&\implies r < (r_0^n + \epsilon)^{1/n}.
+\end{align*}
+Thus,we have
+\begin{align*}
+(\forall r_0 \in (0, \infty))(\forall \epsilon > 0)(\forall r \in (0, \infty))(|r - r_0| < \min \{(r_0^n - \epsilon)^{1/n}, (r_0^n + \epsilon)^{1/n} \} \implies |f(r_0) - f(r)| < \epsilon),
+\end{align*}
+and we have shown that $f$ is continuous.
+
+Now, clearly $f(0) = 0$. Since this theorem is trivially true if $|E|_e = \infty$, we will suppose that $|E|_e < \infty$. Then, there exists countably many intervals $\{I_k\}$ that cover $E$ such that
+\begin{align*}
+\sum_{k=1}^\infty |I_k| < |E|_e + \epsilon.
+\end{align*}
+Thus, we have that there exists some $N$ such that 
+\begin{align*}
+\sum_{k=1}^N |I_k| > |E|_e - \epsilon.
+\end{align*}
+Choose $r$ large enough that $I_k \subseteq Q(r)$ for $k \in \{1, 2, ..., N\}$.
+\end{proof}
+By the caratheodory property, we have
+\begin{align*}
+|E|_e &= |E \cap \bigcup_{k=1}^N I_k|_e + |E - \bigcup_{k=1}^N I_k |_e\\
+&\leq |E \cap \bigcup_{k=1}^N I_k|_e + |\bigcup_{k=N+1}^\infty I_k |_e\\
+&\leq |E \cap \bigcup_{k=1}^N I_k|_e + \sum_{k=N+1}^\infty |I_k|\\
+&\leq |E \cap \bigcup_{k=1}^N I_k|_e + 2 \epsilon\\
+|E|_e - 2 \epsilon &\leq |E \cap \bigcup_{k=1}^N I_k|_e\\
+&\leq |E \cap Q(r)|_e &&\text{Since } \bigcup_{k=1}^N I_k \subseteq Q(r)\\
+&= f(r).
+\end{align*}
+If we let $\epsilon = \frac{|E|_e(1 - \theta)}{2}$, we can see that there exists an $r \in [0, \infty)$ such that $f(r) \geq \theta |E|_e$.Thus, by the intermediate value theorem, there exists an $r \in [0, \infty)$ such that $|E \cap Q(r)|_e = \theta |E|_e$, as desired. Furthermore, if $E$ is measurable, so is $E \cap Q(r)$, and our proof is complete.
+
+\section*{Problem 10}
+\begin{theorem}
+Let $E$ and $Z$ be the sets in $\mathbb{R}^n$ and $|Z| = 0$. If $E \cup Z$ is measurable, show that $E$ is measurable and that $|E|$ = $|E \cup Z|$.
+\end{theorem}
+
+\begin{proof}
+Since $Z$ is measurable, the Caratheodory property tells us
+\begin{align*}
+|E \cup Z| &= |(E \cup Z) \cap Z| + |E \cup Z - Z|_e\\
+&= |Z| + |E|_e\\
+&= |E|_e.
+\end{align*}
 \end{proof}
 \end{document}
