@@ -252,6 +252,29 @@ Now suppose that $|E|_e = |E|_i$, and let $\epsilon >0$. Then, by definition of 
 Thus, by Lemma 3.22, $E$ is measurable.
 \end{proof}
 
+\section*{Problem 7}
+\begin{theorem}
+If $E$ is measurable and $A$ is any subset of $E$, then $|E| = |A|_i + |E - A|_e$.
+\end{theorem}
+
+\begin{proof}
+By the definition of supremum,  for all $k \in \mathbb{N}$, there exists closed sets $I_k \subseteq A$ such that $|I|_k > |A|_i - \frac{1}{k}$. Thus, we can define a set $G \subseteq A$ of type $F_\sigma$ such that $|G| = |A|_i$, defined by
+\begin{align*}
+G = \bigcup_{k=1}^\infty I_k.
+\end{align*}
+Using Caratheodory's theorem, we have
+\begin{align*}
+|E| &= |E \cap G| + |E - G|\\
+&= |G| + |E - G|\\
+&= |A|_i + |E - G|.
+\end{align*}
+Thus, all we need to show is that $|E - G| = |E - A|_e$. By monotonicity of the outer measure, and the fact that $E - A \subseteq E - G$, we have
+\begin{align*}
+|E - A|_e \leq |E - G|.
+\end{align*}
+To finish the proof, we must now show the other direction of the inequality. Unfortunately, I have not figured out how to do this yet.
+\end{proof}
+
 \section*{Problem 8}
 We will prove a more general statement, but we will first need some simple Lemmas.
 \begin{lemma}
@@ -405,5 +428,13 @@ Since $Z$ is measurable, the Caratheodory property tells us
 &= |Z| + |E|_e\\
 &= |E|_e.
 \end{align*}
+Let $\epsilon > 0$. Since $E \cup Z$ is measurable, there exists an open set $G$ such that $E \subseteq G$ and $|G - E \cup Z| < \epsilon$.  Using Caratheoradory's theorem once more, we have
+\begin{align*}
+|G - E|_e &= |Z \cap (G - E)|_e + |(G - E) - Z|_e\\
+&\leq |Z| + |(G - E) - Z|_e &&\text{Since } Z \cap (G - E) \subseteq Z\\
+&= 0 + |G - (E \cup Z)|_e\\
+&< \epsilon,
+\end{align*}
+and our proof is complete.
 \end{proof}
 \end{document}
