@@ -83,5 +83,40 @@
 
 \begin{document}
 \section*{Problem 1}
+We know that if $f$ is measurable, then for every $a \in \mathbb{R}^1$, the set $f^{-1}(\{a\})$ is measurable. Use the following function $f$ to show that the converse of this result is not true, where $f: \mathbb{R}^1 \to \mathbb{R}^1$ is defined by
+\[   f = \left\{
+\begin{array}{ll}
+      e^x & x \in E \\
+      -e^x & x \in E^c \\
+\end{array} 
+\right. \]
+where $E \in \mathbb{R}^1$ is a nonmeasurable set.
 
+\subsection*{Solution}
+\begin{proof}
+We have that $e^x$ is a positive function. Thus, $-e^x$ is a negative function. Thus, it follows that
+\begin{align*}
+\{f > 0\} &= E.
+\end{align*}
+Since $E$ is nonmeasurable, this tells us that $\{f > 0\}$ is nonmeasurable. With this, we have shown that $f$ is not measurable.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $E \in \mathbb{R}^1$ be measurable. Show that if $f: E \to [-\infty, \infty ]$ is increasing, then $f$ is measurable.
+\end{theorem}
+\begin{proof}
+Let $a \in \mathbb{R}$. We have
+\begin{align*}
+\{f > a \} &= \{x: E| f(x) > a \}.
+\end{align*}
+Now, suppose there is no lower bound to $\{f > a \}$. Then,
+\begin{align*}
+(\forall x \in E)(\exists x_a \in \{f > a \})(x_a < x) &\implies (\forall x \in E)(\exists x_a \in \{f > a \})(f(x_a) \leq  f(x)) && \text{Since } f \text{ is increasing}\\
+&\implies (\forall x \in E)(f(x) > a)\\
+&\implies \{f > a \} = E\\
+&\implies \{f > a \} \text{ is measurable.}
+\end{align*}
+Suppose then, that $\{f > a \}$ has a lower bound. Then, by a fundamental properties of the real numbers, $\{f > a \}$ has a greatest lower bound.
+\end{proof}
 \end{document}
