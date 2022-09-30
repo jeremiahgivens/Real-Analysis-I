@@ -117,6 +117,25 @@ Now, suppose there is no lower bound to $\{f > a \}$. Then,
 &\implies \{f > a \} = E\\
 &\implies \{f > a \} \text{ is measurable.}
 \end{align*}
-Suppose then, that $\{f > a \}$ has a lower bound. Then, by a fundamental properties of the real numbers, $\{f > a \}$ has a greatest lower bound.
+Suppose then, that $\{f > a \}$ has a lower bound. Then, by a fundamental property of the real numbers, $\{f > a \}$ has a greatest lower bound $l \in \mathbb{R}$.  Suppose first that $l \in \{f > a\}$. Then, since $f$ is increasing, we have
+\begin{align*}
+(\forall x \geq l)(f(x) > a) &\implies [l, \infty) \cap E = \{f > a\}\\
+&\implies \{f > a \} \text{ Is measurable} &&\text{Intersection of two measurable sets}.
+\end{align*}
+Similarly, if $l \not \in \{f > a\}$, then
+\begin{align*}
+(\forall x > l)(f(x) > a) &\implies (l, \infty) \cap E = \{f > a\}\\
+&\implies \{f > a \} \text{ Is measurable} &&\text{Intersection of two measurable sets}.
+\end{align*}
+Therefore, we have shown that $f$ is measurable.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+If $f$ is differentiable on $[a, b]$, the $f'$ is measurable.
+\end{theorem}
+
+\begin{proof}
+
 \end{proof}
 \end{document}
