@@ -105,6 +105,8 @@ Since $E$ is nonmeasurable, this tells us that $\{f > 0\}$ is nonmeasurable. Wit
 \begin{theorem}
 Let $E \in \mathbb{R}^1$ be measurable. Show that if $f: E \to [-\infty, \infty ]$ is increasing, then $f$ is measurable.
 \end{theorem}
+
+\section*{Solution}
 \begin{proof}
 Let $a \in \mathbb{R}$. We have
 \begin{align*}
@@ -135,7 +137,158 @@ Therefore, we have shown that $f$ is measurable.
 If $f$ is differentiable on $[a, b]$, the $f'$ is measurable.
 \end{theorem}
 
+\section*{Solution}
 \begin{proof}
+We first note that 
+\begin{align*}
+f'(t) &= \lim_{k \to \infty} k \left( f(t + \frac{1}{k}) - f(t) \right)
+\end{align*}
+for $t \in [a, b)$ (for convenience, set $f(t) = f(b)$ when $t > b$, so that $f(t + \frac{1}{k})$ is always defined). By theorem 4.5,  it will suffice to show that $f'$ is measurable on $[a, b)$, since it differs from $[a, b]$ only by a set of measure zero.
 
+Thus, we can define a sequence of function which converges to $f'$, $\{f_k \}_{k = 1}^\infty$, by
+\begin{align*}
+f_k(t) = \lim_{k \to \infty} k \left( f(t + \frac{1}{k}) - f(t) \right).
+\end{align*}
+By theorem 4.12, it will suffice to show that each $f_k$ is measurable.
+
+Since $f$ is differentiable, it is continuous, and therefore measurable.  Define $\phi(t) = t + \frac{1}{k}$ for $t \in [a, b)$.  Then, since $\phi$ is continuous,  $f(\phi) = f(t + \frac{1}{k})$ is also continuous, and therefore measurable (we could instead have used theorem 4.6 to arrive at the same conclusion). 
+
+By theorems 4.8 and 4.9, $f(\phi) - f$ is measurable. Finally, by theorem 4.8, $k \left( f(t + \frac{1}{k}) - f(t) \right)$ is measurable, and our proof is complete.
 \end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Let $f, g$ be two simple functions on $E$. Then, $f +g$ and $fg$ are both simple functions on $E$.
+\end{theorem}
+
+\section*{Solution}
+\begin{proof}
+Suppose that $f$ and $g$ assume $N$ and $M$ distinct values respectively. Then, using elementary combinatorics, there are $N \cdot M$ different ordered pairs of the form $(f(t), g(t))$. Thus, $f + g$ and $fg$ have, at most, $N \cdot M$ values that they can assume. Thus, $f + g$ and $fg$ are simple functions, and our proof is complete.
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+Let $|E| < \infty$ and let $f$ be a measurable function on $E$ which is finite a.e. in $E$. Then, for every $\epsilon >0$, there exists a closed set $F \subseteq E$ such that $|E - F| < \epsilon$ and that $f$ is bounded on $F$.
+\end{theorem}
+
+\section*{Solution}
+\begin{proof}
+Let $\epsilon > 0$, and let $G = \{x \in E: f(x) \text{ is infinite} \}$. Then, since $E$ and $G$ are measurable, we have that $E - G$ is also measurable. Define a sequence of sets $\{E_k\}$ such that
+\begin{align*}
+E_k = \{x \in E - G: -k < f(x) < k \}.
+\end{align*}
+Then, since $f$ is finite valued on $E - G$, we have $E_k \nearrow E - G$. Then, by theorem 3.26, we have
+\begin{align*}
+\lim_{k \to \infty} |E_k| &= |E - G| = |E|.
+\end{align*}
+Thus, there exists some $k > 0$ such that $|E| < |E_k| + \frac{\epsilon}{2}$. Furthermore, since $E_k$ is measurable, there exists some closed set $F \subseteq E_k$ such that $|E_k - F| < \frac{\epsilon}{2}$.  Now, by Caratheodory's theorem, we have
+\begin{align*}
+|E| &= |E \cap F| + |E - F|\\
+&= |F| + |E - F| &&\text{Since } F \subseteq E\\
+|E - F| &= |E| - |F| &&\text{Since } |E| < \infty.
+\end{align*}
+In an identical fashion, we have
+\begin{align*}
+|E_k - F| = |E_k| - |F|.
+\end{align*}
+Combining these results, we have
+\begin{align*}
+|E - F| &= |E| - |F|\\
+&< |E_k| + \frac{\epsilon}{2} - |F|\\
+&= (|E_k| - |F|) + \frac{\epsilon}{2}\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon.
+\end{align*}
+Since $F \subseteq E_k$, we have that $|f(x)| < k$ for all $x \in F$, and is thus bounded on $F$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 6}
+\begin{theorem}
+Let $|E| < \infty$ and let $f$ be measurable on $E$. Then there are at most countably many real numbers $y$ such that $|f^{-1}(y)| > 0$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+By definition of a function, we have that $y_1 \not = y_2 \iff f^{-1}(y_1) \not = f^{-1}(y_2)$. Thus, we have that $f^{-1}(y_1) $ are $f^{-1}(y_2)$ are disjoint if and only if $y_1 \not = y_2$.
+
+For each $k \in \mathbb{N}$, define 
+\begin{align*}
+R_k = \biggl\{ y \in \mathbb{R}: = \frac{|E|}{2^{k}}< |f^{-1}(y)| \leq \frac{|E|}{2^{k - 1}} \biggr\}.
+\end{align*}
+Then, we have that each $R_k$ is disjoint, and that 
+\begin{align*}
+\{y \in \mathbb{R}: |f^{-1}(y)| > 0 \} &= \bigcup_{k=1}^\infty R_k.
+\end{align*}
+Thus, by addativity of the Lebesgue measure, we must have that the cardinality of $R_k$ is less than $2^k$. Thus, each $R_k$ has a finite cardinality,  which means that the union over all $k$ is at most countable. Therefore, our proof is complete.
+\end{proof}
+
+\section*{Problem 7}
+\begin{theorem}
+Let $f$ be defined and measurable in $\mathbb{R}^n$. If $T$ is a nonsingular linear transformation of $\mathbb{R}^n$, then $f(Tx)$ is measurable.
+\end{theorem}
+
+\begin{proof}
+Let $a \in \mathbb{R}$, and define $E_1 = \{f > a \}$ and $E_2 = \{fT > a \}$. Since $f$ is measurable, it follows that $E_1$ is measurable. Now, because $T$ is nonsingular, it has an inverse $T^{-1}$. With this, we have
+\begin{align*}
+x \in E_2 &\iff f(Tx) > a\\
+&\iff Tx \in E_1\\
+&\iff x \in T^{-1} (E_1).
+\end{align*}
+Thus, $E_2 = T^{-1}(E_1)$. Since the inverse of a linear transformation is itself a linear transformation, Theorem 3.35 tells us that $T^{-1} (E_1)$ is measurable, and our proof is complete.
+\end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+Let $f(x, t)$ be a function on $E \times \mathbb{R}$ where $E$ is a measurable subset in $\mathbb{R}^n$. Assume that (i) for almost every $x \in E$, $f(x, t)$ is continuous as a function of $t \in \mathbb{R}$; (ii) for every $t \in \mathbb{R}$, $f(x, t)$ is measurable as a function of $x \in E$. Such conditions (i) and (ii) are called Caratheory's conditions.
+
+Let $g: E \to \mathbb{R}$ be a measurable function. Show that $F(x) = f(x, g(x))$ is measurable on $E$.
+\end{theorem}
+
+\begin{proof}
+Since $g$ is measurable, there exists a sequence of measurable simple functions $\{g_k\}_{k=1}^\infty$ that converges to $g$. With each of these $g_k$ being measurable, we can write
+\begin{align*}
+g_k(x) = \sum_{n=1}^{N_k} a^k_n \chi_{E^k_n}(x),
+\end{align*}
+where each of the $a^k_n$ are distinct for every $n$, and each of the $E^k_n$ are disjoint and measurable for every $n$. Now, we define 
+\begin{align*}
+F_k(x) = f(x, g_k(x)).
+\end{align*}
+We have
+\begin{align}
+\{F_k > a \} &= \bigcup_{n=1}^{N_k} \{x \in E^k_n: f(x, a^k_n) > a\}.
+\end{align}
+Since $f(x, a^k_n)$ is continuous for almost every $x$, it is measurable. Thus,  each set in the union of (1) is measurable, and we can conclude that $F_k$ is measurable.
+
+Now, all that remains is to show that $F_k \to F$. Let $x \in E$ be such that $f(x, t)$ is continuous as function of $t$, and let $\epsilon > 0$. Then, there exists some $\delta > 0$ such that $|f(x, g(x)) - f(y, g(y))| < \epsilon$ whenever $y \in E$ is such that $|y - x| < \delta$. Now, since $g_k \to g$, there exists a $K \in \mathbb{N}$ such that for all $k \geq K$, $|g(x) - g_k(x)| < \delta$. Thus, it follows that for all $k \geq K$, we have $|f(x, g(x)) - f(y, g_k(x))| < \epsilon$. Thus, by theorem 4.12, $F$ is measurable, and our proof is complete.
+\end{proof}
+
+\section*{Problem 9}
+\begin{theorem}
+Let $f: [0, \infty) \to \mathbb{R}$ be continuous. For each $k \in \mathbb{N}$, divide the interval $[0, k)$ into $k^2$ disjoint subintervals
+\begin{align*}
+\left[ \frac{j - 1}{k}, \frac{j}{k} \right), && j=1,2,...,k^2,
+\end{align*}
+and define the step function 
+\[   f_k = \left\{
+\begin{array}{ll}
+      f\left( \frac{j - 1}{k} \right) & x \in \left[ \frac{j - 1}{k}, \frac{j}{k} \right),  \text{  } j=1,2,...,k^2\\
+      f(k) & x \geq k \\
+\end{array} 
+\right. \]
+Then, $f_k(x) \to f(x)$ for every $x \in [0, \infty)$.
+\end{theorem}
+
+\begin{proof}
+Let $x \in [0, \infty)$, and let $\epsilon > 0$. Since $f$ is continuous, there exists a $\delta > 0$ such that $|f(x) - f(y)| < \epsilon$ for all $y \in [0, \infty)$ such that $|x - y| < \delta$. Now, choose $K \in \mathbb{N}$ to be large enough that $x < K$ and $\frac{1}{K} < \epsilon$. Then, for all $k \geq K$, there exists some $j \in \{1, 2, ..., k^2 \}$ such that 
+\begin{align*}
+f_k(x) &= f\left( \frac{j - 1}{k} \right).
+\end{align*}
+Thus, for all $k \geq K$, we have
+\begin{align*}
+|f(x) - f_k(x)| &= \biggl| f(x) -  f\left( \frac{j - 1}{k} \right) \biggr|\\
+&< \epsilon && \text{Since } x \in \left[ \frac{j - 1}{k}, \frac{j}{k} \right) \implies \biggl|x - \frac{j - 1}{k} \biggr| < \frac{1}{k} < \frac{1}{K}  <\delta.
+\end{align*}
+Thus, we have shown that $f_k(x) \to f(x)$, and our proof is complete.
+\end{proof}
+
 \end{document}
