@@ -1,0 +1,393 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis I}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Midterm}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Before we jump into this problem, we will first prove an easy lemma.
+\begin{lemma}
+Let $F, B $ and $E$ be sets with $F \subseteq B \subseteq E$. Then, 
+\begin{align*}
+(E - F) \cap B &= B - F.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+We have
+\begin{align*}
+x \in (E - F) \cap B &\iff (x \in E - F) \land x \in B\\
+&\iff (x \in E) \land (x \not \in F) \land (x \in B)\\
+&\iff (x \in E \cap B) \land (x \not \in F)\\
+&\iff (x \in B) \land (x \not \in F) &&\text{Since } B \subseteq E\\
+&\iff x \in B - F,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\begin{theorem}
+$E \subseteq \mathbb{R}^n$ is measurable if and only if for every $\epsilon >0$ there exists a measurable set $B \subseteq	E$ such that $|E - B|_e < \epsilon$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose $E$ is measurable, and let $\epsilon >0$. By Lemma 3.22 in our textbook,  there exists a closed set $B \subseteq E$ such that $|E - B|_e < \epsilon$.  Since all closed sets are measurable, $B$ is measurable, and we have proven one direction of the theorem.
+
+Now suppose that for each $\epsilon > 0$,  there exists a measurable set $B \subseteq	E$ such that $|E - B|_e < \epsilon$.  Thus, let $\epsilon > 0$, and fix a measurable $B \subseteq	E$ such that $|E - B|_e < \frac{\epsilon}{2}.$ Since $B$ is measurable, Lemma 3.22 tells us that there exists a closed set $F \subseteq B$ such that $|B - F|_e < \frac{\epsilon}{2}$. Now, by Caratheory's theorem, we have
+\begin{align*}
+|E - F|_e &= |(E - F) \cap B|_e + |(E - F) - B|_e\\
+&= |(E - F) \cap B|_e + |E - B|_e && \text{Since } F \subseteq B\\
+&= |B - F|_e + |E - B|_e && \text{By Lemma 1}\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon.
+\end{align*}
+Thus, utilizing Lemma 3.22 one last time, it follows that $E$ is measurable, and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $\{I_1, I_2, ...,I_N \}$ be a finite family of closed intervals in $\mathbb{R}^1$ such that $\mathbb{Q} \cap [0, 1] \subseteq \bigcup_{j = 1}^N I_j$. Then $\sum_{j = 1}^N |I_j| \geq 1$. Furthermore, if this family of intervals is infinite, this may not be true.
+\end{theorem}
+
+\subsection*{Solution}
+
+\begin{proof}
+Suppose there exists an $x \in [0, 1] \backslash \mathbb{Q}$ such that $x \not\in \bigcup_{j = 1}^N I_j$. Then, since each $I_j$ is closed, there exist $\delta_j > 0$ such that 
+\begin{align*}
+(\forall y \in I_j)(|x - y| \geq \delta_j).
+\end{align*}
+Define $\delta = \min \{\delta_j | j = 1,2,...,N\}$, which exists because there are only finitely many $I_j$. By construction, we have that $\delta > 0$. By density of the rational numbers, there exists a rational number $q \in [0, 1]$ such that $|x - q| < \delta$. Thus,  $q \not \in \bigcup_{j = 1}^N I_j$, and we have a contradiction. 
+
+Therefore, we have that $[0, 1] \subseteq \bigcup_{j = 1}^N I_j$. Now, by definition of Lebesgue measure, we have
+\begin{align*}
+1 &= |[0, 1]|\\
+&\leq \sum_{j = 1}^N |I_j| ,
+\end{align*}
+and our proof is complete.
+
+For the last remark, let $\{q_1, q_2,...\}$ be an enumeration of $\mathbb{Q} \cap [0, 1] $. Define an infinite family of closed intervals $\{I_1, I_2,...\}$ such that 
+\begin{align*}
+I_k = [q_k, q_k + \frac{\epsilon}{2}]
+\end{align*}
+for some $0 < \epsilon <1$.  Clearly, we have $\mathbb{Q} \cap [0, 1] \subseteq \bigcup_{j = 1}^\infty I_j$, but we also have
+\begin{align*}
+\sum_{j = 1}^\infty |I_j| &= \sum_{j = 1}^\infty |[q_k, q_k + \frac{\epsilon}{2^k}]|\\
+&= \sum_{j = 1}^\infty \frac{\epsilon}{2^k}\\
+&= \epsilon\\
+&<1,
+\end{align*}
+and we have shown that the statement does not hold for an infinite family of closed intervals.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+\proofpart{(i)}{} 
+Let $A, B \subseteq \mathbb{R}^n$, with $A$ measurable.  If $A \cap B = \emptyset$, then $|A \cup B|_e = |A| + |B|_e$
+
+\proofpart{(ii)}{} 
+If $F \subseteq E$ is closed such that $|E|_e - |F| < \epsilon$ and $|F| < \infty$, then $|E - F|_e < \epsilon$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} 
+Since $A$ is measurable, we have
+\begin{align*}
+|A \cup B|_e &= |(A \cup B) \cap A|_e + |(A \cup B) - A|_e &&\text{By Caratheory's theorem}\\
+&= |A| + |(A \cup B) - A|_e &&\text{Since } A \cap B = \emptyset\\
+&= |A| + |B|_e &&\text{Since } (A \cup B) - A = B\\
+\end{align*}
+and we have completed the proof of this part.
+
+\proofpart{(ii)}{}
+Since $F$ is closed (and therefore measurable), we can use Caratheodory's theorem once more, to see
+\begin{align*}
+|E|_e &= |E \cap F|_e + |E - F|_e\\
+&= |F| + |E - F|_e. &&\text{Since } F \subseteq E\\ 
+\end{align*} 
+Since $|F|$ is finite, we can subtract it from both sides to yield
+\begin{align*}
+|E - F|_e &= |E|_e - |F|\\
+&< \epsilon,
+\end{align*}
+as desired.
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Let $A$ and $B$ be subsets of $\mathbb{R}^n$. Then 
+\begin{align*}
+|A \cup B|_e + |A \cap B|_e \leq |A|_e + |B|_e.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $\epsilon > 0$. By theorem 3.6 in our textbooks, there exist open sets $G_A , G_B$ such that $A \subseteq G_A$, $B \subseteq G_B$, $|G_A| \leq |A|_e + \frac{\epsilon}{2}$, and $|G_B| \leq |B|_e + \frac{\epsilon}{2}$. With this, we have
+\begin{align*}
+|A \cup B|_e + |A \cap B|_e &\leq |G_A \cup G_B| + |G_A \cap G_B| &&\text{Since } A \cup B \subseteq G_A \cup G_B \text{ and } A \cap B \subseteq G_A \cap G_B\\
+&= |G_A| + |G_B| &&\text{From HW2 Problem 4}\\
+&\leq |A|_e + \frac{\epsilon}{2} + |B|_e + \frac{\epsilon}{2}\\
+&= |A|_e +|B|_e + \epsilon.
+\end{align*}
+Since this is true for any $\epsilon > 0$, we have
+\begin{align*}
+|A \cup B|_e + |A \cap B|_e \leq |A|_e + |B|_e,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+If $E \subseteq \mathbb{R}$ is measurable and $|E| > 0$, then there are $x, y \in E$, with $x \not = y$,  such that $x - y$ is a rational number.
+\end{theorem}
+
+\subsection*{Solution}
+
+\begin{proof}
+Since $E$ has nonzero measure, there exists a bounded subset $F \subseteq E$ such that $|F| > 0$.  Since $F$ is bounded, there exists integers $a < b$ such that $F \subseteq [a, b]$. Thus, it will suffice to show that there are $x,y \in F$ such that $x - y$ is a rational number.
+
+Let $\{q_1, q_2,...\}$ be an enumeration of the rational numbers contained in $[0, 1]$. Define a family of sets $\{F_k\}$ by 
+\begin{align*}
+F_k &= F + q_1,
+\end{align*}
+where we have just translated $F$ some rational number in $[0, 1]$. Now, suppose that $F_j \cap F_k = \emptyset$ if $j \not = k$.  Using the fact that $\bigcup_{k=1}^\infty F_k \subseteq [a, b + 1]$, we have
+\begin{align*}
+|[a, b+1]| &\geq | \bigcup_{k=1}^\infty F_k|\\
+&= \sum_{k=1}^\infty |F_k| && \text{Since the sets are disjoint, by assumption}\\
+&= \sum_{k=1}^\infty |F| &&\text{By translation invariance of Lebesgue measure}\\
+&= \infty, 
+\end{align*}
+which is a contradiction, since $|[a, b+1]|$ is finite. Thus,  there exist numbers $j, k \in \mathbb{N}$, with $j \not = k$,  such that $F_j \cap F_k \not = \emptyset$. Thus, there exist $f_j,f_k \in F$ such that 
+\begin{align*}
+f_j + q_j = f_k + q_k.
+\end{align*}
+Then, we have
+\begin{align*}
+f_j - f_k = q_k - q_j.
+\end{align*}
+Since the rational numbers are closed under subtraction, we have that $f_j - f_k$ is rational, and our proof is complete.
+\end{proof}
+
+\section*{Problem 6}
+\begin{theorem}
+Let $E$ be the nonmeasurable set in $I = [0, 1]$ constructed in the lecture. Then
+\proofpart{(i)}{}
+$|E|_i = 0$.
+
+\proofpart{(ii)}{}
+$|I| < |E|_e + |I - E|_e$.
+
+\proofpart{(iii)}{}
+$|I| > |E|_i + |I - E|_i$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{}
+Let $F \subseteq E$ be closed.
+\end{proof}
+
+\section*{Problem 7}
+\begin{theorem}
+Let $f(x) = x^3$.  If $E \subseteq \mathbb{R}$ is a zero measure set, then $|f(E)| = 0$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose first that $E$ is bounded. Then, as I proved on homework 1, $f$ is uniformly continuous. Thus, there exists some $M > 0$ such that for all $x,y \in E$, we have
+\begin{align*}
+|f(x) - f(y)| \leq M|x - y|.
+\end{align*}
+Furthermore, it follows that for any interval $I$, we have
+\begin{align*}
+|f(I)| \leq M|I|.
+\end{align*}
+
+Now let $\epsilon > 0$. Since $E$ is of measure zero, there exists a cover of $\{I_1, I_2,...\}$ of $E$ consisting of closed intervals such that 
+\begin{align*}
+\sum_{j=1}^\infty |I_j| < \frac{\epsilon}{M}.
+\end{align*} 
+We have
+\begin{align*}
+f(E) = \bigcup_{j=1}^\infty f(I_j),
+\end{align*}
+therefore
+\begin{align*}
+|f(E)| &\leq \sum_{j=1}^\infty |f(I_j)| \\
+&\leq \sum_{j=1}^\infty M|I_j| \\
+&< M \frac{\epsilon}{M}\\
+&= \epsilon.
+\end{align*}
+Since this is true for any $\epsilon$, we can conclude that $|f(E)| = 0$. 
+
+Now, suppose that $E$ is not bounded. We have that
+\begin{align*}
+E = \bigcup_{k = 1} E \cap B(0; k),
+\end{align*}
+where $B(0; k)$ is the open ball centered at the origin with radius $k$.  Furthermore, we have
+\begin{align*}
+f(E) = \bigcup_{k = 1} f(E \cap B(0; k)).
+\end{align*}
+Now, since $E \cap B(0; k)$ is bounded for each $k$ and has measure zero, the previous result allows us to conclude that $|f(E \cap B(0; k))| = 0$, and therefore that $|f(E)| = 0$, as desired.
+\end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+If $f$ and $g$ are continuous functions on $\mathbb{R}^n$ and are equal a.e. in $\mathbb{R}^n$, then $f \equiv g$ on $\mathbb{R}^n$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose that $g$ is continuous, and that $f \not \equiv g$. Then, there exists some point $x_0$ such that $f(x_0) \not = g(x_0)$. Since $f$ and $g$ are equal almost everywhere, we can construct a sequence $\{x_k\}$ such that $f(x_k) = g(x_k)$ and $|x_0 - x_k| < \frac{1}{k}$ for all $k \in \mathbb{N}$. By construction, we have that $x_k \to x_0$. By continuity of $g$, we have that $g(x_k) \to g(x_0)$.  Furthermore, since $f(x_k) = g(x_k)$ for all $k$, we have that $f(x_k) \to g(x_0)$,  implying that $f(x_k) \not \to f(x_0)$. Thus, we have shown that $f$ is not continuous, and we have proven the contrapositive. 
+\end{proof}
+
+\section*{Problem 9}
+\begin{theorem}
+Let $\{f_k \}$ be a sequence of measurable functions defined on a measurable set $E$ with $|E| < \infty$. If $|f_k(x)| \leq M_x < \infty$ for all $k$ for each $x \in E$, then given $\epsilon > 0$, there is a closed $f \subseteq E$ and a finite $M > 0$ such that $|E - F| < \epsilon$ and $|f_k(x)| \leq M$ for all $k$ and all $x \in F$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+By the remark after theorem 4.6 in our textbook, we have that $|f_k|$ is measurable for each $k$. By theorem 4.11 in our text book, $\sup_k |f_k(x)|$ is measurable.  Furthermore, we have by assumption that $\sup_k |f_k(x)|$ is finite everywhere. With this, we can construct a sequence of measurable sets $\{E_k\}$ such that $E_k \nearrow E$ defined by
+\begin{align*}
+E_k = \{x \in E | \sup_k |f_k(x)| \leq k \}.
+\end{align*}
+By theorem 3.26 in the book, we have
+\begin{align*}
+\lim_{k \to \infty} |E_k| = |E|.
+\end{align*}
+Thus, there exists an $M > 0$ such that 
+$|E| - |E_M| < \frac{\epsilon}{2}$. Using Lemma 3.22, we can find a closed $F \subseteq E_M$ such that $|E_M - F| < \frac{\epsilon}{2}$. Using Caratheory's theorem, we have
+\begin{align*}
+|E_n| &= |E_n \cap F| + |E_n - F|\\
+&= |F| + |E_n - F| && \text{Since } F \subseteq E_n\\
+|F| &= |E_n| - |E_n - F| &&\text{Since } |E| < \infty \implies |E_n| < \infty \implies |F| < \infty,
+\end{align*}
+and, using the exact same approach,
+\begin{align*}
+|E - F| &= |E| - |E \cap F|\\
+&= |E| - |F|\\
+&= |E| - (|E_n| - |E_n - F| )\\
+&= (|E| - |E_n|) + |E_n - F|\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon.
+\end{align*}
+Finally, since $F \subseteq E_M$, we have that 
+\begin{align*}
+(\forall x \in F)(\sup_k |f_k(x)| \leq M) \implies (\forall x \in F)(\forall k)(|f_k(x)| \leq M),
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 10}
+\begin{theorem}
+Let $f$ be a measurable function and finite a.e. on $E \subseteq \mathbb{R}^n$. Show that there is a sequence of continuous functions $g_k$ on $\mathbb{R}^n$ such that $g_k \to f$ a.e. on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+By the alternative version of Lusin's theorem, we can construct a sequence of closed sets $\{F^*_k\}$ such that $F^*_k \subseteq E$ and $|E - F^*_k| < \frac{1}{k}$, and a sequence of continuous functions $\{g^*_k\}$ such that $g^*_k:\mathbb{R}^n \to \mathbb{R}$ and $g^*_k(x) = f(x)$ for all $x \in F_k$.
+
+Now, this sequence of continuous functions does not necessarily converge, as  $\{F^*_k\}$ is not necessarily an increasing sequence. One way to remedy this, is to define a new sequence, $\{F_k\}$ such that $F_1 = F^*_1$, and $F_k = F^*_k \cup F_{k-1}$ for $k > 1$. By design, we have that $F_k \nearrow E$, and each $F_k$ is closed.  Using this, we will define a new sequence of functions $\{g_k\}$, where $g_1 = g^*_1$, and $g_{k + 1}(x) = g^*_{k+1}(x)$ when $x \in F^*_{k+1}$,  and $g_{k + 1}(x) = g_{k}(x)$ when $x \not \in F^*_{k+1}$. All that remains is to show that each $g_k$ is continuous, and our proof will be complete.
+
+Since $g^*_1$ is continuous, it follows that $g_1$ is continuous. Now suppose that for some $k \geq 1$ that $g_k$ is continuous.  Let $\{x_j\}$ be any convergent sequence in $\mathbb{R}^n$, and call it's limit $x$. Now, either $x \in F^*_{k+1}$, or $x \not \in F^*_{k+1}$.  Suppose first that $x \in F^*_{k+1}$. Since $F^*_{k+1}$ is closed,  there exists some $J \in \mathbb{N}$ such that $x_j \in F^*_{k+1}$ for all $j \geq J$. Thus,  $g_{k+1}(x_j) = g^*_{k+1}(x_j)$ for all $j \geq J$. Then, by continuity of $g^*_{k+1}$,  $g_{k+1}(x_j) \to g_{k+1}(x)$, and we have that $g_{k+1}$ is continuous in $F^*_{k+1}$.
+
+Now, suppose that $x \not \in F^*_{k+1}$.  Then, since $F^*_{k+1}$ is closed,  there exists some $J \in \mathbb{N}$ such that $x_j \not \in F^*_{k+1}$ for all $j \geq J$. Thus,  $g_{k+1}(x_j) = g_{k}(x_j)$ for all $j \geq J$.  By continuity of $g_k$, we have that $g_{k+1}(x_j) \to g_{k+1}(x)$, and we have shown that $g_{k+1}$ is continuous everywhere. Since we have already shown the base case of $k = 1$, the principle of mathematical induction allows us to conclude that $g_k$ is continuous for all $k$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 11}
+\begin{theorem}
+Let $f$ be a measurable function and finite a.e.  on $[a, b]$. Then, there is a sequence of polynomials $p_k$ such that $p_k \to f$ a.e. on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+As we proved in the previous problem,  there exists a sequence of continuous functions $g_k$ on $\mathbb{R}^n$ such that $g_k \to f$ a.e. on $[a, b]$. By the Stone-Weierstrass theorem, we can construct a sequence of polynomials $p_k$ such that for all $x \in [a, b]$, $|p_k(x) - g_k(x)| < \frac{1}{k}$. Now, let $x \in [a, b]$ be such that $g_k(x) \to f(x)$, and let $\epsilon > 0$.  Choose $K_1 \in \mathbb{N}$ to be such that $\frac{1}{K_1} < \frac{\epsilon}{2}$. Additionally, choose $K_2 \in \mathbb{N}$ large enough that for all $k \geq K_2$, we have $|g_k(x) - f(x)| < \frac{\epsilon}{2}$. Then, if we define $K$ as the maximum of $K_1$ and $K_2$, we have that for all $k \geq K$,
+\begin{align*}
+|p_k(x) - f(x)| &\leq |p_k(x) + g_k(x)| + |g_k(x) - f(x)| &&\text{By the triangle inequality}\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon.
+\end{align*}
+Thus, since $\epsilon$ was arbitrary, we have shown that $p_k \to f$ a.e. on $[a, b]$, and our proof is complete.
+\end{proof}
+
+\end{document}
