@@ -263,7 +263,42 @@ $|I| > |E|_i + |I - E|_i$.
 \subsection*{Solution}
 \begin{proof}
 \proofpart{(i)}{}
-Let $F \subseteq E$ be closed.
+Let $F \subseteq E$ be closed. Then, we have that $F$ is measurable, and that $|F| \leq 1$. Let $\{1_1, q_2,...\}$ be an enumeration of the rational numbers in $[0, 1]$. Define the translated sets $\{F_k\}$ by 
+\begin{align*}
+F_k = F + q_k.
+\end{align*}
+Suppose that there exist $j,k \in \mathbb{N}$ such that $F_j \cap F_k \not= \emptyset$. Then, there exists some $x,y \in F$ such that 
+\begin{align*}
+x + q_j = y + q_k.
+\end{align*}
+This implies that $x - y = q_k - q_j$, which is a rational number. From this, we have that $y$ is in the equivalence class of $x$. However, since each element of $E$ (and therefore $F$) belong to distinct equivalent classes, we have that $x = y$, which implies that $j = k$. Thus, we can conclude that the sets in $\{F_k\}$ are pairwise disjoint. Furthermore, by translation invariance of the Lebesgue measure, each of these sets is measurable, with measure $|F|$. Since the union of these sets is contained in $[0, 2]$, we have
+\begin{align*}
+2 &= |[0, 2]|\\
+&\geq \left| \bigcup_{k = 1}^\infty F_k \right|\\
+&= \sum_{k=1}^\infty |F_k| &&\text{Since these sets are disjoint}\\
+&= \sum_{k=1}^\infty |F|\\
+&= \infty \cdot |F|.
+\end{align*}
+Thus, we can conclude that $|F|$ has measure zero. Since this is true for any closed subset of $E$, we have shown that 
+\begin{align*}
+|E|_i = 0.
+\end{align*}
+\proofpart{(ii)}{}
+As we proved on Problem 7 of Homework 2, we have that
+\begin{align*}
+|I| = |E|_i + |I - E|_e.
+\end{align*}
+By part (i), we have that $|I| = |I - E|_e$. Furthermore,  we have that $|E|_e > 0$, since sets of zero outer measure are measurable, and we have already proven that $E$ is not measurable. Thus, since $|I|$ is finite, it follows that 
+\begin{align*}
+|I| < |E|_e + |I - E|_e.
+\end{align*}
+
+\proofpart{(iii)}{}
+As we showed above, $|I| = |I - E|_e$. As we also showed on Homework 2, $|I - E|_e \geq |I - E|_i$.  Suppose, for sake of contradiction, that $|I - E|_e = |I - E|_i$. Then, since $|I - E|_e$ is finite, this would imply that $I - E$ is measurable (which we also proved on Homework 2). However, we have
+\begin{align*}
+I - (I - E) = E,
+\end{align*}
+and since the set difference of two measurable sets is measurable, we have reached a contradiction. Thus, $|I - E|_e > |I - E|_i$, and we have reached the desired conclusion.
 \end{proof}
 
 \section*{Problem 7}
