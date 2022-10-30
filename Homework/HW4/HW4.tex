@@ -1,0 +1,339 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis I}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 4}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Suppose that $f$ is a continuous function a.e. in a measurable set $E \in \mathbb{R}^n$. Show that $f$ is measurable on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+By Theorem 4.5 in our textbook, we can assume, without loss of generality, that $f$ is continuous on all of $E$. Let $a \in \mathbb{R}$. We have
+\begin{align*}
+x \in \{f > a\} &\iff f(x) > a\\
+&\iff (f(x) - a > 0).
+\end{align*}
+Define $\epsilon_x = f(x) - a$. Since$f$ is continuous, there exists some $\delta_x$ such that $f(B(x; \delta_x)) \subseteq B(f(x); \epsilon_x)$.  Let $y \in B(x; \delta_x)$. Then
+\begin{align*}
+f(y) \in B(f(x); \epsilon_x) &\implies |f(x) - f(y)| < \epsilon_x\\
+&\implies f(y) > f(x) - \epsilon_x\\
+&\implies f(y) > f(x) - (f(x) - a)\\
+&\implies f(y) > a\\
+&\implies y \in \{f > a\}.
+\end{align*} 
+Thus, $B(x; \delta_x) \subseteq \{f > a\}$, and we have shown that $\{f > a\}$ is an open set. Since every open set is measurable, we have shown that $\{f > a\}$ is measurable. Since $a$ was arbitrary, we have shown that $f$ is measurable, and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $f_k$ ($k=1,2,...$) be measurable functions and finite $a.e.$ on $E$, with $|E| < \infty$. Let $f$ be a function on $E$. Assume that for any $\delta > 0$, there is a measurable set $F \subseteq E$ such that $|E - F| < \delta$ and $f_k \to f$. Then $f_k \to f$ a.e. on $E$ and $f$ is measurable on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Construct a family of measurable sets $\{F_j\}$ such that for each $j \in \mathbb{N}$, $F_j \subseteq E$ with $|E - F_j| < \frac{1}{j}$, and $f_k \to f$ on $F_j$.  Define a new family of measurable sets $\{E_j \}$ by $E_j = \bigcup_{i = 1}^j F_j$. Then we have that $E_j \nearrow E$ and $E_j \nearrow  \bigcup_{j=1}^\infty F_j$ . By theorem 3.26 in our textbook
+\begin{align*}
+\left| \bigcup_{j=1}^\infty F_j \right| &= \lim_{k \to \infty} |E_k| = |E|.
+\end{align*}
+Thus, since $|E| < \infty$, we have that
+\begin{align*}
+\left| E - \bigcup_{j=1}^\infty F_j \right| = 0.
+\end{align*}
+Since $f_k \to f$ on $F_j$ for all $j$, we have that $f_k \to f$ on $ \bigcup_{j=1}^\infty F_j $, and our proof is complete.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $f_k = \chi_{|x| < k}$ for all $k \in \mathbb{N}$. Then,
+\proofpart{(i)}{} $f_k \to 1$ for all $x \in \mathbb{R}^n$.
+\proofpart{(ii)}{} $f_k$ does not converge uniformly outside any ball $|x| > m$ for $m > 0$.
+\proofpart{(iii)}{} The conclusion in Egorov's theorem does not hold for $\{f_k\}$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} Let $x \in \mathbb{R}^n$. Define $K \in \mathbb{N}$ to be the smallest natural number such that $K \geq 	|x|$. Then, we have that $f_k(x) = 1$ for all $k \geq K$. Since we can do this for any $x$, we have that $f_k \to 1$.
+
+\proofpart{(ii)}{} Suppose, for sake of contradiction, that $f_k$ does converge uniformly to $f$ on some unbounded subset of $\mathbb{R}^n$. Then, there exists some natural $K$ such that $|f_k(x) - 1| < 1$ for all $k \geq K$. Now let $x \in \mathbb{R}^n$ be such that $|x| > K$. Then, $f_K(x) = 0$, and we have a contradiction. Thus, $f_k$ does not converge uniformly on any unbounded set.
+
+\proofpart{(iii)}{} Let $f \subseteq \mathbb{R}^n$ be closed, with $|E - F| < \epsilon$ for some finite $\epsilon > 0$. Now, $F$ must be unbounded, for any bounded subset of $\mathbb{R}^n$ would have finite measure, and thus we would have $|E - F| = \infty$. Therefore, by part (ii), $f_k$ cannot converge uniformly to 1 on $F$, and the conclusion of Ergorov's theorem does not hold.
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+\proofpart{(i)}{} Assume that $f_k \overset{\text{m}}{\to} f$ on $E$ and $f_k \leq f_{k + 1}$ for natural $k$.  Then, $f_k \to f$ a.e. on $E$.
+
+\proofpart{(ii)}{} Assume that $f_k \overset{\text{m}}{\to} f$ on $E$ and $f_k \leq M$ a.e. on $E$ for each natural $k$. Then $f \leq M$ a.e. on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} 
+By theorem 4.22 in our textbook, there exists a subsequence $f_{k_j}$ such that $f_{k_j} \to f$ a.e. on $E$.  Let $\epsilon > 0$, and let $x \in \mathbb{R}^n$ be such that $f_{k_j}(x) \to f(x)$. Then,  there exists some $J \in \mathbb{N}$ such that for all $j \geq J$
+\begin{align*}
+|f_{k_j}(x) - f(x)| < \frac{\epsilon}{3}.
+\end{align*}
+Let $k \geq k_J$. Then, there exist $j_1, j_2 \geq J$ such that $k_{j_1} \leq k \leq k_{j_2}$. Then, we have
+\begin{align*}
+|f_k(x) - f(x)| &\leq |f_k(x) - f_{k_{j_1}}(x)| + |f_{k_{j_1}}(x) - f(x)| &&\text{By the triangle inequality}\\
+&= f_k(x) - f_{k_{j_1}}(x) + |f_{k_{j_1}}(x) - f(x)| &&\text{Since } k \geq k_1\\
+&\leq f_{k_{j_2}}(x) - f_{k_{j_1}}(x) + |f_{k_{j_1}}(x) - f(x)| &&\text{Since } k \leq k_2\\
+&= |f_{k_{j_2}}(x) - f_{k_{j_1}}(x)| + |f_{k_{j_1}}(x) - f(x)| \\
+&= 2|f_{k_{j_1}}(x) - f(x)| + |f_{k_{j_2}}(x) - f(x)|&&\text{By the triangle inequality}\\
+&< 2\frac{\epsilon}{3} + \frac{\epsilon}{3}\\
+&= \epsilon.
+\end{align*}
+
+\proofpart{(ii)}{}
+Suppose that $f > M$ on a set $F \subseteq E$ with nonzero measure. We can write $F$ as a countable union of disjoint measurable sets
+\begin{align*}
+F =\bigcup_{j = 1}^\infty \{f > M + \frac{1}{j} \}.
+\end{align*}
+One of these sets must have nonzero measure. Thus, there exists some $\epsilon > 0$ such that $\{f > M + \epsilon\}$ has non zero measure. Since $f_k \leq M$ a.e. on $E$, we have that for all $k$
+\begin{align*}
+\{f > M + \epsilon\} - Z \subseteq \{x \in E: |f(x) - f_k(x)| > \epsilon \},
+\end{align*}
+where $Z$ is a set of measure zero, where each of the $f_k > M$. With this, we have that
+\begin{align*}
+\lim_{k \to \infty} |\{x \in E: |f(x) - f_k(x)| > \epsilon \}|\geq  |\{f > M + \epsilon\}| > 0,
+\end{align*}
+showing that $f_k \not \overset{\text{m}}{\to} f$, and proving the contrapositive.
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+Let $f_k(x) = \frac{x}{k}$ for $x \in \mathbb{R}$ and $k \in \mathbb{N}$. Then $f_x$ does not converge in measure on $\mathbb{R}$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Clearly, $f_k \to 0$. Let $\epsilon > 0$, and let $k \in \mathbb{N}$. Then, there exists and $X \in \mathbb{R}$ such that for all $x \geq X$,  we have $\frac{x}{k} > \epsilon$. Therefore, 
+\begin{align*}
+\{x \in E: |f_k(x) - 0| > \epsilon \} \subseteq \{x \geq X \}
+\end{align*}
+has infinite measure. Since this is true for all $k$, we can conclude that 
+\begin{align*}
+\lim_{k \to \infty} |\{x \in E: |f_k(x) - 0| > \epsilon \}| = \infty,
+\end{align*}
+and we have shown that $f_k$ does not converge in measure.
+\end{proof}
+
+\section*{Problem 6}
+\begin{theorem}
+$f_k \overset{\text{m}}{\to} f$ on $E$ if and only if for any $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that for any $k \geq N$,
+\begin{align*}
+|\{x \in E: |f_k(x) - 0| > \epsilon \}| < \epsilon.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose first that $f_k \overset{\text{m}}{\to} f$. Then, by definition, we have that for every $\epsilon > 0$,
+\begin{align*}
+\lim_{k \to \infty} |\{x \in E: |f_k(x) - 0| > \epsilon \}| = 0.
+\end{align*}
+By directly applying the definition of a limit,  there exists some $N \in \mathbb{N}$ such that for all $k \geq N$,
+\begin{align*}
+|\{x \in E: |f_k(x) - 0| > \epsilon \}| < \epsilon.
+\end{align*}
+With this, we have proven the forward direction.
+
+Now suppose that for any $\epsilon > 0$, there exists $N \in \mathbb{N}$ such that for any $k \geq N$,
+\begin{align*}
+|\{x \in E: |f_k(x) - 0| > \epsilon \}| < \epsilon.
+\end{align*}
+Fix some $\epsilon_0 > 0$, and let $\epsilon > 0$ be such that $\epsilon < \epsilon_0$. Then, 
+\begin{align*}
+\{x \in E: |f_k(x) - 0| > \epsilon_0 \} \subseteq \{x \in E: |f_k(x) - 0| > \epsilon \} &\implies |\{x \in E: |f_k(x) - 0| > \epsilon_0 \}| \leq |\{x \in E: |f_k(x) - 0| > \epsilon \}|.
+\end{align*}
+By initial assumption, there exists $N \in \mathbb{N}$ such that for any $k \geq N$,
+\begin{align*}
+|\{x \in E: |f_k(x) - 0| > \epsilon \}| < \epsilon.
+\end{align*}
+Thus, for any $k \geq N$,
+\begin{align*}
+|\{x \in E: |f_k(x) - 0| > \epsilon_0 \}| < \epsilon,
+\end{align*}
+and we have shown that 
+\begin{align*}
+\lim_{k \to \infty} |\{x \in E: |f_k(x) - 0| > \epsilon_0 \}| = 0.
+\end{align*}
+Thus, we have shown that $f_k \overset{\text{m}}{\to} f$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 7}
+\begin{theorem}
+Let $E$ be measurable and $|E| < \infty$. Then $f_k \overset{\text{m}}{\to} f$ if and only if any subsequence $\{f_{k_n}\}$ has a subsequence $\{ f_{k_{n_j}} \}$ that is convergent to $f$ a.e. on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose first that $f_k \overset{\text{m}}{\to} f$, and let $\{f_{k_n}\}$ be a subsequence of $f_k$. Let $\epsilon > 0$. Since $f_k \overset{\text{m}}{\to} f$, there exists a $K \in \mathbb{N}$ such that for all $k \geq K$, 
+\begin{align*}
+|\{x \in E: |f_k(x) - f(x)| > \epsilon \}| < \epsilon.
+\end{align*}
+Thus, since $k_n \geq K$ for all $n \geq K$, we have that 
+\begin{align*}
+|\{x \in E: |f_{n_k}(x) - f(x)| > \epsilon \}| < \epsilon
+\end{align*}
+for all $n \geq K$. Thus, $\{f_{k_n}\}$ converges in measure to $f$. By theorem 4.22 in our textbook,  we can conclude that $\{f_{k_n}\}$ has a subsequence $\{ f_{k_{n_j}} \}$ that is convergent to $f$ a.e. on $E$.
+
+For the reverse direction, we will prove the contrapositive. Suppose then, that  $f_k \not \overset{\text{m}}{\to} f$. Then, there exists some $\epsilon > 0$ such that 
+\begin{align*}
+\lim_{k \to \infty} |\{x \in E: |f_k(x) - f(x)| > \epsilon \}| \not = 0.
+\end{align*}
+Then, for some $\delta > 0$, we have that for all $K \in \mathbb{N}$, there exists a $k \geq K$ such that 
+\begin{align*}
+|\{x \in E: |f_k(x) - f(x)| > \epsilon \}| > \delta.
+\end{align*}
+Thus, we can define a subsequence $\{f_{k_n}\}$ of $\{f_k\}$ such that 
+\begin{align*}
+|\{x \in E: |f_{k_n}(x) - f(x)| > \epsilon \}| > \delta
+\end{align*}
+for all $n \in \mathbb{N}$. Define $E_n \subseteq E$ by 
+\begin{align*}
+E_n = \{x \in E: |f_{k_n}(x) - f(x)| > \epsilon \}.
+\end{align*}
+Let $\{ f_{k_{n_j}} \}$ be a subsequence of $\{f_{k_n}\}$, and suppose for sake of contradiction that $f_{k_{n_j}} \to f$ a.e.. Then, there exists some set $Z \subseteq E$ such that $|Z| = 0$ and $f_{k_{n_j}} \to f$ on $E - Z$. Thus, there exists some $J \in \mathbb{N}$ such that for all $j \geq J$, and all $x \in E - Z$
+\begin{align*}
+|f_{k_j}(x) - f(x)| < \epsilon.
+\end{align*}
+However, since $|E_{n_j}| > 0$, we must have that $E_{n_j} \cap (E - Z) \not = \emptyset$. Thus, there exists an $x \in E - Z$ such that
+\begin{align*}
+|f_{k_j}(x) - f(x)| > \epsilon,
+\end{align*}
+and we have reached a contradiction. Thus, $f_{k_{n_j}} \not \to f$ a.e.. Since this is true for any subsequence of $\{f_{k_n}\}$, our proof is complete.
+\end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+Assume that $f_k \overset{\text{m}}{\to} f$ on $E$ with $|E| < \infty$. Then, $f^2_k \overset{\text{m}}{\to} f^2$ on $E$.
+\end{theorem}
+
+\subsection*{Solution}
+Before we jump into this proof, we will need to prove a useful lemma.
+\begin{lemma}
+Let $\{a_k\}$ and $\{b_k\}$ be two sequences in $R$ with limits $A$ and $B$ respectively. Then,
+\begin{align*}
+a_k b_k \to AB.
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+Let $\epsilon > 0$.  Assume first that $A$ and $B$ are nonzero, as otherwise the proof would be trivial. Using the handy equality
+\begin{align*}
+a_kb_k - AB = (a_k - A)B + (b_k - B)A + (a_k - A)(b_k - B),
+\end{align*}
+we have that for all $k$,
+\begin{align*}
+|a_kb_k - AB| \leq |a_k - A||B| + |b_k - B||A| + |a_k - A||b_k - B|.
+\end{align*}
+Define $N_1 \in \mathbb{N}$ to be such that for all $n \geq N_1$,
+\begin{align*}
+|a_k - A| < \min \left\{ \frac{\epsilon}{3 |B|}, \sqrt{\frac{\epsilon}{3}}\right\}.
+\end{align*}
+Furthermore, define $N_2 \in \mathbb{N}$ to be such that for all $n \geq N_2$,
+\begin{align*}
+|b_k - B| < \min \left\{ \frac{\epsilon}{3 |A|}, \sqrt{\frac{\epsilon}{3}}\right\}.
+\end{align*}
+Finally, define $N \in \mathbb{N}$ to be the larger of $N_1$ and $N_2$, and we can see that for all $k \geq N$, we have
+\begin{align*}
+|a_kb_k - AB| &< \frac{\epsilon}{3} +  \frac{\epsilon}{3} +  \frac{\epsilon}{3}\\
+&= \epsilon.
+\end{align*}
+With this, we have completed the proof.
+\end{proof}
+Now we can jump into the main proof.
+\begin{proof}
+Let $\{f_{k_n}^2 \}$ be a subsequence of $\{f_k^2 \}$. By the result of problem 7, and the fact that $f_k \overset{\text{m}}{\to} f$, we have that there exists a subsequence $\{f_{k_{n_j}}\}$ of $\{f_{k_n}\}$ that converges almost everywhere to $f$. Thus, for almost every $x \in E$, we have that 
+\begin{align*}
+f_{k_{n_j}}(x) \to f(x).
+\end{align*}
+Thus, by Lemma 1,  we can see that for almost every $x \in E$, 
+\begin{align*}
+f_{k_{n_j}}(x)^2 \to f(x)^2.
+\end{align*}
+Thus,  $\{f_{k_{n_j}}^2\}$ converges almost every where to $f^2$. Utilizing the other direction of what we proved in problem 7, we have shown that $f^2_k \overset{\text{m}}{\to} f^2$ on $E$, and our proof is complete.
+\end{proof}
+\end{document}
