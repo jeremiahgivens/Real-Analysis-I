@@ -1,0 +1,195 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis I}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 5}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $|E| < \infty$ and $E_i$ $(i = 1,2,...,m)$ be measurable subsets of $E$. Let $k \in \{1,2,...,m\}$. Show that if every point of $E$ belongs to at least $k$ of $E_i$, then there is $i$ such that $|E_i| \geq \frac{k}{m}|E|$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Since each $k \leq \sum_{i = 1}^m \chi_{E_i}$ for each $k \in E$, theorem 5.5 tells us that 
+\begin{align*}
+\int_E k &\leq \int_E \sum_{i = 1}^m \chi_{E_i}.
+\end{align*}
+The left hand side of this inequality is easily evaluated to be $k|E|$ by Corollary 5.4. For the right hand side, we can use theorem 5.14 to see
+\begin{align*}
+\int_E \sum_{i = 1}^m \chi_{E_i} &= \sum_{i = 1}^m \int_E \chi_{E_i}\\
+&= \sum_{i = 1}^m |E_i|\\
+&\leq \sum_{j = 1}^m \max \{|E_i|: i = 1, 2, ..., m\}\\
+&= m \cdot \max \{|E_i|: i = 1, 2, ..., m\}.
+\end{align*}
+Thus, we have that 
+\begin{align*}
+k|E| \leq m \cdot \max \{|E_i|: i = 1, 2, ..., m\} &\implies \frac{k}{m} = \max \{|E_i|: i = 1, 2, ..., m\},
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 2}
+Let $f$ be continuous and nonnegative on $[a, b]$ where $-\infty < a < b < \infty$. Define a nondecreasing sequence of step functions $\{\phi_k \}$ on $[a, b]$ such that $\phi_k \to f$ on $[a, b]$. Then,  use the monotone convergence theorem to show that
+\begin{align*}
+(L) \int_{[a, b]} f(x) dx = (R) \int_a^b f(x)dx.
+\end{align*}
+
+\subsection*{Solution}
+Since $f$ is continuous, we have that it is Reimann integrable and Lebesgue integrable. For each $k \in \mathbb{N}$, lets create a partition of $[a, b]$, $\Gamma_k = \{I^k_1, I^k_2,...,I^k_{N_k} \}$ with norm $|\Gamma_k| <\frac{1}{k}$. For each partition, define a function $\phi_k: [a, b] \to \mathbb{R}$ such that for $x \in I^k_n$, we have
+\begin{align*}
+\phi_k(x) = \inf \{f(x_n): x_n \in I^k_n\}.
+\end{align*}
+Then, we clearly have that $\phi_k \nearrow f$. By the monotone convergence theorem, we have
+\begin{align*}
+(L) \int_{[a, b]} \phi_k(x)dx \to (L) \int_a^b f(x)dx.
+\end{align*}
+Also, we have by corollary 5.4 that
+\begin{align*}
+(L) \int_{[a, b]} \phi_k(x)dx = \sum_{n = 1}^{N_k} \inf \{f(x_n): x_n \in I^k_n\} \cdot |k|
+\end{align*}
+which is nothing more than a lower Reimann sum of $f$. Thus, we can conclude that 
+\begin{align*}
+(L) \int_{[a, b]} \phi_k(x)dx \to (R) \int_a^b f(x)dx,
+\end{align*}
+and ultimately that
+\begin{align*}
+(L) \int_{[a, b]} f(x) dx = (R) \int_a^b f(x)dx.
+\end{align*}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $f \geq 0$ be measurable in $\mathbb{R}^n$. For $k=1,2,...,$, define the cut-off functions 
+\[   f = \left\{
+\begin{array}{ll}
+      f(x) & \text{if } f(x)<k \\
+      0 & \text{if } f(x) \geq k\\
+\end{array} 
+\right. \]
+
+Then, (i) each $f_k$ is measurable on $\mathbb{R}^n$ and (ii)
+\begin{align*}
+\int_{\mathbb{R}^n} f_k(x)dx \to \int_{\mathbb{R}^n} f(x)dx
+\end{align*}
+as $k \to \infty$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} Let $a \in \mathbb{R}$. Suppose first that $a \geq k$. Then
+\begin{align*}
+\{f_k > a \} &= \{x \in  \mathbb{R}: f_k(x) > a \}\\
+&\subseteq \{x \in  \mathbb{R}: f_k(x) > k \}\\
+&= \emptyset,
+\end{align*}
+and we can conclude that $\{f_k > a \} = \emptyset$, which is measurable.
+
+Now suppose that $0 < a < k$. Then, we have
+\begin{align*}
+\{f_k > a \} &= \{a < f_k <k \}\\
+&= \{a < f < k \},
+\end{align*}
+which is measurable, since $f$ is measurable. 
+
+Now suppose that $a = 0$. Then,
+\begin{align*}
+\{f_k > a \} &= \{f_k > 0 \}\\
+&= \{0 < f < k \} 
+\end{align*}
+which is measurable, since $f$ is measurable. 
+
+Finally,  suppose that $a < 0$. Then,
+\begin{align*}
+\{f_k > a \} &= \{f_k \geq 0 \}\\
+&= \mathbb{R}^n &&\text{Since } f_k \text{ is a nonnegative function.}
+\end{align*}
+Thus, in every case, $\{f_k > a \}$ is measurable, and we have shown that each $f_k$ is measurable.
+
+\proofpart{(ii)}{} 
+Since $f$ is finite a.e., theorem 5.10 in our text tells us that it will suffice to show that
+\begin{align*}
+\int_{E} f_k(x)dx \to \int_{E} f(x)dx,
+\end{align*}
+where $E \subseteq \mathbb{R}^n$ is the set of all $x \in \mathbb{R}^n$ such that $f(x)$ is finite. Since each $f_k$ is measurable and nonnegative, the monotone convergence theorem tells us that if $f_k \nearrow f$ on $E$, then we will have the desired result. Thus, we will show that $f_k \nearrow f$ on $E$. 
+
+Let $x \in E$. Since $f$ is finite on $E$, there exists some least $K \in \mathbb{N}$ such that $f(x) < K$. Thus, for all $k \geq K$, we have that $f_k(x) = f(x)$. Now suppose that $k < K$. Then, we have $f_k(x) = 0 < f(x)$. Since this is true for any $x$, we have shown that $f_k \leq f$ for all $k$ and that $f_k \to f$. Thus, $f_k \nearrow f$, and our proof is complete.
+\end{proof}
+\end{document}
