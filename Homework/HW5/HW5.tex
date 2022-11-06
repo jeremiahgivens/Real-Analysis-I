@@ -192,4 +192,134 @@ where $E \subseteq \mathbb{R}^n$ is the set of all $x \in \mathbb{R}^n$ such tha
 
 Let $x \in E$. Since $f$ is finite on $E$, there exists some least $K \in \mathbb{N}$ such that $f(x) < K$. Thus, for all $k \geq K$, we have that $f_k(x) = f(x)$. Now suppose that $k < K$. Then, we have $f_k(x) = 0 < f(x)$. Since this is true for any $x$, we have shown that $f_k \leq f$ for all $k$ and that $f_k \to f$. Thus, $f_k \nearrow f$, and our proof is complete.
 \end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Suppose that $f \geq 0$ is continuous on $(0, 1]$ and the improper Riemann integral 
+\begin{align*}
+(R) \int_0^1 f(x) dx = \lim_{a \to 0^+} (R) \int_a^1 f(x) dx
+\end{align*}
+exists (finite or $+\infty$). Then,
+\begin{align*}
+(L) \int_{(0, 1]} f(x) dx = (R) \int_0^1 f(x) dx.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Define the sequence of functions $\{f_k \}$ by 
+\begin{align*}
+f_k = \chi_{[\frac{1}{k},  1]} f.
+\end{align*}
+Clearly, we have that $f_k \leq f$ and $f_k \to f$, and therefore that $f_k \nearrow f$.  Furthermore, since indicator functions are measurable, and $f$ is measurable, we have by theorem 4.10 that each $f_k$ is measurable. Thus, we have by the monotone convergence theorem that
+\begin{align*}
+(L) \int_{(0, 1]} f_k dx \to (L) \int_{(0, 1]} f dx.
+\end{align*}
+In addition to this, we have that for each $k$,
+\begin{align*}
+(L) \int_{(0, 1]} f_k dx &= (L) \int_{(0, \frac{1}{k})} f_k dx + (L) \int_{[\frac{1}{k}, 1]} f_k dx &&\text{By theorem 5.7}\\
+&= 0 + (L) \int_{[\frac{1}{k}, 1]} f_k dx &&\text{Since } f_k = 0 \text{ on } (0, \frac{1}{k}) \\
+&= (L) \int_{[\frac{1}{k}, 1]} f_k dx\\
+&= (R) \int_{\frac{1}{k}}^1 f(x) dx &&\text{By problem 2}
+\end{align*}
+Thus, putting all of this together, we have
+\begin{align*}
+(R) \int_0^1 f(x) dx &= \lim_{k \to \infty} (R) \int_{\frac{1}{k}}^1 f(x) dx\\
+&= \lim_{k \to \infty} (L) \int_{[\frac{1}{k}, 1]} f_k dx\\
+&= \lim_{k \to \infty} (L) \int_{(0, 1]} f_k dx\\
+&= (L) \int_{(0, 1]} f dx,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+Let $f$ be nonnegative and measurable on a measurable set $E \subseteq \mathbb{R}^n$ with $|E| < \infty$.
+\proofpart{(i)}{} 
+If $f \leq M$ a.e. on $E$ where $M > 0$ is constant, then
+\begin{align*}
+\int_E f &= \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j|,
+\end{align*}
+where the infimum is taken over all decompositions $E = \bigcup_j E_j$ of $E$ into the union of a finite number of disjoint measurable sets $E_j$.
+
+\proofpart{(ii)}{} The statement of (i) can fail if we allow $f$ to be unbounded.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} In light of theorem 5.10, we will assume that $f \leq M$ everywhere on $E$. Then, we have that the measurable function $M - f$ is nonnegative on $E$.  Utilizing theorem 5.8, we have
+\begin{align*}
+\int_E (M - f) &= \sup \sum_j [\inf_{x \in E_j} (M - f(x))]|E_j|\\
+&= - \inf \left(- \sum_j [\inf_{x \in E_j} (M - f(x))]|E_j|\right) &&\text{Using the relation between inf and sup we used to prove 4.11}\\
+&= - \inf \sum_j [\sup_{x \in E_j} (f(x) - M)]|E_j| &&\text{Using the same relation again}\\
+&= - \inf \sum_j ([\sup_{x \in E_j} f(x)] - M)|E_j| \\
+&= \inf \sum_j M|E_j| - \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j| \\
+&= \sum_j M|E_j| - \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j| \\
+&= \int_E M - \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j|  &&\text{By theorem 5.7 and corollary 5.4}.
+\end{align*}
+We have by theorem 5.5 part (i) that $\int_E f \leq \int_E M$. Combining this with that fact $\int_E M = M|E|$, we have that the integral of $f$ is finite. Finally, using corollary 5.15, we have that 
+\begin{align*}
+\int_E M  - \int_E f &= \int_E (M - f)\\
+&= \int_E M - \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j|\\
+- \int_E f &= - \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j|\\
+\int_E f &= \inf \sum_j [\sup_{x \in E_j} f(x)] |E_j|,
+\end{align*}
+and our proof of (i) is complete.
+
+\proofpart{(ii)}{}
+Consider the function $f(x) = \frac{1}{\sqrt{x}}$ with $E = (0, 1]$. Taking the limit of Reimann integrals in the same manner as problem 4 leads us easily to the fact that 
+\begin{align*}
+\int_{(0, 1]} f(x) dx = 2.
+\end{align*}
+Now, let $\{E_j \}$ be some finite decomposition of $E$ into disjoint measurable sets. Since this decomposition is finite, there must be some $E_j$ that contains an interval $(0, \epsilon)$ for some $\epsilon > 0$. Thus, we have
+\begin{align*}
+\sum_j [\sup_{x \in E_j} f(x)]|E_j| &\geq [\sup_{x \in (0, \epsilon)} f(x)]|(0, \epsilon)|\\
+&= \infty \cdot \epsilon\\
+&= \infty.
+\end{align*}
+Since this is true for any such decomposition, we have that
+\begin{align*}
+\inf \sum_j [\sup_{x \in E_j} f(x)] |E_j| &= \infty\\
+&\not= \int_{(0, 1]} f(x) dx,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 6}
+\begin{theorem}
+Let $\{f_k \}$ be a sequence of nonnegative measurable functions defined on $E$. If $f_k \to f$ and $f_k \leq f$ a.e. on $E$, then 
+\begin{align*}
+\int_E f_k \to \int_E f.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Since $f_k \leq f$ a.e., we can define for each $k$ a set of measure zero
+\begin{align*}
+Z_k = \{f_k > f \}.
+\end{align*}
+With this, define $Z = \bigcup_{k=1}^\infty Z_k$. Then, $Z$ has zero measure, and we have that for each $k$, $f_k \leq f$ and $f_k \to f$ on $E - Z$. Thus,
+\begin{align*}
+\lim_{k \to \infty} \int_E f_k &= \lim_{k \to \infty} \left(\int_{E - Z} f_k + \int_Z f_k \right) && \text{By theorem 5.7}\\
+&= \lim_{k \to \infty} \int_{E - Z} f_k &&\text{By theorem 5.9, since } |Z| = 0\\
+&= \int_{E - Z} f &&\text{By the monotone convergence theorem}\\
+&= \int_{E - Z} f + \int_{Z} f\\
+&= \int_{E} f,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 7}
+\begin{theorem}
+If $f \in L(0, 1)$, then $x^k f(x) \in L(0, 1)$ for $k = 1,2,...,$, and 
+\begin{align*}
+\int_0^1 x^k f(x) dx \to 0.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Wellllll
+\end{proof}
 \end{document}
