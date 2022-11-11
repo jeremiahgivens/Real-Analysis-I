@@ -320,6 +320,67 @@ If $f \in L(0, 1)$, then $x^k f(x) \in L(0, 1)$ for $k = 1,2,...,$, and
 
 \subsection*{Solution}
 \begin{proof}
-Wellllll
+Since $x^k$ is continuous, we have that $x^k$ is measurable. Furthermore, we have that $|x^k| = x^k \leq 1$ for all $x \in (0, 1)$. Thus, by theorem 5.30, $x^kf(x) \in L(0, 1)$ for each $k \in \mathbb{N}$.
+
+We will now use the monotone convergence theorem (part (ii)) to show that $\int_0^1 x^k f(x) dx \to 0$.  Define $f_k = x^k f(x)$, and $\phi = |f|$. Clearly, we have that $f_k \leq \phi$ on $(0, 1)$. By theorem 5.21, we have that $\phi \in L(0, 1)$. Thus, it just remains to show that $f_k \to 0$ a.e. on $(0, 1)$.
+
+By theorem 5.22, we have that $f(x)$ is finite for almost all $x \in (0, 1)$. Let $x \in (0, 1)$ be such that $f(x)$ is finite, and let $\epsilon > 0$.  We have that $x^k \to 0$,  thus, there exists some $K \in \mathbb{N}$ such that for all $k \geq K$, $x^k < \frac{\epsilon}{|f(x)|}$. Then, we have for all $k \geq K$,
+\begin{align*}
+|f_k(x)| &= |x^k f(x)|\\
+&= x^k |f(x)|\\
+&< \frac{\epsilon}{|f(x)|} |f(x)|\\
+&= \epsilon.
+\end{align*}
+Thus, $f_k \to 0$ a.e. on $(0, 1)$, and the monotone convergence theorem leads us to conclude that 
+\begin{align*}
+\int_0^1 x^k f(x) dx \to 0,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+\proofpart{(a)}{} Let $\{f_k \}$ be a sequence of measurable functions on $E$. Then $\sum f_k$ converges absolutely a.e. in $E$ if $\sum \int_E |f_k| < + \infty$.
+
+\proofpart{(b)}{} If $\{r_k\}$ denotes the rational numbers in $[0, 1]$ and $\{a_k \}$ satisfies $\sum |a_k| < \infty$, then $\sum a_k |x - r_k|^{-1/2}$ converges absolutely a.e. in $[0, 1]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(a)}{} Suppose that $\sum \int_E |f_k| < + \infty$. Since each $f_k$ is measurable, we have that the nonnegative functions $|f_k|$ are measurable. Thus, by theorem 5.16, we have
+\begin{align*}
+\sum \int_E |f_k| &= \int_E \sum |f_k|.
+\end{align*}
+By theorem 5.22, we have $\int_E \sum |f_k| < \infty$ implies that $\sum |f_k|$ is finite a.e. in $E$. Thus, we have shown that $\sum |f_k|$ converges absolutely a.e. in $E$.
+
+\proofpart{(b)}{}
+We have that $|x - r_k|^{-1/2}$ is continuous and nonnegative on $[0, r_k)$ and $(r_k, 1]$, and is thus Riemann integrable on these sets.  Furthermore, by the results of Problem 4, the Riemann integral coincides with the Lebesgue integral on these sets. Thus, we have
+\begin{align*}
+\int_{[0, 1]} a_k |x - r_k|^{-1/2} dx &= \int_{[0, r_k)} a_k |x - r_k|^{-1/2}  + \int_{(r_k, 1]} a_k |x - r_k|^{-1/2} dx\\
+&= \int_{[0, r_k)} a_k (r_k - x)^{-1/2}  + \int_{(r_k, 1]} a_k (x - r_k)^{-1/2} dx\\
+&= (R) \int_0^{r_k} a_k (r_k - x)^{-1/2}  + (R) \int_{r_k}^1 a_k (x - r_k)^{-1/2} dx.
+\end{align*}
+
+Using the standard techniques from elementary real analysis (u substitution), we have
+\begin{align*}
+(R) \int_0^{r_k} a_k (r_k - x)^{-1/2} &= 2a_k r^{1/2},
+\end{align*}
+and
+\begin{align*}
+(R) \int_{r_k}^1 a_k (x - r_k)^{-1/2} dx &= 2a_k (1 - r_k)^{1/2}.
+\end{align*}
+With this, we have
+\begin{align*}
+\int_{[0, 1]} a_k |x - r_k|^{-1/2} dx &= 2a_k r_k^{1/2} + 2a_k (1 - r_k)^{1/2}\\
+&= 2a_k(r_k^{1/2} + (1 - r_k)^{1/2})\\
+&\leq 4 a_k.
+\end{align*}
+Finally, we have
+\begin{align*}
+\sum_k \int_{[0, 1]} |a_k| |x - r_k|^{-1/2} dx &\leq \sum_k 4 |a_k|\\
+&= 4 \sum_k |a_k|\\
+&< \infty.
+\end{align*}
+By part (a), we have shown that $\sum a_k |x - r_k|^{-1/2}$ converges absolutely a.e. in $[0, 1]$.
 \end{proof}
 \end{document}
