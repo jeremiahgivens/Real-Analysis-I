@@ -144,4 +144,196 @@ Define $E = \{x \in \mathbb{R}^n : |f(x) - f_k(x)| > \epsilon\}$. Then, we have
 \end{align*}
 Thus, for every $K \in \mathbb{N}$, there exists a $k \geq K$ such that $\int_{\mathbb{R}^n} |f_k - f| dx \geq \delta \epsilon$, and we have shown that $\int_{\mathbb{R}^n} |f_k - f| dx$ does not go to $0$. With this, we have proven the contrapositive, and our proof is complete.
 \end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $f \in L(\mathbb{R}^n)$. Then
+\begin{align*}
+\lim_{k \to \infty} \int_{|x| > k} |f(x)|dx = 0, &&\text{and} && \lim_{k \to \infty} \int_{|f(x)| > k} |f(x)|dx = 0.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $\epsilon > 0$. By theorem 5.21, we have that $|f| \in L(\mathbb{R}^n)$.  By theorem 5.24, we have
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx = \sum_{k=1}^\infty \int_{k - 1 \leq |x| < k} |f(x)|dx.
+\end{align*}
+Since the integral on the left is finite, and all of the terms in the summation are nonnegative, we have that there exists some $K \in \mathbb{N}$ such that 
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx - \sum_{k=1}^K \int_{k - 1 \leq |x| < k} |f(x)|dx < \epsilon.
+\end{align*}
+Using theorem 5.24 once more, we have 
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx - \sum_{k=1}^K \int_{k - 1 \leq |x| < k} |f(x)|dx = \int_{ |x| \geq K} |f(x)|dx.
+\end{align*}
+Using theorem 5.5 part (iii), we have
+\begin{align*}
+\int_{ |x| < K} |f(x)|dx &< \int_{ |x| \geq K} |f(x)|dx\\
+&< \epsilon,
+\end{align*}
+and we have shown that 
+\begin{align*}
+\lim_{k \to \infty} \int_{|x| > k} |f(x)|dx = 0.
+\end{align*}
+
+For the next part, we will proceed in a nearly identical fashion. Using theorem 5.24, we have
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx &= \sum_{k=1}^\infty \int_{k - 1 \leq |f(x)| < k} |f(x)|dx.
+\end{align*}
+To see that each of the sets we are integrating over in the summation, recall that $|f|$ is measurable by theorem 5.1. Thus, since $f$ is measurable,  we have that each of these sets are measurable by corollary 4.2.
+
+Using the same argument as before, we have that there exists a $K \in \mathbb{N}$ such that 
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx - \sum_{k=1}^K \int_{k - 1 \leq |f(x)| < k} |f(x)|dx < \epsilon.
+\end{align*}
+From theorem 5.24, we have
+\begin{align*}
+\int_{\mathbb{R}^n} |f(x)|dx - \sum_{k=1}^K \int_{k - 1 \leq |f(x)| < k} |f(x)|dx = \int_{|f(x)| \geq K} |f(x)|dx.
+\end{align*}
+Finally, we have
+\begin{align*}
+\int_{|f(x)| > K} |f(x)|dx &\leq \int_{|f(x)| \geq K} |f(x)|dx\\
+&< \epsilon.
+\end{align*}
+With this, we have shown that
+\begin{align*}
+\lim_{k \to \infty} \int_{|f(x)| > k} |f(x)|dx = 0,
+\end{align*}
+completing the proof.
+\end{proof}
+
+\section*{Problem 4}
+Give an example of a bounded continuous function $f$ on $(0, \infty)$ such that $\lim_{x \to \infty} f(x) = 0$ but $\int_{(0, \infty)} |f|^p dx = \infty$ for any $p > 0$.
+
+\subsection*{Solution}
+Consider the function $f$ on $(0, \infty)$ defined by
+\begin{align*}
+f(x) = \begin{cases} 
+     \sum_{n=1}^\infty 2^{-n} x^{-1/n} & \text{for } x \geq 1 \\
+     1 & \text{otherwise} \\
+\end{cases}
+\end{align*}
+Since $x^{-1/n} \leq 1$ for all $n$ and all $x \in (1, \infty)$, we have for all $x\in (1, \infty)$,
+\begin{align*}
+\sum_{n=1}^\infty 2^{-n} x^{-1/n} &\leq  \sum_{n=1}^\infty 2^{-n}\\
+&= 1.
+\end{align*}
+Therefore, this function is bounded. Furthermore, since this is a sum of continuous functions,  f is also continuous.  Finally, since each term goes to zero as $x \to \infty$, we have that $f \to 0$ as $x \to \infty$.
+
+Now it just remains to show that the integral of $|f|^p$ diverges. We have
+\begin{align*}
+\int_{(0, \infty)} |f|^p dx &\leq \int_{(1, \infty)} |f|^p dx && \text{By theorem 5.5}\\
+&= \int_{(1, \infty)} \left| \sum_{n=1}^\infty 2^{-n} x^{-1/n}  \right|^p dx\\
+&\leq \int_{(1, \infty)} \sum_{n=1}^\infty \left| 2^{-n} x^{-1/n}  \right|^p dx\\
+&=  \int_{(1, \infty)} \sum_{n=1}^\infty 2^{-np} x^{-p/n} dx\\
+&=\sum_{n=1}^\infty  \int_{(1, \infty)} 2^{-np} x^{-p/n} dx &&\text{By 5.16}\\
+\end{align*}
+Now, lets examine the integral of a single term, and compute it as the limit of a Reimann integral:
+\begin{align*}
+\int_{(1, \infty)} 2^{-np} x^{-p/n} dx =\left. \frac{nx^\frac{n-p}{n}}{n - p} \right|_1^\infty.
+\end{align*}
+Thus, once $n > p$, this integral diverges, and we have shown that $\int_{(0, \infty)} |f|^p dx = \infty$ for any $p > 0$.
+
+\section*{Problem 5}
+Evaluate the limit
+\begin{align*}
+\lim_{n \to \infty} \int_0^\infty \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx,
+\end{align*}
+and justify your answer.
+
+\subsection*{Solution}
+To the solve this problem, we will use the Lebesgue Dominated Convergence Theorem. We will break this integral up over two sets, as the integrand has different behavior on $(0, 1)$ than it does on $[1, \infty)$. Thus, let us first consider
+\begin{align*}
+\lim_{n \to \infty} \int_0^1 \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx.
+\end{align*}
+We need to show that there exists a function $\phi \in L(0, 1)$ such that for some $K \in \mathbb{N}$,  $|f_n| \leq \phi$ for all $n \geq K$.  By simple evaluation, we see
+\begin{align*}
+\left|\frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} \right| &= \frac{n x^{n - 3}}{1 + x^n} \left| \sin \frac{x}{n} \right|\\
+&\leq \frac{n x^{n - 3}}{1 + x^n} \frac{x}{n} &&\text{A result from the mean value theorem}\\
+&\leq  \frac{x^{n - 2}}{1 + x^n}\\
+&\leq  \frac{x^{n - 2}}{1}\\
+&\leq 1 && \text{For } n > 2.
+\end{align*}
+With this, we are free to use the LDCT on this integral. Evalutating the limit,
+\begin{align*}
+\lim_{n \to \infty} \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} &= \lim_{n \to \infty} n x^{n - 3} \sin \frac{x}{n}\\
+&= x^{-3} \lim_{n \to \infty} n x^n \sin \frac{x}{n}\\
+&= x^{-3} (\lim_{n \to \infty} n x^n )(\lim_{n \to \infty} \sin \frac{x}{n})\\
+\end{align*}
+Since $-1 \leq \sin \frac{x}{n} \leq 1$, it will suffice to show that $\lim_{n \to \infty} n x^n = 0$. We have
+\begin{align*}
+\lim_{n \to \infty} n x^n &= \lim_{n \to \infty} \frac{n}{1/x^n}\\
+&= \lim_{n \to \infty} \frac{n}{x^{-n}}\\
+&= \lim_{n \to \infty} \frac{1}{-x^{-n} \ln(x)} &&\text{L'Hopital's Rule}\\
+&= 0.
+\end{align*}
+Thus, we have shown that 
+\begin{align*}
+\lim_{n \to \infty} \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} = 0,
+\end{align*}
+and the LDCT tells us that 
+\begin{align*}
+\lim_{n \to \infty} \int_0^1 \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx = 0.
+\end{align*}
+
+Now we consider the integral 
+\begin{align*}
+\lim_{n \to \infty} \int_1^\infty \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx.
+\end{align*}
+Again, we must first verify that this is a candidate for the LDCT,:
+\begin{align*}
+\left|\frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} \right| &= \frac{n x^{n - 3}}{1 + x^n} \left| \sin \frac{x}{n} \right|\\
+&\leq \frac{n x^{n - 3}}{1 + x^n} \frac{x}{n} &&\text{A result from the mean value theorem}\\
+&= \frac{x^{n - 2}}{1 + x^n}\\
+&\leq \frac{x^{n - 2}}{x^n}\\
+&= x^{-2}.
+\end{align*}
+Thus, since $\int_1^\infty x^-2 dx = 1$,  we have found our $\phi \in L(1, \infty)$ such that $|f_n| \leq \phi$. Therefore, we are free to use the LDCT.  Evaluating the limit, we see
+\begin{align*}
+\lim_{n \to \infty} \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} &= \lim_{n \to \infty} \frac{n x^{n - 3}}{x^n}\sin \frac{x}{n} && x^n \text{ dominates 1 in the limit}\\
+&=\lim_{n \to \infty} \frac{n}{x^3}\sin \frac{x}{n}\\
+&= x^{-3} \lim_{n \to \infty} \frac{\sin \frac{x}{n}}{n^{-1}}\\
+&=x^{-3} \lim_{n \to \infty} \frac{x\ln(n) \cos \frac{x}{n}}{\ln(n)}&&\text{L'Hopital's Rule}\\
+&= x^{-2} \lim_{n \to \infty} \cos\frac{x}{n}\\
+&= x^{-2}.
+\end{align*}
+Putting it all together, we have
+\begin{align*}
+\lim_{n \to \infty} \int_0^\infty \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx &= \lim_{n \to \infty} \int_0^1 \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx + \lim_{n \to \infty} \int_1^\infty \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx\\
+&= \int_0^1  \lim_{n \to \infty} \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx + \int_1^\infty  \lim_{n \to \infty} \frac{n x^{n - 3}}{1 + x^n}\sin \frac{x}{n} dx\\
+&= \int_0^1 0 dx + \int_1^\infty x^-2 dx\\
+&= 0 + 1\\
+&= 1.
+\end{align*}
+
+\section*{Problem 6}
+Let $f: \mathbb{R}^n \to [0, \infty)$ be measurable and let $0 < \alpha < 1$. Evaluate the limit 
+\begin{align*}
+\lim_{n \to \infty} \int_{\mathbb{R}^n} n \left( \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 \right) dx,
+\end{align*}
+and justify your answer.
+
+\subsection*{Solution}
+For this problem, we will use the Monotone Convergence Theorem for Nonnegative functions. Define the sequence $\{a_n \}$ by
+\begin{align*}
+a_n = n \left( \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 \right).
+\end{align*}
+In order to use the monotone convergence theorem, we will need to prove that this sequence is increasing. To do this, we will treat $n$ as as a continuous variable, and take the derivative of $a_n$:
+\begin{align*}
+\frac{d}{dn}a_n &= \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 + n\left( 1 + \frac{f(x)}{n} \right)^ {\alpha - 1} f(x) \ln(n)\\
+&\geq n\left( 1 + \frac{f(x)}{n} \right)^ {\alpha - 1} f(x) \ln(n) && \text{Since } \left( 1 + \frac{f(x)}{n} \right)^ \alpha \geq 1\\
+&\geq 0 &&\text{Since all terms are nonnegative}
+\end{align*}
+Thus, $a_n$ is an increasing sequence. Now, we just need to find what this sequence converges to, and we can compute the integral. We have
+\begin{align*}
+\lim_{n \to \infty} n \left( \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 \right) &= \lim_{n \to \infty} \frac{\left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1}{n^{-1}}\\
+&= \lim_{n \to \infty} \frac{\left( 1 + \frac{f(x)}{n} \right)^{ \alpha - 1} \alpha f(x) \ln(n)}{\ln(n)} &&\text{L'Hopital's Rule}\\
+&=  \lim_{n \to \infty} \left( 1 + \frac{f(x)}{n} \right)^{ \alpha - 1} \alpha f(x)\\
+&= \alpha f(x).
+\end{align*}
+Thus, the Monotone Convergence Theorem for Nonnegative Functions leads us to conclude that
+\begin{align*}
+\lim_{n \to \infty} \int_{\mathbb{R}^n} n \left( \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 \right) dx = \alpha \int_{\mathbb{R}^n} f(x)dx
+\end{align*}
 \end{document}
