@@ -336,4 +336,68 @@ Thus, the Monotone Convergence Theorem for Nonnegative Functions leads us to con
 \begin{align*}
 \lim_{n \to \infty} \int_{\mathbb{R}^n} n \left( \left( 1 + \frac{f(x)}{n} \right)^ \alpha - 1 \right) dx = \alpha \int_{\mathbb{R}^n} f(x)dx
 \end{align*}
+
+\section*{Problem 7}
+\begin{theorem}
+Let $E \in \mathbb{R}^n$ be measurable and $|E| < \infty$. Let $f$ be a measurable function on $E$ that is finite a.e. on $E$. Let $\{a_k\}$ be a positive and strictly increasing sequence such that $\lim_{k \to \infty} a_k = \infty$. Then $f$ is integrable if and only if 
+\begin{align*}
+\sum_{k = 1}^\infty (a_{k + 1} - a_k)|\{|f| \geq a_k \}| < \infty.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+This problem has stumped me.
+
+\section*{Problem 8}
+Apply the result in problem 7 with $a_k = k$ to show the following:
+
+Assume that $f$ is a measurable function on $[0, 1]$ and is finite a.e. on $[0, 1]$ satisfying 
+\begin{align*}
+|\{x \in[0, 1]: |f(x)| \geq y \}| \leq \frac{1}{y^2}
+\end{align*}
+for all $y > 0$. Show that $f$ is integrable on $[0, 1]$.
+
+\subsection*{Solution}
+We have 
+\begin{align*}
+\sum_{k = 1}^\infty (a_{k + 1} - a_k)|\{|f| \geq a_k \}| &\leq \sum_{k = 1}^\infty (k + 1 - k)\frac{1}{k^2}\\
+&= \sum_{k = 1}^\infty \frac{1}{k^2}\\
+&= \frac{\pi^2}{6} &&\text{Result from elementary analysis}\\
+&< \infty.
+\end{align*}
+Thus, by the result of problem 7, we can conclude that $f$ is integrable on $[0, 1]$.
+
+\section*{Problem 9}
+Let $f(x, y)$ be a function defined on the unit square $[0, 1] \times [0, 1]$ which is continuous in each variable separately. Show that $f$ is a measurable function of $(x, y)$. Is the same true if $f$ is only assumed to be continuous in $x$ for each $y$?
+
+\subsection*{Solution}
+Define a sequence of functions $f_n(x, y)$ for $n \in \mathbb{N}$ such that
+\begin{align*}
+f_n(x, y) = f(m/n, x)
+\end{align*}
+where $m \in \mathbb{Z}$ is such that $\frac{m-1}{n}< x \leq \frac{m}{n}$.  We claim that each $f_n$ is measurable and that $\{f_n\}$ converges to $f$.
+
+To see that $f_n$ is measurable, let $a \in \mathbb{R}$. We have
+\begin{align*}
+\{f_n > a \} &= \bigcup_{m = 0}^n \left(\frac{m-1}{n},  \frac{m}{n}\right] \times \{y \in [0, 1]: f(m/n, y) > a \}.
+\end{align*}
+Since $f$ is a continuous function of $y$ for fixed $x$, and continuous functions are measurable, we have that $\{y \in [0, 1]: f(m/n, y) > a \}$ is measurable. Finally, since intervals are measurable, and the cartesian product of two measurable sets is measurable, we have that every set in the sum is measurable. Finally, by theorem 3.12, we can conclude that $\{f_n > a \}$ is a measurable set, and $f_n$ is measurable.
+
+Now we must show that $f_n \to f$. Let $x_0, y_0 \in [0, 1]$, and let $\epsilon > 0$.  Since $f(x, y_0)$ is a continuous function of $x$, there exists a $\delta > 0$ such that for all $x \in B(x_0; \delta)$, we have
+\begin{align*}
+|f(x, y_0) - f(x_0, y_0)| < \epsilon.
+\end{align*}
+Choose $N \in \mathbb{N}$ large enough that $\frac{1}{N} < \delta$. Then we have that for all $n \geq N$,
+\begin{align*}
+|\frac{m}{n} - x_0| &\leq |\frac{m}{n} - \frac{m - 1}{n}|\\
+&< \delta,
+\end{align*}
+which means
+\begin{align*}
+|f_n(x_0, y_0) - f(x_0, y_0)| &= |f(m/n, y_0) - f(x_0, y_0)|\\
+&< \epsilon.
+\end{align*}
+Thus, we have shown that $f_n \to f$.  Since $f_n \to f$ and each $f_n$ is measurable, we can conclude from theorem 4.12 that $f$ is measurable.
+
+It is not necessary for $f$ to be continuous in $y$ for each $x$, but it is necessary that $f$ be measurable in $y$ for each $x$. Continuity is sufficient, but not necessary for measurability in  $y$ for each $x$.
 \end{document}
