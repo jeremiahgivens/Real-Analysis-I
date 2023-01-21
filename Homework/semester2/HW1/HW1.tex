@@ -1,0 +1,243 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis II}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 1}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+Let 
+\[   f = \left\{
+\begin{array}{ll}
+      \frac{xy}{(x^2 + y^2)^2} & \text{if } (x, y) \in [-1, 1]^2 \backslash \{(0, 0)\} \\
+      0 & \text{if } (x, y) = (0, 0)\\
+\end{array} 
+\right. \]
+
+Show that 
+\begin{align*}
+\int_{-1}^1 \left( \int_{-1}^1 f(x, y) dy \right) dx = \int_{-1}^1 \left( \int_{-1}^1 f(x, y) dx \right) dy,
+\end{align*}
+but $f \not \in L([-1, 1]^2)$.
+
+\subsection*{Solution}
+We have, for any $x \in [-1, 1]$,
+\begin{align*}
+\int_{-1}^1 f(x, y) dy &= \int_{-1}^1 \frac{xy}{(x^2 + y^2)^2} dy\\
+&= 0 &&\text{Since we are integrating and odd function over symmetric bounds}
+\end{align*}
+With an identical argument, we have that for any $y \in [0, 1]$,
+\begin{align*}
+\int_{-1}^1 f(x, y) dy &= \int_{-1}^1 \frac{xy}{(x^2 + y^2)^2} dy\\
+&= 0.
+\end{align*}
+Thus,
+\begin{align*}
+0 = \int_{-1}^1 \left( \int_{-1}^1 f(x, y) dy \right) dx = \int_{-1}^1 \left( \int_{-1}^1 f(x, y) dx \right) dy.
+\end{align*}
+
+Now, to show that $f \not \in L([-1, 1]^2)$, we will show that $|f| \not \in L([-1, 1]^2)$. We have
+\[   |f| = \left\{
+\begin{array}{ll}
+      \frac{|x||y|}{(x^2 + y^2)^2} & \text{if } (x, y) \in [-1, 1]^2 \backslash \{(0, 0)\} \\
+      0 & \text{if } (x, y) = (0, 0)\\
+\end{array} 
+\right. \]
+Since this $|f|$ is continuous almost everywhere, we have that $|f|$ is measurable. Thus, by Tonneli's theorem, we have
+\begin{align*}
+\int \int_{[-1, 1]^2} |f(x, y)| dy dx &= \int_{-1}^1 \left( \int_{-1}^1 |f(x, y)| dy \right) dx\\
+&= \int_{-1}^1 \left( 2\int_{0}^1 |f(x, y)| dy \right) dx &&\text{Even function over symmetric bounds}\\
+&= \int_{-1}^1 \left( 2\int_{0}^1 \frac{|x|y}{(x^2 + y^2)^2} dy \right) dx\\
+&= \int_{-1}^1 \left( \int_{u(0)}^{u(1)} |x| u^{-2} du \right) dx && \text{u sub with } u = x^2 + y^2\\
+&= \int_{-1}^1 \left. \left( -|x| u^{-1} \right) \right|_{u(0)}^{u(1)} dx\\
+&= \int_{-1}^1 \left. \left( -\frac{|x|}{x^2 + y^2} \right) \right|_{0}^{1} dx\\
+&= \int_{-1}^1 \left( \frac{|x|}{x^2} -\frac{|x|}{x^2 + 1} \right) dx\\
+&= 2\int_{0}^1 \left( \frac{x}{x^2} -\frac{x}{x^2 + 1} \right) dx&&\text{Even function over symmetric bounds}\\
+\end{align*}
+\begin{align*}
+&= 2\int_{0}^1 \left( \frac{1}{x} -\frac{x}{x^2 + 1} \right) dx\\
+&= \infty - \int_{1}^2 u^{-1} du &&\text{u sub with } u = x^2 + 1\\
+&= \infty - \ln (2)\\
+&= \infty.
+\end{align*}
+Thus, we have shown that $f \not \in L([-1, 1]^2)$.
+
+\section*{Problem 2}
+\begin{theorem}
+Let $A \subseteq \mathbb{R}^p$ be measurable, and $B \subseteq \mathbb{R}^q$ be non-measurable with $|B|_e < \infty$. Then
+\proofpart{(i)}{} If $|A| = 0$, then $A \times B$ is measurable, and
+\proofpart{(ii)}{} If $|A| > 0$, then $A \times B$ is not measurable.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} Suppose $|A|=0$. Define $H \subseteq \mathbb{R}^q$ such that $H \subseteq B$, $H$ is of type $G_\delta$, and $|H| = |B|_e$. Then, we have
+\begin{align*}
+|A \times B|_e &\leq |A \times H| &&\text{Since } A \times B \subseteq A \times H\\
+&= |A| \cdot |H|\\
+&= |A| \cdot |B|_e\\
+&= 0 \cdot |B|_e\\
+&= 0 && \text{Since } |B|_e < \infty.
+\end{align*}
+Thus, $A \times B$ is measurable.
+\end{proof}
+
+\proofpart{(ii)}{} We will prove the contrapositive. Thus, suppose $A \times B$ is measurable. Then, by the first theorem we proved in class this semester, we have that for almost every $x \in \mathbb{R}^p$, $(A \times B)_x$ is measurable. Now, by definition, we have that for $x \in A$, 
+\begin{align*}
+(A \times B)_x = B,
+\end{align*} 
+and for $x \not \in A$, 
+\begin{align*}
+(A \times B)_x = \emptyset.
+\end{align*}
+Thus, for almost every $x \in A$, we have that $B$ is measurable. However, since we know $B$ is not measurable, we can conclude that $A$ is a set of measure zero, and our proof of the contrapostive is complete.
+
+\section*{Problem 3}
+Show that
+\begin{align*}
+\int \int_{[0, \infty]^2} \frac{dx dy}{(1 + x)(1 + x y^2)} = \frac{\pi^2}{2}.
+\end{align*}
+
+\subsection*{Solution}
+Since our integrand is continuous, it is measurable. Thus, since we also have that our integrand is nonnegative, Tonneli's theorem allows us to compute this as an itterated integral:
+\begin{align*}
+\int \int_{[0, \infty]^2} \frac{dx dy}{(1 + x)(1 + x y^2)} &= \int_0^\infty \frac{1}{(1 + x)} \left( \int_0^\infty \frac{1}{1 + x y^2} dy \right) dx\\
+&= \int_0^\infty \frac{1}{x(1 + x)} \left( \int_0^\infty \frac{1}{\frac{1}{x} + y^2} dy \right) dx\\
+&= \int_0^\infty \frac{1}{x(1 + x)} \left( \frac{\pi \sqrt{x}}{2} \right) dx &&\text{Integral table}\\
+&= \frac{\pi}{2}\int_0^\infty \frac{1}{\sqrt{x}(1 + x)} dx\\
+&= \frac{\pi^2}{2} &&\text{Integral table}.
+\end{align*}
+
+\section*{Problem 4}
+Let $f(x, y) = e^{-y} \sin(2xy)$ for $(x, y) \in E = [0, 1] \times [0, \infty)$. Apply Fubini's theorem to show
+\begin{align*}
+\int_0^\infty e^{-y} \frac{sin^2 y}{y} dy = \frac{1}{4} \ln 5.
+\end{align*}
+
+\subsection*{Solution}
+Since $f$ is continuous, $f$ is measurable, and the classical formula presented at the beginning of chapter 6 tells us that the integral of $f$ will be equal to it's iterated integral.
+
+Now, we note that for $y \in [0, \infty)$, we have
+\begin{align*}
+\int_0^1 e^{-y} \sin(2xy) dx = e^{-y} \frac{sin^2 y}{y}.
+\end{align*}
+Thus, using Fubini's theorem, we have
+\begin{align*}
+\int_0^\infty e^{-y} \frac{sin^2 y}{y} dy &= \int_0^\infty \left( \int_0^1 e^{-y} \sin(2xy) dx \right) dy\\
+&= \int_0^1 \left(\int_0^\infty e^{-y} \sin(2xy) dy \right) dx\\
+&= \int_0^1 \frac{2x}{4x^2 + 1} dx && \text{After two applications of integration by parts}\\
+&= \int_{u(0)}^{u(1)} \frac{du}{4u} && \text{u sub with } u = 4x^2 + 1\\
+&= \left. \frac{1}{4}\ln(4x^2 + 1) \right|_0^1\\
+&= \frac{1}{4} \ln 5.
+\end{align*}
+If you would like to see the work for integration by parts, let me know, and I can send you a picture of my white board.
+
+\section*{Problem 5}
+\begin{theorem}
+\proofpart{(i)}{} Let $f$ be measurable on $\mathbb{R}^p$, and $g$ be measurable on $\mathbb{R}^q$. Then $h(x, y) = f(x)g(x)$ is measurable on $\mathbb{R}^{p + q}$.
+
+\proofpart{(ii)}{} Let $f \in L(\mathbb{R}^p)$, and $g \in L(\mathbb{R}^q)$. Then $h(x, y) = f(x)g(y) \in L(\mathbb{R}^{p + q})$ and 
+\begin{align*}
+\int \int_{\mathbb{R}^{p + q}} f(x)g(y) dx dy = \left(\int_{\mathbb{R}^{p}} f(x) dx\right) \left( \int_{\mathbb{R}^{q}} g(y) dy \right).
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+\proofpart{(i)}{} Define $\bar{f}(x, y) = f(x)$ and $\bar{g}(x, y) = g(y)$ for all $(x, y) \in \mathbb{R}^{p + q}$. Then, for any $a \in \mathbb{R}$, we have
+\begin{align*}
+\{\bar{f} > a \} = \{f > a \} \times \mathbb{R}^q \text{, and } \{\bar{g} > a \} = \mathbb{R}^p \times \{g > a \}.
+\end{align*}
+Now, since $f$ and $g$ are measurable, and (as we proved last semester) the cartesian product of measurable sets is measurable, we can conclude that $\bar{f}$ and $\bar{g}$ are measurable. Finally, since $h = \bar{f} \cdot \bar{g}$, theorem 4.10 in our textbook tells us that $h$ is measurable.
+
+\proofpart{(ii)}{} Define $h(x, y)$ as we did in part (i). By theorem 4.6, we have that $|h(x, y)| = |f(x)| \cdot |g(y)|$ is measurable. Thus, by Tonneli's theorem, we have
+\begin{align*}
+\int \int_{\mathbb{R}^{p + q}} |h(x, y)| dx dy &= \int_{\mathbb{R}^{p}} \left( \int_{\mathbb{R}^{q}} |h(x, y)| dy \right) dx\\
+&= \int_{\mathbb{R}^{p}} \left( \int_{\mathbb{R}^{q}} |f(x)||g(y)| dy \right) dx\\
+&= \left(\int_{\mathbb{R}^{p}} |f(x)| dx\right) \left( \int_{\mathbb{R}^{q}} |g(y)| dy \right) && \text{Since there is no } x \text{ dependence in } \int_{\mathbb{R}^{q}} |g(y)| dy.
+\end{align*}
+Thus, since $f$ and $g$ are integrable, the two integrals in the last expression are finite, and we can conclude that $h$ is integrable. Finally, since $h$ is integrable, Fubini's theorem tells us
+\begin{align*}
+\int \int_{\mathbb{R}^{p + q}} f(x)g(y) dx dy &= \int_{\mathbb{R}^{p}} \left( \int_{\mathbb{R}^{q}} f(x)g(y) dy \right) dx\\
+&= \left(\int_{\mathbb{R}^{p}} f(x) dx\right) \left( \int_{\mathbb{R}^{q}} g(y) dy \right)&& \text{Since there is no } x \text{ dependence in } \int_{\mathbb{R}^{q}} g(y) dy.
+\end{align*}
+With this, our proof is complete.
+\end{proof}
+
+\end{document}
