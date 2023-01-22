@@ -19,6 +19,7 @@
 
 \usepackage{amsthm}
 \usepackage{lipsum}
+\usepackage{tikz}
 
 \makeatletter
 \newcommand{\proofpart}[2]{%
@@ -50,6 +51,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{fancyhdr}
+\usepackage{tkz-euclide}
 
 \DeclareMathOperator{\interior}{int}
 
@@ -238,6 +240,161 @@ Thus, since $f$ and $g$ are integrable, the two integrals in the last expression
 &= \left(\int_{\mathbb{R}^{p}} f(x) dx\right) \left( \int_{\mathbb{R}^{q}} g(y) dy \right)&& \text{Since there is no } x \text{ dependence in } \int_{\mathbb{R}^{q}} g(y) dy.
 \end{align*}
 With this, our proof is complete.
+\end{proof}
+
+\section*{Problem 6}
+Let $f(x, y) = \frac{x^2 - y^2}{x^2 + y^2}$ for $(x, y) \not = (0, 0)$. Show that 
+\begin{align*}
+\int_0^1 \left(\int_0^1 f(x, y)dy \right) dx = 0. 
+\end{align*}
+
+\subsection*{Solution}
+First, let us examine the inner most integral
+\begin{align*}
+\int_0^1 \frac{x^2 - y^2}{x^2 + y^2}dy.
+\end{align*}
+As we normally do for integrals of this form, we will draw a triangle, and use this to make some handy variable changes.
+\begin{center}
+\begin{tikzpicture}
+\coordinate (A) at (0, 0);
+\coordinate (B) at (4, 0);
+\coordinate (C) at (4, 4);
+	\draw (A) -- (B) node[midway, below]{$x$} -- (C) node[midway, right]{$y$} -- cycle node[midway, left]{$\sqrt{x^2 + y^2}$};
+	\tkzMarkAngle[size=1cm,color=cyan, mark=](B,A,C)
+	\tkzLabelAngle[pos=1.2](B,A,C){$\theta$}
+\end{tikzpicture}
+\end{center}
+Thus, using this, we let 
+\begin{align*}
+y &= x\tan\theta\\
+dy &= x \sec^2 \theta d \theta\\
+\cos \theta &= \frac{x}{\sqrt{x^2 + y^2}},
+\end{align*}
+With this change of variables, our integral becomes
+\begin{align*}
+\int_0^1 \frac{x^2 - y^2}{x^2 + y^2}dy &= \int_{\theta(0)}^{\theta(1)} x(2 - \sec^2 \theta)dy\\
+&= \left. (2x \theta - x\tan \theta ) \right|_{\theta(0)}^{\theta(1)}\\
+&= \left. \left(2x \tan^{-1}\left(\frac{y}{x}\right) - x\frac{y}{x} \right) \right|_0^1\\
+&= 2x \tan^{-1}\left(\frac{1}{x}\right) - 1.
+\end{align*}
+Now, we can solve the final integral:
+\begin{align*}
+\int_0^1 \left(\int_0^1 f(x, y)dy \right) dx &= \int_0^1 \left(2x \tan^{-1}\left(\frac{1}{x}\right) - 1 \right) dx\\
+&= -1 + \int_0^1 2x \tan^{-1}\left(\frac{1}{x}\right) dx\\
+\end{align*}
+Once again, we will draw a triangle to help determine an appropriate change of variables:
+\begin{center}
+\begin{tikzpicture}
+\coordinate (A) at (0, 0);
+\coordinate (B) at (4, 0);
+\coordinate (C) at (4, 4);
+	\draw (A) -- (B) node[midway, below]{$x$} -- (C) node[midway, right]{$1$} -- cycle node[midway, left]{$\sqrt{x^2 + 1}$};
+	\tkzMarkAngle[size=1cm,color=cyan, mark=](B,A,C)
+	\tkzLabelAngle[pos=1.2](B,A,C){$\theta$}
+\end{tikzpicture}
+\end{center}
+With this, we have
+\begin{align*}
+\tan^{-1} \left(\frac{1}{x} \right) &= \theta\\
+\sin^{-2} \theta &= x^2 + 1\\
+x &= \cot \theta\\
+dx &= - (\csc \theta)^2
+\end{align*}
+Thus, plugging these subsitutions in and making some simplifications, we have
+\begin{align*}
+-1 + \int_0^1 2x \tan^{-1}\left(\frac{1}{x}\right) dx &= -1 - 2 \int_{\theta(0)}^{\theta(1)} \theta \frac{\cos \theta}{\sin^3 \theta} d \theta.
+\end{align*}
+Now, recognizing that 
+\begin{align*}
+\frac{d}{d \theta} \left( \theta (\sin \theta)^{-2} \right) &= csc^2(\theta) - 2 \theta \frac{\cos \theta}{\sin^3 \theta}
+\end{align*}
+we can use integration by parts to reduce our integral to
+\begin{align*}
+-1 - 2 \int_{\theta(0)}^{\theta(1)} \theta \frac{\cos \theta}{\sin^3 \theta} d \theta &= -1 + \left. \theta \sin^{-2} \theta \right|_{\theta(0)}^{\theta(1)} - \int_{\theta(0)}^{\theta(1)} \csc^2 \theta d \theta \\
+&= -1 + \left. \theta \sin^{-2} \theta \right|_{\theta(0)}^{\theta(1)} + \left. \cot \theta \right|_{\theta(0)}^{\theta(1)}\\
+&= -1 + \left. (x^2 + 1) \tan^{-1} \left(\frac{1}{x} \right) \right|_0^1 +  \left. x \right|_0^1\\
+&= -1 + 2\frac{\pi}{4} - \frac{\pi}{2} + 1\\
+&= 0,
+\end{align*}
+as desired.
+
+\section{Problem 7}
+\begin{theorem}
+\proofpart{(a)}{} Let $E$ be a measurable subset of $\mathbb{R}^2$ such that for almost every $x \in \mathbb{R}^1$, $\{y : (x, y) \in E \}$ has measure zero. Then $E$ has measure 0, and for almost every $y \in \mathbb{R}^1$, $\{x : (x, y) \in E \}$ has measure zero. 
+\proofpart{(b)}{} Let $f(x, y)$ be nonnegative and measurable in $\mathbb{R}^2$. Suppose that for almost every $x \in \mathbb{R}$, $f(x, y)$ is finite for almost every $y$. Then, for almost every $y \in \mathbb{R}$, $f(x, y)$ is finite for almost every $x$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(a)}{} Define $A,B \subseteq \mathbb{R}$ such that $E = A \times B$. We have that for $x \in A$, 
+\begin{align*}
+\{y : (x, y) \in E \} = B,
+\end{align*}
+and for $x \not \in A$,
+\begin{align*}
+\{y : (x, y) \in E \} = \emptyset.
+\end{align*}
+Thus, either $|B| = 0$, or $|A| = 0$. Armed with this information, let's examine the set $\{x : (x, y) \in E \}$. We have that for $y \in B$,
+\begin{align*}
+\{x : (x, y) \in E \} = A,
+\end{align*}
+and for $y \not \in B$,
+\begin{align*}
+\{x : (x, y) \in E \} = \emptyset.
+\end{align*}
+If $|A| = 0$, it follows that this set has zero measure for all $y$. Suppose now that $|B| = 0$. Then, for almost every $y$ (that is, the ones not in the measure zero set $B$), we have that $\{x : (x, y) \in E \} = \emptyset$, which implies it has measure zero.
+
+Now, we must show that $E$ has measure zero. Suppose first that $|A| = 0$. Let $H \subseteq \mathbb{R}$ be of type $G_\delta$ with $B \subseteq H$, and $|H| = |B|_e$. Then, we have
+\begin{align*}
+|A \times B|_e &\leq |A \times H| &&\text{Since } A \times B \subseteq A \times H\\
+&= |A| \cdot |H| &&\text{We proved this in class for measurable sets}\\
+&= 0 \cdot |H|\\
+&= 0.
+\end{align*}
+Thus, $|E| = 0$. The case of $|B| = 0$ can be handled in a nearly identical fashion.
+
+\proofpart{(b)}{} Since for almost every $x \in \mathbb{R}$, $f(x, y)$ is finite for almost every $y$, there exist zero measure sets $A, B \subseteq \mathbb{R}$ such that for every $x \in \mathbb{R} \backslash A$, and for every $y \in \mathbb{R} \backslash B$, $f(x, y)$ is finite. Thus, for every $y \in \mathbb{R} \backslash B$, $f(x, y)$ is finite for every $x \in \mathbb{R} \backslash A$. Thus, by direct definition of "almost everywhere", we have that for almost every $y \in \mathbb{R}$, $f(x, y)$ is finite for almost every $x$.
+\end{proof}
+
+\section*{Problem 8}
+If $f$ and $g$ are measurable in $\mathbb{R}^n$ show that $h(x, y) = f(x)g(y)$ is measurable in $\mathbb{R}^n \times \mathbb{R}^n$. Deduce that if $E_1$ and $E_2$ are measurable subsets of $\mathbb{R}^n$, then their cartesian product is measurable.
+
+\subsection*{Solution}
+We proved the first part of this in part (i) of problem 5. We proved the second part of this problem in class last semester at the start of chapter 5 (you proved a more general version of Lemma 5.2 in the book).
+
+\section*{Problem 9}
+\begin{theorem}
+Let $f$ be measurable on $(0, 1)$. If $f(x) - f(y)$ is integrable over the square $[0, 1]^2$, show that $f \in L(0, 1)$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Since $f(x) - f(y)$ is integrable over the square $[0, 1]^2$, Fubini's theorem tells us
+\begin{align*}
+\int \int_{[0, 1]^2} (f(x) - f(y)) dx dy &= \int_0^1 \left( \int_0^1 (f(x) - f(y)) dy \right) dx\\
+&= \int_0^1 \left(f(x) - \int_0^1 f(y) dy \right) dx &&f(x) \text{ acts as a constant when integrating over }y\\
+&= \int_0^1 f(x) dx - \int_0^1 f(y) dy &&\int_0^1 f(y) \text{ acts as a constant when integrating over }x.
+\end{align*}
+Thus, since $f(x) - f(y)$ is integrable over the square $[0, 1]^2$, the integral must be finite. From this, we can conclude that the last two integrals on the write side must me finite, and we have shown that $f \in L(0, 1)$.
+\end{proof}
+
+\section*{Problem 10}
+\begin{theorem}
+Let $A \subseteq \mathbb{R}^p$ be measurable, and let $B \subseteq \mathbb{R}^q$ be an arbitrary set. Then
+\begin{align*}
+|A \times B|_e = |A| \cdot |B|_e.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $H \subseteq \mathbb{R}^q$ be of type $G_\delta$ such that $B \subseteq H$ and $|B|_e = |H|$. Then,
+\begin{align*}
+|A \times B|_e &\leq |A \times H| &&\text{Since } A \times B \subseteq A \times H\\
+&= |A| \cdot |H|\\
+&= |A| \cdot |B|_e.
+\end{align*}
+Now, to show inequality in the reverse direction, let $U \subseteq \mathbb{R}^{p + q}$ be of type $G_\delta$ such that $|U| = |A \times B|_e$.
 \end{proof}
 
 \end{document}
