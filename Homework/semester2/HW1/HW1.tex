@@ -394,7 +394,17 @@ Let $H \subseteq \mathbb{R}^q$ be of type $G_\delta$ such that $B \subseteq H$ a
 &= |A| \cdot |H|\\
 &= |A| \cdot |B|_e.
 \end{align*}
-Now, to show inequality in the reverse direction, let $U \subseteq \mathbb{R}^{p + q}$ be of type $G_\delta$ such that $|U| = |A \times B|_e$.
+Now, to show inequality in the reverse direction, let $U \subseteq \mathbb{R}^{p + q}$ be of type $G_\delta$ such that $|U| = |A \times B|_e$. We have
+\begin{align*}
+|A \times B|_e &= |U|\\
+&= \int \int_U \chi_U dx dy\\
+&= \int_{\mathbb{R}^p} \left( \int_{U_x} \chi_U dy \right) dx &&\text{By Fubini's theorem}\\
+&\geq \int_{A} \left( \int_{U_x} \chi_U dy \right) dx &&\text{Since } A \subseteq \mathbb{R}^p\\
+&= \int_A |U_x| dx\\
+&= \int_A |B|_e &&\text{Since } B \subseteq U_x\\
+&= |A| \cdot |B|_e.
+\end{align*}
+Thus, we have shown that $|A \times B|_e = |A| \cdot |B|_e$, and our proof is complete.
 \end{proof}
 
 \end{document}
