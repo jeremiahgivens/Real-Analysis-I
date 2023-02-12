@@ -1,0 +1,178 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis II}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 1}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $f:[a,b] \to \mathbb{R}$ and $x_0 \in [a, b]$. Then the set of all subsequential derivatives of $f$ at $x_0$ is a closed set of $\bar{\mathbb{R}} = \mathbb{R} \cup \{-\infty, \infty \}$.
+\end{theorem}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $f:[a,b] \to \mathbb{R}$ be monotone increasing. If 
+\begin{align*}
+\int_a^b f'(t)dt = f(b) - f(a),
+\end{align*}
+then
+\begin{align*}
+\int_a^x f'(t)dt = f(x) - f(a) && \forall x \in [a, b].
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+f(b) - f(a) &= \int_a^b f'(t)dt\\
+&= \int_a^x f'(t)dt + \int_x^b f'(t)dt\\
+\int_a^x f'(t)dt &= f(b) - f(a) - \int_x^b f'(t)dt &&\text{Since the integrals are finite}\\
+&\geq f(b) - f(a) - (f(b) - f(x)) &&\text{By the weak version of FTC}\\
+&= f(x) - f(a).
+\end{align*}
+Once again utilizing the weak version of the FTC that we proved in class, we have
+\begin{align*}
+\int_a^x f'(t)dt \leq f(x) - f(a).
+\end{align*}
+Thus, combining these two inequalities, we have the desired result.
+\end{proof}
+
+\section*{Problem 3}
+Let $f:[a,b] \to \mathbb{R}$ and $E \subseteq [a, b]$. Assume that $f'(x)$ exists for all $x \in E$, and satisfies 
+\begin{align*}
+|f'(x)| \leq M,
+\end{align*}
+for all $x \in E$, and some $M > 0$. Then,
+\begin{align*}
+|f(E)|_e \leq M |E|_e.
+\end{align*}
+
+\subsection*{Solution}
+\begin{proof}
+Let $\epsilon > 0$. Then, there exists an open set $G$ such that $E \subseteq G$ and $|G| \leq |E|_e + \epsilon$. Let $x_0 \in E$. Then $\exists \{h_n\}$ with $h_n \searrow 0$ such that 
+\begin{align*}
+ \lim_{n \to \infty} \left|\frac{f(x_0 + h_n) - f(x_0)}{h_n} \right| \leq M.
+\end{align*}
+Let $M < \tilde{M} < M + \epsilon$. Then, we have that $\exists N \in \mathbb{N}$ such that for all $n \geq N$, we have
+\begin{align}
+\left|\frac{f(x_0 + h_n) - f(x_0)}{h_n} \right| \leq \tilde{M}.
+\end{align}
+Without loss of generality, we assume that for all $n$ and $x_0 \in E$,
+\begin{align}
+I_n(x_0) = [x_0 - h_n/2, x_0 + h_n/2] \subseteq G.
+\end{align}
+Clearly, $\{I_n(x_0): x_0 \in E, n \in \mathbb{N}\}$ is a Vitali cover of $E$.
+
+Apply the Vitali covering lemma to obtain countably many disjoint intervals
+\begin{align*}
+\{I_{n_i}(x_i)\} \subseteq \{I_n(x_0): x_0 \in E, n \in \mathbb{N}\}
+\end{align*}
+such that
+\begin{align*}
+\left| E \backslash \bigcup _i^\infty I_{n_i}(x_i) \right| = 0.
+\end{align*}
+By (1), we have
+\begin{align*}
+f(I_{n_i}(x_i)) \subseteq [f(x_i) - (h_{n_i}/2) \tilde{M}, f(x_i) + (h_{n_i}/2) \tilde{M}],
+\end{align*}
+which implies
+\begin{align*}
+|f(I_{n_i}(x_i))| \leq h_{n_i} \tilde{M}.
+\end{align*}
+\begin{align*}
+|f(E)| &\leq \left|f\left( E \backslash \bigcup _i^\infty I_{n_i}(x_i) \right) \right| + \left| f\left(\bigcup _i^\infty I_{n_i}(x_i) \right) \right|\\
+&= \left| f\left(\bigcup _i^\infty I_{n_i}(x_i) \right) \right| &&\text{Explained in (*)}\\
+&\leq \left| \bigcup _i^\infty f\left(I_{n_i}(x_i) \right) \right|\\
+&\leq \sum_i^\infty |f\left(I_{n_i}(x_i) \right)|\\
+&\leq \sum_i^\infty h_{n_i} \tilde{M}\\
+&= \sum_i^\infty|I_{n_i}(x_i)|\tilde{M}\\
+&= \left| \bigcup _i^\infty I_{n_i}(x_i) \right| \tilde{M}\\
+&\leq |G| \tilde{M} &&\text{By (2)}\\
+&= \tilde{M}|E|_e.
+\end{align*}
+(*) Recall that functions with bounded derivatives are Lipschitz transformations. From the proof of 3.33 in our book, we know that Lipschitz transformations map sets of measure zero to sets of measure zero.
+
+With this, our proof is complete.
+\end{proof}
+\end{document}
