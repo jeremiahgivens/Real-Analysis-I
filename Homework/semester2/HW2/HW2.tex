@@ -89,6 +89,38 @@
 Let $f:[a,b] \to \mathbb{R}$ and $x_0 \in [a, b]$. Then the set of all subsequential derivatives of $f$ at $x_0$ is a closed set of $\bar{\mathbb{R}} = \mathbb{R} \cup \{-\infty, \infty \}$.
 \end{theorem}
 
+\subsection*{Solution}
+\begin{proof}
+Let $\Lambda$ be the set of all subsequential derivatives of $f$ at $x_0$, and let $\lambda$ be a boundary point of $\Lambda$. Define, for any real $h \not = 0$ with $h + x_0 \in [a, b]$,
+\begin{align*}
+F(h) = \frac{f(x_0 + h) - f(x_0)}{h}.
+\end{align*}
+Since $\lambda$ is a boundary point of $\Lambda$, we have that for all $m \in \mathbb{N}$, there exist $\lambda_m \in \Lambda$ such that $|\lambda - \lambda_m| < \frac{1}{2m}$. By definition of the subsequential derivative, we have that there exist sequences $\{h_n^m \}$ such that $h_n^m \not = 0$, $h_n^m \to 0$, and 
+\begin{align*}
+\lim_{n \to \infty} F(h_n^m) = \lambda_m.
+\end{align*}
+By definition of a limit, we have that for each $m$, there exists $N_m \in \mathbb{N}$ such that for all $n \geq N_m$, we have
+\begin{align*}
+|F(h_n^m) - \lambda_m| < \frac{1}{2m}.
+\end{align*}
+For each $m$, define a new sequence $\{h_m \}$ such that 
+\begin{align*}
+h_m = h_{N_m}^m.
+\end{align*}
+We will show that $F(h_m) \to \lambda$.
+
+Let $\epsilon > 0$. Choose $M \in \mathbb{N}$ large enough such that $\frac{1}{M} < \epsilon$. We have, for all $m \geq M$,
+\begin{align*}
+|F(h_m) - \lambda| &\leq |F(h_m) - \lambda_m| + |\lambda - \lambda_m| &&\text{By the triangle inequality}\\
+&= |F(h_{N_m}^m) - \lambda_m| + |\lambda - \lambda_m|\\
+&< \frac{1}{2m} + \frac{1}{2m}\\
+&= \frac{1}{m}\\
+&< \frac{1}{M}\\
+&< \epsilon.
+\end{align*}
+Thus, we have shown that $\lambda \in \Lambda$, and we can conclude that $\Lambda$ is closed.
+\end{proof}
+
 \section*{Problem 2}
 \begin{theorem}
 Let $f:[a,b] \to \mathbb{R}$ be monotone increasing. If 
@@ -175,4 +207,158 @@ which implies
 
 With this, our proof is complete.
 \end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be continuous and have a subsequential derivative $\lambda_x \geq 0$ at each $x \in [a,b]$. Then $f$ is increasing on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $x \in [a, b]$. By definition of the subsequential derivative, we have that there exists a sequence $\{h_n\}$ with $h_n \to 0$, $h_n + x \in [a, b]$, and $h_n \not = 0$, such that
+\begin{align*}
+\lim_{n \to \infty} \frac{f(x + h_n) - f(x)}{h_n} = \lambda_x \geq 0.
+\end{align*}
+Let $\epsilon > 0$. Define a new function $g(x) = f(x) + \epsilon x$. Then, we have that $g$ is continuous, and that 
+\begin{align*}
+\lim_{n \to \infty} \frac{g(x + h_n) - g(x)}{h_n} &= \lim_{n \to \infty} \frac{f(x + h_n) + \epsilon(x+h_n) - f(x) - \epsilon x}{h_n}\\
+&= \lim_{n \to \infty} \frac{f(x + h_n) - f(x) + \epsilon h_n}{h_n}\\
+&= \lim_{n \to \infty} \frac{f(x + h_n) - f(x)}{h_n} + \epsilon\\
+&= \lambda_x + \epsilon\\
+&\geq \epsilon.\\
+\end{align*}
+By definition of a limit, there exists an $N \in \mathbb{N}$ such that for all $n \geq N$, we have
+\begin{align*}
+\left| \frac{g(x + h_n) - g(x)}{h_n} - (\lambda_x + \epsilon)\right| < \epsilon.
+\end{align*}
+This implies that for all $n \geq N$, 
+\begin{align*}
+\frac{g(x + h_n) - g(x)}{h_n} > 0.
+\end{align*}
+
+Now, let $n \geq N$. Without loss of generality, assume that $h_n > 0$. Then we have that $g(x + h_n) > g(x)$.
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+If $f$ is continuous on $[a, b]$ and $|f|$ is of bounded variation on $[a, b]$, then $f$ is of bounded variation on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+Before we prove this theorem, we will prove a useful lemma:
+\begin{lemma}
+Let $f$ be a function on $[a, b]$, and let $T_1 = \{a = x_0 < ... < x_n = b\}$ be a partition of $[a, b]$. If $T_2$ is a refinement of $T_1$, then 
+\begin{align*}
+V(f, T_1) \leq V(f, T_2).
+\end{align*}
+\end{lemma}
+
+\begin{proof}[Proof of Lemma 1]
+Since $T_2$ is a refinement of $T_1$, we have $T_1 \subseteq T_2$, and for some of the $i \in \{0, ..., n-1\}$, there exists an $x'_i \in T_2$ such that $x_i < x'_i < x_{i+1}$. For those $i$ where $T_2$ does not have such an $x'_i$, define $x'_i = x_i$. Then
+\begin{align*}
+V(f, T_1) &= \sum_{i=1}^n |f(x_i) - f(x_{i - 1})|\\
+&\leq \sum_{i=1}^n \left(|f(x_{i - 1}) - f(x'_i)| + |f(x'_i) - f(x_i)| \right) && \text{By the triangle inequality}\\
+&= V(f, T_2),
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+Now we are ready to begin the proof of the theorem.
+
+\begin{proof}[Proof of Theorem 4]
+Let $T_1 = \{a = x_0 < ... < x_n = b\}$ be a partition of $[a, b]$. For the cases where $f(x_i)f(x_{i+1}) < 0$ (the cases where $f$ changes sign), use the intermediate value theorem (since $f$ is continuous) to define $x_i < x'_i < x_{i + 1}$ such that $f(x'_i) = 0$. As we did in the proof of Lemma 1, we define a refinement $T_2$ of $T_1$. We have 
+\begin{align*}
+V(f, T_1) &= \sum_{i=1}^n |f(x_i) - f(x_{i - 1})|.
+\end{align*}
+For the cases where $f(x_i)f(x_{i+1}) < 0$, we have
+\begin{align*}
+|f(x_i) - f(x_{i - 1})| &= |f(x_i)| + |f(x_{i - 1})|\\
+&= ||f(x_{i - 1})| - |f(x'_i)|| + ||f(x'_i)| - |f(x_i)||.
+\end{align*}
+Otherwise, we have
+\begin{align*}
+|f(x_i) - f(x_{i - 1})| &= ||f(x_i)| - |f(x_{i+1})||\\
+&\leq ||f(x_{i - 1})| - |f(x'_i)|| + ||f(x'_i)| - |f(x_i)||.
+\end{align*}
+Thus, we see
+\begin{align*}
+V(f, T_1) &= \sum_{i=1}^n |f(x_i) - f(x_{i - 1})|\\
+&\leq \sum_{i=1}^n \left( ||f(x_{i - 1})| - |f(x'_i)|| + ||f(x'_i)| - |f(x_i)|| \right)\\
+&= V(|f|, T_2)\\
+&\leq V(|f|)\\
+&< \infty.
+\end{align*}
+Since this is true for any $T_1$, we have shown that $V(f) \leq V(|f|)$, and our proof is complete.
+\end{proof}
+*Note, I did not end up using Lemma 1 here like I thought I would need to, but I am leaving it here incase I need it for any future problems.
+
+\section*{Problem 6}
+\begin{theorem}
+Let $BV[a, b]$ be the normed vector space of all functions of bounded variation on $[a, b]$ with norm $||f|| = V_{a}^{b}(f) + |f(a)|$. Then, $BV[a, b]$ is a Banach space.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $\{f_m\}$ be a Cauchy sequence of functions in $BV[a, b]$, where the metric is induced by our norm. We will first show that this converges point wise to some function $f$ on $[a, b]$. Since this sequence is Cauchy, we have that there exists an $N \in \mathbb{N}$ such that for all $j, k \geq N$, 
+\begin{align*}
+\epsilon &> ||f_j - f_k||\\
+&= V_{a}^{b}(f_j - f_k) + |f_j(a) - f_k(a)|\\
+&\geq |f_j(a) - f_k(a)|.
+\end{align*}
+Thus, $\{f_m(a) \}$ is a cauchy sequence, which converges to what we will define as $f(a)$.
+
+Now consider the two point partition $T = \{a=x_0 < x_1 = b \}$. Then, we have
+\begin{align*}
+||f_j - f_k|| &= V_{a}^{b}(f_j - f_k) + |f_j(a) - f_k(a)|\\
+&\geq V_{a}^{b}(f_j - f_k, T) + |f_j(a) - f_k(a)|\\
+&= |(f_j(x_1) - f_k(x_1)) - (f_j(x_0) - f_k(x_0))| + |f_j(a) - f_k(a)|\\
+&= |(f_j(b) - f_k(b)) - (f_j(a) - f_k(a))| + |f_j(a) - f_k(a)|\\
+&= |(f_j(b) - f_k(b)) - (f_j(a) - f_k(a))|.
+\end{align*}
+This, with the fact that $\{f_m(a)\}$ is Cauchy (which means $(f_j(a) - f_k(a)) \to 0$), allows us to conclude that $\{f_m(b)\}$ is Cauchy, and converges to some real number $f(b)$.
+
+Now consider the three point partition $T = \{a=x_0 < x_1 = x < x_2 = b \}$. Proceeding as before, we see
+\begin{align*}
+||f_j - f_k|| &= V_{a}^{b}(f_j - f_k) + |f_j(a) - f_k(a)|\\
+&\geq V_{a}^{b}(f_j - f_k, T) + |f_j(a) - f_k(a)|\\
+&\geq V_{a}^{b}(f_j - f_k, T)\\
+&= \sum_{i=1}^2 |(f_j(x_i) - f_k(x_i)) - (f_j(x_{i-1}) - f_k(x_{i-1}))|\\
+&= |(f_j(x) - f_k(x)) - (f_j(a) - f_k(a))| + |(f_j(b) - f_k(b)) - (f_j(x) - f_k(x))|.
+\end{align*}
+As before, we use the fact that $\{f_m(a)\}$ and $\{f_m(b)\}$ are Cauchy, to conclude that $\{f_m(x)\}$ is Cauchy for all $x \in (a, b)$, and converges to to what we will define as $f(x)$.
+
+Since we have proved that this sequence does converge to some function $f$, we must now show that $f$ is of bounded variation. Let $T = \{a = x_0 < ... < x_n = b\}$ be a partition of $[a, b]$. For some $\epsilon > 0$, choose $N \in \mathbb{N}$ large enough so that $|f_N(x_i) - f(x_i)| < \frac{\epsilon}{2n}$ for all $x_i \in T$. Since $\{f_n\}$ is Cauchy, the sequence is bounded, thus there exists an $M$ such that $V(f_n) < M$ for all $n$. Then, we have
+\begin{align*}
+V(f, T) &= \sum_{i=1}^n |f(x_i) - f(x_{i - 1})|\\
+&\leq \sum_{i=1}^n |f(x_i) - f_N(x_i)| + \sum_{i=1}^n |f_N(x_i) - f(x_{i - 1})| \\
+&\leq \sum_{i=1}^n |f(x_i) - f_N(x_i)|  + \sum_{i=1}^n |f_N(x_i) - f_N(x_{i - 1})| + \sum_{i=1}^n |f_N(x_{i-1}) - f(x_{i - 1})| \\
+&\leq \sum_{i=1}^n \frac{\epsilon}{2n}  + \sum_{i=1}^n |f_N(x_i) - f_N(x_{i - 1})| + \sum_{i=1}^n \frac{\epsilon}{2n} \\
+&= \frac{\epsilon}{2} + \sum_{i=1}^n |f_N(x_i) - f_N(x_{i - 1})| + \frac{\epsilon}{2}\\
+&= \epsilon + \sum_{i=1}^n |f_N(x_i) - f_N(x_{i - 1})|\\
+&= \epsilon + V(f_N, T)\\
+&\leq \epsilon + V(f_N)\\
+&< \epsilon + M.
+\end{align*}
+Since this is true for an parition $T$, we can conclude that $V(f) \leq M$, and we have shown that $f \in BV[a, b]$.
+\end{proof}
+
+\section*{Problem 7}
+Let 
+\[   f = \left\{
+\begin{array}{ll}
+      x \sin \left( \frac{\pi}{2x} \right), &  x \in (0, 1]\\
+      0, & x = 0\\
+\end{array} 
+\right. \]
+and recall that $f \not \in BV[0, 1]$. Construct a sequence $\{f_n\}$ such that $f_n \in BV[0, 1]$ and $f_n \to f$ uniformly on $[0, 1]$.
+
+\subsection*{Solution}
+By the Stone-Weierstrass theorem, we can construct a sequence of polynomials $\{f_n\}$ that converges uniformly to $f$ on [0, 1]. Since the derivative of a polynomial is another polynomial, we have that $f'_n$ is continuous for all $n$. Thus, since $[0, 1]$ is closed, and continuous functions on closed intervals are bounded, we have that there exists some $M_n \in \mathbb{R}$ such that $|f'_n(x)| \leq M_n$. We have
+\begin{align*}
+V(f_n) &= \int_0^1 |f'(x)| dx &&\text{By Corollary 2.10 in our textbook}\\
+&\leq \int_0^1 M_n dx &&\text{By Theorem 5.5 (i) in our textbook}\\
+&= M_n &&\text{By Corollary 5.4 in our textbook}\\
+&< \infty.
+\end{align*}
+Thus, each $f_n$ is of bounded variation.
 \end{document}
