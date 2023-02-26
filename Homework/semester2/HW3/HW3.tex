@@ -153,25 +153,61 @@ If $f$ is of bounded variation on $[a, b]$, and if the function $V(x) = V[a, x]$
 
 \subsection*{Solution}
 \begin{proof}
-Let $\epsilon > 0$. Since $V(x)$ is absolutely continuous, we have that there exists $\delta > 0$ such that $\sum |V(b_i) - V(a_i)| < \epsilon$ for any finite collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. Let $\{[a_i, b_i]\}$ be a collection of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. From Theorem 2.2 (part i) in our textbook, since $f$ is of bounded variation, and $V(x)$ is finite for all $x \in [a, b]$. Furthermore, from theorem 2.2 (part ii), we have
-\begin{align*}
-V[a, b] &= V[a, a_i] + V[a_i, b]
-&= V[a, b_i] + V[b_i, b].
-\end{align*}
-Then, 
-\begin{align*}
-V(b_i) - V(a_i) &= V[a, b_i] - V[a, a_i] \\
-&= V[a_i, b] - V[b_i, b]\\
-&\geq V[a_i, b]\\
-&\geq V[a_i, b_i] &&\text{Theorem 2.2 part i}\\
-&\geq |f(b_i) - f(a_i)|.
-\end{align*}
-Finally, we have
+Let $\epsilon > 0$. Since $V(x)$ is absolutely continuous, we have that there exists $\delta > 0$ such that $\sum |V(b_i) - V(a_i)| < \epsilon$ for any finite collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. Let $\{[a_i, b_i]\}$ be a collection of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. From Theorem 2.2 (part i) in our textbook, since $f$ is of bounded variation, and $V(x)$ is finite for all $x \in [a, b]$. We have
 \begin{align*}
 \epsilon &> \sum |V(b_i) - V(a_i)|\\
+&= \sum (V[a, b_i] - V[a, a_i])\\
+&\geq \sum V[a, b_i]\\
+&\geq \sum V[a_i, b_i] &&\text{Theorem 2.2 part i}\\
 &\geq \sum |f(b_i) - f(a_i)|,
 \end{align*}
 and we have proven that $f$ is absolutely continuous.
 \end{proof}
+
+\section*{Problem 1.9}
+\begin{theorem}
+If $f$ is of bounded variation on $[a, b]$, then 
+\begin{align*}
+\int_a^b |f'| \leq V[a, b].
+\end{align*}
+Furthermore, if the equality holds in this inequality, then $f$ is absolutely continuous.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $N(x)$ and $P(x)$ denote the negative and positive variations of $f$ on $[a, x]$, as in the proof of theorem 2.7 in our textbook. Then, we have
+\begin{align*}
+f(x) = [P(x) + f(a)] - N(x).
+\end{align*}
+We note, that $P(x) + f(a)$ and $N(x)$ are increasing functions. Now, we have
+\begin{align*}
+\int_a^b |f'| &= \int_a^b |P'(x) - N'(x)| dx\\
+&\leq \int_a^b P'(x) + \int_a^b N'(x)\\
+&\leq P(b) - P(a) + N(b) - N(a) &&\text{By theorem 7.21 in our textbook}\\
+&= V(b) - V(a) &&\text{By theorem 2.6 in our textbook}\\
+&\leq V(b)\\
+&= V[a, b].
+\end{align*}
+
+Now, suppose the equality holds. That is, suppose
+\begin{align*}
+\int_a^b |f'| = V[a, b].
+\end{align*}
+By theorem 7.24 in our textbook, we have $V'(x) = |f'(x)|$ almost everywhere for $x \in [a, b]$. Thus, we have
+\begin{align*}
+\int_a^x V'(t) dt &= \int_a^x |f'(t)| dt\\
+&= V(x)\\
+&= V[a, x]\\
+&= V[a, x] + V[a, a] &&\text{By theorem 2.2 ii}\\
+&= V(x) - V(a).
+\end{align*}
+Thus, by theorem 7.29, $V(x)$ is absolutely continuous. By the statement we proved in the previous problem, we can conclude that $f$ is absolutely continuous.
+\end{proof}
+
+\section*{Problem 1.10}
+\begin{theorem}
+\proofpart{(a)}{} If $f$ is absolutely continuous on $[a, b]$ and $Z$ is a subset of $[a, b]$ with measure zero, then the image set defined by $f(Z) = \{w: w = f(z), z \in Z\}$ also has measure zero. Deduce that the image under $f$ of any measurable subset of $[a, b]$ is measurable. (Compare theorem 3.33)(Hint: use the fact that the image of an interval $[a_i, b_i]$ is an interval of length at most $V(b_i) - V(a_i)$.)
+\proofpart{(b)}{} Give an example of a strictly increasing Lipschitz continuous function $f$ and a set $Z$ with measure 0 such that $f^{-1}(Z)$ does not have measure 0 (and cosequently, $f^{-1}$ is not absolutely continuous). (Let $f^{-1}(x) = x + C(x)$ on $[0, 1]$, where $C(x)$ is the Cantor-Lebesgue function. 
+\end{theorem}
 
 \end{document}
