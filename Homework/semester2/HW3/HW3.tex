@@ -210,4 +210,45 @@ Thus, by theorem 7.29, $V(x)$ is absolutely continuous. By the statement we prov
 \proofpart{(b)}{} Give an example of a strictly increasing Lipschitz continuous function $f$ and a set $Z$ with measure 0 such that $f^{-1}(Z)$ does not have measure 0 (and cosequently, $f^{-1}$ is not absolutely continuous). (Let $f^{-1}(x) = x + C(x)$ on $[0, 1]$, where $C(x)$ is the Cantor-Lebesgue function. 
 \end{theorem}
 
+\subsection*{Solution}
+Before we jump into the proof, we will prove a usefull lemma.
+\begin{lemma}
+If $f$ is an absolutely continuous function on $[a, b]$, and $[a_i, b_i] \subseteq [a, b]$, then the image of $[a_i, b_i]$ under $f$ is an interval with $f([a_i, b_i]) \leq V(b_i) - V(a_i)$.
+\end{lemma}
+
+\begin{proof}
+Since $f$ is continuous, it follows immediately from the intermediate value theorem that $f([a_i, b_i])$ is an interval. By Theorem 7.27 in our textbook, we have that $f$ is of bounded variation. Thus, by theorem 2.2, we have
+\begin{align*}
+V(b_i) - V(a_i) &= V[a, b_i] - V[a, a_i]\\
+&= V[a_i, b_i].
+\end{align*}
+By the extreme value theorem, there exist $c, d \in [a_i, b_i]$ such that the minimum and maximum values of $f$ on $[a_i, b_i]$ are attained at $c$ and $d$ respectively. Define a partition of $[a_i, b_i]$ by
+\begin{align*}
+T = \{a_i, c, d, b_i\}.
+\end{align*}
+Then
+\begin{align*}
+V[a_i, b_i] &\geq V([a_i, b_i], T)\\
+&\geq |f(d) - f(c)|\\
+&= |[f(c), f(d)]|
+&= |f([a_i, b_i])|,
+\end{align*}
+and we have proven the lemma.
+\end{proof}
+
+Now we are ready for the main proof.
+\begin{proof}
+\proofpart{(a)}{} Let $\epsilon >0$. Since $f$ is absolutely continuous on $[a, b]$, theorem 7.31 tells us that $V(x)$ is absolutely continuous on $[a, b]$. Thus, there exists a $\delta > 0$ such that $\sum |V(b_i) - V(a_i)| < \epsilon$ for any countable collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. Define an open set $G$ such that $[a, b] \subseteq G$, with $|G| < \delta$. Since $G$ is open, by theorem 1.11 in our textbook, there exists a countable collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a, b]$ whose union is $[a_i, b_i]$. Thus, since $\sum (b_i - a_i) < \delta$, we have
+\begin{align*}
+\epsilon &> \sum |V(b_i) - V(a_i)|\\
+&\geq \sum |f([a_i, bi])| && \text{By Lemma 1}\\
+&\geq \left|\bigcup f([a_i, b_i]) \right|\\
+&\geq |f(G)|\\
+&\geq |f(Z)|.
+\end{align*}
+Since this is true for all $\epsilon < 0$, we have that $|f(Z)| = 0$, and we have shown that $f$ maps sets of measure zero to sets of measure zero.
+
+Now, let $E$ be any measurable set. Then, we use theorem 3.28 in our textbook write $E = H \cup Z$, where $H$ is a set of type $F_\sigma$ and $Z$ is of measure zero. Since $f(E) = f(H) \cup f(Z)$, we have that $TE$ is the the union of two measurable sets, and is therefore measurable.
+\end{proof}
+
 \end{document}
