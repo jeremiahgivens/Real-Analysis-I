@@ -249,6 +249,106 @@ Now we are ready for the main proof.
 Since this is true for all $\epsilon < 0$, we have that $|f(Z)| = 0$, and we have shown that $f$ maps sets of measure zero to sets of measure zero.
 
 Now, let $E$ be any measurable set. Then, we use theorem 3.28 in our textbook write $E = H \cup Z$, where $H$ is a set of type $F_\sigma$ and $Z$ is of measure zero. Since $f(E) = f(H) \cup f(Z)$, we have that $TE$ is the the union of two measurable sets, and is therefore measurable.
+
+\proofpart{(b)}{} Let $g:[0, 1] \to [0, 2]$ be defined by
+\begin{align*}
+g(x) = x + C(x),
+\end{align*}
+where $C:[0, 1] \to [0, 1]$ is the Cantor Lebesgue function. This function is injective, thus it's inverse function $f:[0, 2] \to [0, 1]$ is well defined. Since $g$ is strictly increasing, we have that $f$ is strictly increasing. We will first show that $f$ is Lipschitz continuous. Let $x, y \in [0, 2]$ with $x < y$. Then, we have
+\begin{align*}
+\left|\frac{y - x}{f(y) - f(x)} \right| &= \frac{y - x}{f(y) - f(x)} &&\text{Since } f \text{ is increasing}\\
+&= \frac{g(f(y)) - g(f(x))}{f(y) - f(x)}\\
+&= \frac{f(y) - f(x)}{f(y) - f(x)} + \frac{C(f(y)) - C(f(x))}{f(y) - f(x)}\\
+&= 1 + \frac{C(f(y)) - C(f(x))}{f(y) - f(x)}\\
+&\geq 1 &&\text{Since the Cantor Lebesgue function is non decreasing.}
+\end{align*}
+Thus, we have
+\begin{align*}
+|f(y) - f(x)| \leq |y - x|,
+\end{align*}
+and we can conclude $f$ is  Lipschitz continuous.
+
+Now, let $\mathcal{C}$ be the Cantor set, and consider the set $[0, 1]\backslash \mathcal{C}$. We have that $[0, 1]\backslash \mathcal{C}$ is the sum of countably many disjoint intervals $\{I_i\}$, and $C$ is constant on each one of these intervals. Let $C(x) = c_i$ for $x \in I_i$. Then, we have
+\begin{align*}
+g(I_i) = \{x + c_i: x \in I_i \}.
+\end{align*}
+Thus, by translation invariance of the lebesgue outer measure, we have
+\begin{align*}
+|g(I_i)|_e &= |I_i|.
+\end{align*}
+With this, we have
+\begin{align*}
+|g([0, 1]\backslash \mathcal{C})|_e &= \left| g \left(\bigcup I_i \right) \right|\\
+&= \left| \bigcup g(I_i) \right|_e\\
+&= \sum_{i=1}^\infty |g(I_i)|_e\\
+&= 1.
+\end{align*}
+Now, we know that $|\mathcal{C}| = 0$. Furthermore, we have $g([0, 1]) = [0, 2]$. Finally, we have
+\begin{align*}
+g([0, 1]) = g(\mathcal{C}) \cup g([0, 1]\backslash \mathcal{C}),
+\end{align*}
+and by theorem 3.34 in our textbook, we can conclude that $|g(\mathcal{C})| = 1$.
 \end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be monotone, and suppose $f'(x)$ exists and is finite at every $x \in [a, b]$. Then $f$ is absolutely continuous. 
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose, without loss of generality, that $f$ is monotone increasing.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+A function $f:[a, b] \to \mathbb{R}$ is Lipschitz continuous on $[a, b]$ if and only if $f$ is an indefinite integral of a bounded measurable function on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+We will start with a useful lemma.
+\begin{lemma}
+Let $f:[a, b] \to \mathbb{R}$ be Lipschitz continuous on $[a, b]$. Then, the derivative of $f$ is bounded.
+\end{lemma}
+
+\begin{proof}
+Since $f$ is Lipschitz continuous on $[a, b]$, there exists an $M > 0$ such that for all $x, h \in [a, b]$, where $f'(x)$ exists and $x + h \in [a, b]$, we have
+\begin{align*}
+|f(x + h) - f(x)| \leq M |h| &\implies \left| \frac{f(x+h) - f(x)}{h} \right| \leq M.
+\end{align*}
+Taking the limit as $h \to 0$, we have that $f'(x) \leq M$, and we have proven the lemma.
+\end{proof}
+
+Now we are ready to prove the main theorem.
+\begin{proof}
+Suppose that $f$ is Lipschitz continuous on $[a, b]$. Then, $f$ is absolutely continuous, and by theorem 7.29 in our textbook that
+\begin{align*}
+f(x) - f(a) = \int_a^x f' &\implies f(x) = \int_a^x f' + f(a)\\
+&\implies f(x) = \int_a^x \left(f' + \frac{f(a)}{x - a}\right).
+\end{align*}
+Thus, combining this with the results of Lemma 2, we have shown that $f$ is an indefinite integral of a bounded measurable function on $[a, b]$.
+
+Now, suppose that $f$ is the indefinite integral of a bounded measurable function $F$. That is, suppose
+\begin{align*}
+f(x) &= \int_a^x F,
+\end{align*}
+for some function where $|F| \leq M$ for some $M > 0$. Then, for any $a_i < b_i \in [a, b]$, we have
+\begin{align*}
+|f(b_i) - f(a_i)| &= \left|\int_a^{b_i} F - \int_a^{a_i} F \right|\\
+&= \left|\int_{a_i}^{b_i} F \right|\\
+&\leq \int_a^{b_i} |F|\\
+&= M(b_i - a_i).
+\end{align*}
+Thus, $f$ is Lipschitz continuous, and our proof is complete.
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Show that if $|D^+ f(x)| \leq M$ for all $x \in [a, b]$, where
+\begin{align*}
+D^+ f(x) = \lim_{h \searrow 0} \frac{f(x + h) - f(x)}{h},
+\end{align*}
+then $f$ satisfies a Lipschitz condition on $[a, b]$.
+\end{theorem}
 
 \end{document}
