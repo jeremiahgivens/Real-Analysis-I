@@ -297,7 +297,7 @@ Let $f:[a, b] \to \mathbb{R}$ be monotone, and suppose $f'(x)$ exists and is fin
 
 \subsection*{Solution}
 \begin{proof}
-Suppose, without loss of generality, that $f$ is monotone increasing.
+Proof is under development.
 \end{proof}
 
 \section*{Problem 3}
@@ -344,11 +344,94 @@ Thus, $f$ is Lipschitz continuous, and our proof is complete.
 
 \section*{Problem 4}
 \begin{theorem}
-Show that if $|D^+ f(x)| \leq M$ for all $x \in [a, b]$, where
+Show that if $f[a, b] \to \mathbb{R}$ is continuous, and $|D^+ f(x)| \leq M$ for all $x \in [a, b]$, where
 \begin{align*}
 D^+ f(x) = \lim_{h \searrow 0} \frac{f(x + h) - f(x)}{h},
 \end{align*}
 then $f$ satisfies a Lipschitz condition on $[a, b]$.
 \end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Proof is still under development.
+\end{proof}
+
+\section*{Problem 5} 
+\begin{theorem}
+A function $f:[a, b] \to \mathbb{R}$ satisfies a Lipschitz condition if and only if for all $\epsilon > 0$, there exists a $\delta > 0$, such that any finite collection of intervals $\{[a_i, b_i] \}_{i=1}^n$ in $[a, b]$ (which are not necessarily nonoverlapping) satisfying 
+\begin{align*}
+\sum_{i=1}^n (b_i - a_i) < \delta,
+\end{align*}
+it holds that 
+\begin{align*}
+\left|\sum_{i=1}^n (f(b_i) - f(a_i))\right| < \epsilon.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose that $f$ is Lipschitz continuous with Lipschitz constant $M$. Let $\epsilon > 0$, and define $\delta = \epsilon / M$. Then, for any finite collection of intervals $\{[a_i, b_i] \}_{i=1}^n$ in $[a, b]$ satisfying 
+\begin{align*}
+\sum_{i=1}^n (b_i - a_i) < \delta,
+\end{align*}
+we have
+\begin{align*}
+\left|\sum_{i=1}^n (f(b_i) - f(a_i))\right| &\leq \sum_{i=1}^n |f(b_i) - f(a_i)|\\
+&\leq \sum_{i=1}^n M|b_i - a_i|\\
+&= M \sum_{i=1}^n |b_i - a_i|\\
+&< M \delta\\
+&= M \frac{\epsilon}{M}\\
+&= \epsilon.
+\end{align*}
+Thus, we have proven the forward direction.
+
+Now we will prove the other direction by contrapositive. Suppose $f$ is not Lipschitz continuous. Then, for any $\epsilon > 0$, there exists two points $x < y \in [a, b]$ such that 
+\begin{align*}
+|f(y) - f(x)| > \frac{1}{\epsilon}|x - y|.
+\end{align*}
+Fix an $\epsilon > 0$ and the corresponding $x,y$. Suppose first that $|y - x| < \epsilon$. Then, choose $n \in \mathbb{N}$ such that 
+\begin{align*}
+\frac{\epsilon}{2} \leq n |y - x| < \epsilon.
+\end{align*}
+With this, we have
+\begin{align*}
+\frac{\epsilon}{2} \leq \sum_{i=1}^n (y - x) < \epsilon,
+\end{align*}
+and
+\begin{align*}
+\sum_{i=1}^n |f(y) - f(x)| &\geq \sum_{i=1}^n \frac{1}{\epsilon}|y - x|\\
+&= \frac{1}{\epsilon} \sum_{i=1}^n (y - x)\\
+&\geq \frac{1}{\epsilon} \cdot \frac{\epsilon}{2}\\
+&= \frac{1}{2}.
+\end{align*}
+
+Now suppose $|y - x| \geq \epsilon$. We will break $[x, y]$ into $n$ subintervals $[x_i, y_i]$ of equal length, satisfying
+\begin{align*}
+\frac{\epsilon}{2} \leq \frac{y - x}{n} < \epsilon.
+\end{align*}
+Suppose, for sake of contradiction, that for all $i$, we have $|f(y_i) - f(x_i)| \leq \frac{1}{\epsilon}|y_i - x_i|$. Then, by the triangle inequality, we have
+\begin{align*}
+|f(y) - f(x)| &\leq \sum_{i=1}^n |f(y_i) - f(x_i)|\\
+&\leq \sum_{i=1}^n \frac{1}{\epsilon}|y_i - x_i|\\
+&\leq \frac{1}{\epsilon}|y - x|,
+\end{align*}
+which is a contradiction. Thus, for some $I \in \{1, ..., n\}$, we have
+\begin{align*}
+|f(y_I) - f(x_I)| > \frac{1}{\epsilon}|y_I - x_I|.
+\end{align*}
+Then, we have
+\begin{align*}
+\frac{\epsilon}{2} \leq \sum_{i=1}^n (y_I - x_I) < \epsilon,
+\end{align*}
+and
+\begin{align*}
+\sum_{i=1}^n |f(y_I) - f(x_I)| &\geq \sum_{i=1}^n \frac{1}{\epsilon}|y_I - x_I|\\
+&= \frac{1}{\epsilon} \sum_{i=1}^n (y_I - x_I)\\
+&\geq \frac{1}{\epsilon} \cdot \frac{\epsilon}{2}\\
+&= \frac{1}{2}.
+\end{align*}
+With this, our proof is complete.
+\end{proof}
+
 
 \end{document}
