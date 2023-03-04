@@ -433,5 +433,44 @@ and
 With this, our proof is complete.
 \end{proof}
 
+\section*{Problem 6}
+Use the function 
+\[   f(x) = \left\{
+\begin{array}{ll}
+      x \sin \frac{1}{x} & \text{if } x \in (0, \pi] \\
+      0 & \text{if } x = 0\\
+\end{array} 
+\right. \]
+to show that the following statement is not true: If $f:[a, b] \to \mathbb{R}$ is absolutely continuous on $[a + \epsilon, b]$ for any small $\epsilon > 0$, and $f$ is continuous on $[a, b]$, then $f$ is absolutely continuous on $[a, b]$.
 
+\subsection*{Solution}
+For any small $\epsilon > 0$, we have for all $x \in [\epsilon, \pi]$,
+\begin{align*}
+|f'(x)| &= \left| \sin \frac{1}{x} - \frac{\cos\frac{1}{x}}{x} \right|\\
+&\leq \left| \sin \frac{1}{x} \right| + \left| \frac{\cos\frac{1}{x}}{x} \right|\\
+&\leq 1 + \frac{1}{\epsilon}.
+\end{align*}
+Thus, since $f'(x)$ is bounded on $x \in [\epsilon, \pi]$, an easy argument using the mean value theorem allows us to conclude that $f$ is Lipschitz continuous, and therefore absolutely continuous.
+
+Now, let $\delta > 0$. Choose $n \in \mathbb{N}$ large enough that $\frac{2}{\pi (1 + 2n)} < \delta$, and define $x_i = \frac{2}{\pi (1 + 2i)}$ for $i \geq n$. Then, we have $\{[x_i, x_{i-1}] \}_{i=n + 1}^\infty$ is a set of nonoverlapping subintervals of $[0, \pi]$ such that $\sum_{i= n + 1}^\infty (x_i - x_{i-1}) < \delta$. Furthermore, since 
+\begin{align*}
+\frac{1}{x_i} = \frac{\pi}{2} + i \pi,
+\end{align*}
+we have that $f(x_i)$ alternates between $1$ and $-1$. Assume, without loss of generality, that $f(x_n) = -1$. Then, we have
+\begin{align*}
+\sum_{i=n + 1}^\infty |f(x_i) - f(x_{i-1})| &= \sum_{i=n + 1}^\infty |x_i + x_{i-1}|\\
+&= \sum_{i=n + 1}^\infty \left(\frac{2}{\pi (1 + 2i)} + \frac{2}{\pi (1 + 2(i-1))} \right)\\
+&= \frac{2}{\pi} \sum_{i=n + 1}^\infty \left(\frac{1}{1 + 2i} + \frac{1}{2i - 1} \right)\\
+&= \frac{2}{\pi} \sum_{i=n + 1}^\infty \frac{2i - 1 + 2i + 1}{(1 + 2i)(2i - 1)} \\
+&= \frac{2}{\pi} \sum_{i=n + 1}^\infty \frac{4i}{4i^2 - 1} \\
+&\geq \frac{2}{\pi} \sum_{i=n + 1}^\infty \frac{4i}{4i^2} \\
+&= \frac{2}{\pi} \sum_{i=n + 1}^\infty \frac{1}{i}\\
+&= \infty && \text{Harmonic series does not converge}.
+\end{align*}
+Since this is true for any $\delta > 0$, we can conclude that $f$ is not absolutely continuous (or even of bounded variation) on $[0, \pi]$.
+
+\section*{Problem 7}
+\begin{theorem}
+If $f:[a, b] \to \mathbb{R}$ is continuous, $f \in BV[a, b]$, and $f \in AC[a + \epsilon, b]$ for any small $\epsilon > 0$, then $f \in AC[a, b]$.
+\end{theorem}
 \end{document}
