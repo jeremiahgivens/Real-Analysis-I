@@ -481,7 +481,21 @@ Let $f[a, b] \to \mathbb{R}$ be continuous, and of bounded variation. Then, $V(x
 \end{lemma}
 
 \begin{proof}
-Let $x_0 \in [a, b]$.  
+Let $x_0 \in [a, b]$, and let $\epsilon > 0$. Define a partition $T = \{x_0 < x_1 <...< x_n = b\}$ of $[x_0, b]$ such that 
+\begin{align*}
+V[x_0, b] \leq V(f, T) + \epsilon/2.
+\end{align*} 
+Since $f$ is continuous, there exists some $\delta_1 > 0$ such that for all $|f(x_0) - f(x)| < \epsilon/2$ if $|x - x_0| < \delta_1$. Define $\delta = \min\{\delta_1, x_1 - x_0\}$. Then,
+\begin{align*}
+V(b) - V(x_0) &= V[x_0, b] &&\text{By theorem 2.2 in our textbook}\\
+&\leq V(f, T) + \epsilon/2\\
+&= \sum_{i=1}^n |f(x_i) - f(x_{i-1})| + \epsilon/2\\
+&= |f(x_1) - f(x_{0})| + \sum_{i=2}^n |f(x_i) - f(x_{i-1})| + \epsilon/2\\
+&\leq |f(x_0) - f(x)| + |f(x_1) - f(x)| + \sum_{i=2}^n |f(x_i) - f(x_{i-1})| + \epsilon/2\\
+&< \epsilon/2 + V[x, b] + \epsilon/2\\
+&= \epsilon + V(b) - V(x).
+\end{align*}
+Thus, we can conclude that $V(x) - V(x_0) < \epsilon$. Thus, it follows that $V(x)$ is continuous.
 \end{proof}
 
 Now we are ready to prove the main theorem.
