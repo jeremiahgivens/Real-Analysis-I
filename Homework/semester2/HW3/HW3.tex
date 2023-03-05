@@ -473,4 +473,30 @@ Since this is true for any $\delta > 0$, we can conclude that $f$ is not absolut
 \begin{theorem}
 If $f:[a, b] \to \mathbb{R}$ is continuous, $f \in BV[a, b]$, and $f \in AC[a + \epsilon, b]$ for any small $\epsilon > 0$, then $f \in AC[a, b]$.
 \end{theorem}
+
+\subsection*{Solution}
+To prove this theorem, we will invoke a rather useful lemma.
+\begin{lemma}
+Let $f[a, b] \to \mathbb{R}$ be continuous, and of bounded variation. Then, $V(x)$ is continuous.
+\end{lemma}
+
+\begin{proof}
+Let $x_0 \in [a, b]$.  
+\end{proof}
+
+Now we are ready to prove the main theorem.
+\begin{proof}
+Let $\epsilon > 0$. Since $f$ is continuous, $V(x) = V[a, x]$ is continuous for all $x \in [a, b]$. Thus, there exists a $\delta_1 > 0$ such that $V(a + \delta_1) < \epsilon/2$. Furthermore, since $f$ is of bounded variation, on $[a + \delta_1, b]$, there exists a $\delta_2 > 0$ such that $\sum |f(b_i) - f(a_i)| < \epsilon/2$ for any countable collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a + \delta_1, b]$ with $\sum (b_i - a_i) < \delta_2$.
+
+Now, let $\{[a_i, b_i]\}$ be a set of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta_2$. Assume, without loss of generality, that there is a single interval $[a_n, b_n]$ such that $a_n < a + \delta_1 < b_n$. Let $L = \{i: [a_i, b_i] \subseteq [a, a + \delta_1]\}$ and let $R = \{i: [a_i, b_i] \subseteq [a + \delta_1, b]\}$. Then, we have
+\begin{align*}
+\sum_{i}|f(b_i) - f(a_i)| &= \sum_{i \in L} |f(b_i) - f(a_i)| + \sum_{i \in R} |f(b_i) - f(a_i)| + |f(b_n) - f(a_n)|\\
+&\leq \sum_{i \in L} |f(b_i) - f(a_i)| + \sum_{i \in R} |f(b_i) - f(a_i)| + |f(b_n) - f(a + \delta_1)| + |f(a + \delta_1) - f(a_n)|\\
+&= \left(\sum_{i \in L} |f(b_i) - f(a_i)| + |f(a + \delta_1) - f(a_n)|\right) + \left( \sum_{i \in R} |f(b_i) - f(a_i)| + |f(b_n) - f(a + \delta_1)|\right)\\
+&< V(a + \delta_1) + \frac{\epsilon}{2} \text{, Left hand points can extend to a partition of } [a, a + \delta_1]\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon.
+\end{align*}
+Thus, we have proven that $f$ is absolutely continuous on $[a, b]$.
+\end{proof}
 \end{document}
