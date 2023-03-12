@@ -344,7 +344,7 @@ Thus, $f$ is Lipschitz continuous, and our proof is complete.
 
 \section*{Problem 4}
 \begin{theorem}
-Show that if $f[a, b] \to \mathbb{R}$ is continuous, and $|D^+ f(x)| \leq M$ for all $x \in [a, b]$, where
+Show that if $f[a, b] \to \mathbb{R}$ is continuous, and $|D^+ f(x)| < M$ for all $x \in [a, b]$, where
 \begin{align*}
 D^+ f(x) = \lim_{h \searrow 0} \frac{f(x + h) - f(x)}{h},
 \end{align*}
@@ -353,7 +353,47 @@ then $f$ satisfies a Lipschitz condition on $[a, b]$.
 
 \subsection*{Solution}
 \begin{proof}
-Proof is still under development.
+Define $g(x) = f(x) + Mx$, and $h(x) = f(x) - Mx$. Then for all $x \in [a, b]$, we have
+\begin{align*}
+D^+ g(x) &= D^+ f(x) + M\\
+&> 0,
+\end{align*}
+and
+\begin{align*}
+D^+ h(x) &= D^+ f(x) - M\\
+&< 0.
+\end{align*}
+Let $x_0 \in [a, b)$, and suppose for each $n \in \mathbb{N}$, that we can find an $x_n \in [x_0, x_0 + 1/n)$ such that $f(x_n) < f(x_0)$. Then, we have
+\begin{align*}
+\lim_{n \to \infty} \frac{f(x_n) - f(x_0)}{x_n - x_0} \leq 0
+\end{align*}
+which contradicts our assumption that $D^+ g(x_0) > 0$. Thus, for each $x \in [a, b)$, there exists a $\delta > 0$ such that $g$ is increasing on $[x, x + \delta)$.
+
+Suppose now that there exist $x < y \in [a, b]$ such that $g(x) > g(y)$. Define
+\begin{align*}
+w = \inf \{z \in [x, y]: g(z) < g(x) \}.
+\end{align*}
+Then, by definition of an infimum, we have for all $\epsilon > 0$, 
+\begin{align*}
+f(x) \leq f(w - \epsilon).
+\end{align*}
+Thus, by continuity of $g$, we have that $g(x) = g(w)$. However, by definition of an infimum, we have that for all $n \in \mathbb{N}$, there exists $x_n [w, w + 1/n)$ such that $g(x_n) < g(x)$, which contradicts the fact that $g$ is locally increasing at $w$. Therefore, we can conclude that $g$ is increasing on $[a, b]$. A similar argument allows us to conclude that $h$ is decreasing on $[a, b]$.
+
+Now, let $x < y \in [a, b]$. Then,
+\begin{align*}
+g(x) \leq g(y) &\implies f(x) + Mx \leq f(y) + My\\
+&\implies f(x) - f(y) \leq M(y - x),
+\end{align*}
+and
+\begin{align*}
+h(y) \leq h(x) &\implies f(y) - My \leq f(x) - Mx\\
+&\implies f(y) - f(x) \leq M(y - x).
+\end{align*}
+Thus, we have
+\begin{align*}
+|f(y) - f(x)| \leq M|x - y|,
+\end{align*}
+and we have shown that $f$ is Lipschitz continuous.
 \end{proof}
 
 \section*{Problem 5} 
