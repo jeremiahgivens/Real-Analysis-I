@@ -1,0 +1,186 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis II}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Homework 4}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $f:(a,b) \to \mathbb{R}$ be such that for all $x_0 \in (a, b)$, there is a support line
+\begin{align*}
+l_{x_0}(x) = f(x_0) + m(x - x_0)
+\end{align*}
+for some $m \in \mathbb{R}$ such that 
+\begin{align*}
+f(x) \geq l_{x_0}(x)
+\end{align*}
+for all $x \in (a, b)$. Then $f$ is convex on $(a, b)$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Suppose that $f$ is not convex on $(a, b)$. Then, for some $[x_1, x_2] \subset (a, b)$, there exists an $x_0 \in [x_1, x_2]$ such that $f(x_0) > L(x_0)$, where $L$ is the straight line such that $L(x_1) = f(x_1)$ and $L(x_2) = f(x_2)$. We have $l_{x_0}(x_1) \leq f(x_1) = L(x_1)$ and $l_{x_0}(x_2) \leq f(x_2) = L(x_2)$. Since $L$ and $l_{x_0}$ are both straight lines, we have that $l_{x_0}(x) \leq L(x)$ for all $x \in [x_1, x_2]$. However, we have
+\begin{align*}
+l_{x_0}(x_0) = f(x_0) + m(x_0 - x_0) = f(x_0) > L(x_0),
+\end{align*}
+and we have reached a contradiction. Thus, we have proven that $f$ is convex.
+\end{proof}
+
+\section*{Problem 2}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be absolutely continuous and $f'(x)$ be increasing except on a zero measure subset of $[a, b]$. Then $f$ is convex on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+We will start by proving a lemma which will aid in the proof of this theorem:
+\begin{lemma}
+Let $f:[a, b] \to \mathbb{R}$ be continuous and satisfy the midpoint convexity
+\begin{align*}
+f \left(\frac{x_1 + x_2}{2} \right) \leq \frac{f(x_1) + f(x_2)}{2}.
+\end{align*}
+for any $x_1, x_2 \in [a, b]$. Then $f$ is convex on $[a, b]$.
+\end{lemma}
+\begin{proof}
+We will first prove, that for any $n \in \mathbb{N}$, if $x_1,...,x_{2^n} \in [a, b]$, then
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) \leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}.
+\end{align*}
+To prove this, we note that the base case ($n=1$) is true by midpoint convexity of $f$. Now, suppose for some $n \in \mathbb{N}$ that if $x_1,...,x_{2^n} \in [a, b]$, then
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) \leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}.
+\end{align*}
+Let $x_1,...,x_{2^{n+1}} \in [a, b]$. Then, we have
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^{n+1}}}{2^{n+1}} \right) &= f\left( \frac{\frac{x_1 + ... + x_{2^n}}{2^n} + \frac{x_{2^n + 1} + ... + x_{2^{n+1}}}{2^n}}{2} \right)\\
+&\leq \frac{f\left( \frac{x_1 + ... + x_{2^n}}{2^n}\right) + f \left( \frac{x_{2^n + 1} + ... + x_{2^{n+1}}}{2^n} \right)}{2}\\
+&= \frac{f(x_1) + ... + f(x_{2^{n+1}})}{2^{n+1}},
+\end{align*}
+and our induction is complete.
+
+From elementary analysis, we have that rational numbers of the form $\frac{m}{2^n}$ with $1 \leq m \leq 2^n$ are dense in $[0, 1]$. Let $[a_1, b_2] \subseteq [a, b]$. Fix some $n \in \mathbb{N}$ and some $1 \leq m \leq 2^n$. Setting $x_i = a_i$ for $1 \leq i \leq m$, and $x_i = b_i$ for $m+1 \leq i \leq 2^n$, we see from the above argument that
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) &\leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}\\
+&= \frac{mf(a_i) + (2^n - m)f(b_i)}{2^n}\\
+&= \frac{m}{2^n}f(a_i) + (1 - \frac{m}{2^n})f(b_i).
+\end{align*}
+Finally, let $\theta \in [0, 1]$ be a real number. For each $n \in \mathbb{N}$, define $1 \leq m_n \leq 2^n$ to be the largest number such that $\frac{m_n}{2^n} \geq \theta$. Then, $\frac{m_n}{2^n} \to \theta$, and it follows from the continuity of $f$ that 
+\begin{align*}
+f(\theta a_i + (1 - \theta)b_i) \leq \theta f(a_i) + (1 - \theta)f(b_i),
+\end{align*}
+and we have shown that $f$ is convex.
+\end{proof}
+Now we are ready to prove the main theorem:
+\begin{proof}
+Let $[x_1, x_2] \subseteq [a, b]$. By the above lemma, it will suffice to show that 
+\begin{align*}
+f \left(\frac{x_1 + x_2}{2} \right) \leq \frac{f(x_1) + f(x_2)}{2}.
+\end{align*} 
+Since $f$ is absolutely continuous, we have
+\begin{align*}
+f \left(\frac{x_1 + x_2}{2} \right) - f(x_1) = \int_{x_1}^{\frac{x_1 + x_2}{2}} f'(x)dx,
+\end{align*}
+and 
+\begin{align*}
+f(x_2) - f \left(\frac{x_1 + x_2}{2} \right) = \int_{\frac{x_1 + x_2}{2}}^{x_2} f'(x)dx.
+\end{align*}
+Now, since $f'$ is increasing almost everywhere, we have
+\begin{align*}
+\int_{x_1}^{\frac{x_1 + x_2}{2}} f'(x)dx &\leq \int_{\frac{x_1 + x_2}{2}}^{x_2} f'(x)dx.
+\end{align*}
+With this, we have
+\begin{align*}
+f \left(\frac{x_1 + x_2}{2} \right) - f(x_1) &\leq f(x_2) - f \left(\frac{x_1 + x_2}{2} \right)\\
+f \left(\frac{x_1 + x_2}{2} \right) &\leq \frac{f(x_1) + f(x_2)}{2}
+\end{align*}
+and we have proven that $f$ is midpoint-convex, and therefore convex.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ and let $E \subseteq [a, b]$. Assume that $f'(x)$ exists with a finite value for any $x \in E$. Then,
+\begin{align*}
+|f(E)|_e \leq \int_E |f'(x)|dx.
+\end{align*}
+\end{theorem}
+
+\end{document}
