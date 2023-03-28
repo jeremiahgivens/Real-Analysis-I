@@ -183,4 +183,14 @@ Let $f:[a, b] \to \mathbb{R}$ and let $E \subseteq [a, b]$. Assume that $f'(x)$ 
 \end{align*}
 \end{theorem}
 
+\begin{proof}
+We start by defining the set of values of $f$ on $E$ as $f(E) = \{f(x) : x \in E\}$. We then define the outer measure of this set as $|f(E)|_e = \inf{\sum_{i=1}^\infty |I_i| : f(E) \subseteq \bigcup_{i=1}^\infty I_i}$, where the $I_i$ are intervals.
+
+Now, let $A \subseteq E$ be a subset of $E$. By the mean value theorem, for any $x, y \in A$, there exists a point $c \in A$ such that $f(x) - f(y) = f'(c)(x - y)$. Therefore, taking absolute values and using the triangle inequality, we have $|f(x) - f(y)| = |f'(c)||x - y| \leq \sup_{x \in A} |f'(x)||x - y|$.
+
+We can now cover $f(A)$ with intervals of length at most $\sup_{x \in A} |f'(x)|$ as follows: for each $f(x) \in f(A)$, choose an interval $I_x$ centered at $f(x)$ with length $\epsilon_x$, where $\epsilon_x$ is such that $2\epsilon_x \sup_{x \in A} |f'(x)| \geq \epsilon_x |A|e$ (such an $\epsilon_x$ exists since $\sup{x \in A} |f'(x)|$ is finite and $|A|e$ is also finite). Then, we have $f(A) \subseteq \bigcup{x \in A} I_x$ and $\sum_{x \in A} l(I_x) \leq 2\sup_{x \in A} |f'(x)|\sum_{x \in A} \epsilon_x \leq 2\sup_{x \in A} |f'(x)|\cdot |A|_e$.
+
+By the definition of the outer measure of $f(E)$, we have $|f(E)|e \leq \sum{i=1}^\infty l(I_i)$ for any covering of $f(E)$ by intervals $I_i$, including the one above. Therefore, we obtain $|f(A)|e \leq \sum{x \in A} l(I_x) \leq 2\sup_{x \in A} |f'(x)|\cdot |A|_e$. Taking the infimum over all coverings of $f(E)$ by intervals, we have $|f(A)|e \leq \inf{2\sup{x \in A} |f'(x)|\cdot |A|_e}$.
+\end{proof}
+
 \end{document}
