@@ -183,14 +183,29 @@ Let $f:[a, b] \to \mathbb{R}$ and let $E \subseteq [a, b]$. Assume that $f'(x)$ 
 \end{align*}
 \end{theorem}
 
+\subsection*{Solution}
 \begin{proof}
-We start by defining the set of values of $f$ on $E$ as $f(E) = \{f(x) : x \in E\}$. We then define the outer measure of this set as $|f(E)|_e = \inf{\sum_{i=1}^\infty |I_i| : f(E) \subseteq \bigcup_{i=1}^\infty I_i}$, where the $I_i$ are intervals.
+We will use the fact that if $f'(x)$ exists for all $x \in A \subseteq [a, b]$, and $|f(x)| \leq p$ for all $x \in A$, then
+\begin{align*}
+|f(A)|_e \leq p|A|_e.
+\end{align*}
+\end{proof}
 
-Now, let $A \subseteq E$ be a subset of $E$. By the mean value theorem, for any $x, y \in A$, there exists a point $c \in A$ such that $f(x) - f(y) = f'(c)(x - y)$. Therefore, taking absolute values and using the triangle inequality, we have $|f(x) - f(y)| = |f'(c)||x - y| \leq \sup_{x \in A} |f'(x)||x - y|$.
+\section*{Problem 4}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be continuous. If $f'(x)$ exists as a finite number almost on all but a countable subset of $[a, b]$ and $f' \in L([a, b])$, then $f$ is absolutely continuous on $[a, b]$.
+\end{theorem}
 
-We can now cover $f(A)$ with intervals of length at most $\sup_{x \in A} |f'(x)|$ as follows: for each $f(x) \in f(A)$, choose an interval $I_x$ centered at $f(x)$ with length $\epsilon_x$, where $\epsilon_x$ is such that $2\epsilon_x \sup_{x \in A} |f'(x)| \geq \epsilon_x |A|e$ (such an $\epsilon_x$ exists since $\sup{x \in A} |f'(x)|$ is finite and $|A|e$ is also finite). Then, we have $f(A) \subseteq \bigcup{x \in A} I_x$ and $\sum_{x \in A} l(I_x) \leq 2\sup_{x \in A} |f'(x)|\sum_{x \in A} \epsilon_x \leq 2\sup_{x \in A} |f'(x)|\cdot |A|_e$.
-
-By the definition of the outer measure of $f(E)$, we have $|f(E)|e \leq \sum{i=1}^\infty l(I_i)$ for any covering of $f(E)$ by intervals $I_i$, including the one above. Therefore, we obtain $|f(A)|e \leq \sum{x \in A} l(I_x) \leq 2\sup_{x \in A} |f'(x)|\cdot |A|_e$. Taking the infimum over all coverings of $f(E)$ by intervals, we have $|f(A)|e \leq \inf{2\sup{x \in A} |f'(x)|\cdot |A|_e}$.
+\subsection*{Solution}
+\begin{proof}
+By a theorem we recently proved in class, it will suffice to show that $f$ is a null function. Let $N \subseteq [a, b]$ have measure zero. Define $Z \subseteq N$ to be the at most countable set where $f'$ does not have a finite value. Then, we have
+\begin{align*}
+|f(N)|_e &= |f(N\backslash Z) \cup f(Z)|_e\\
+&\leq |f(N\backslash Z)|_e + |f(Z)|_e\\
+&\leq \int_{N\backslash Z} |f'(x)|dx + 0 && \text{By Theorem 3 and the fact that } f(Z) \text{ is at most countable}\\
+&= 0. &&\text{Since } N\backslash Z \text{ has measure zero, and } f' \text{ is finite on } N\backslash Z
+\end{align*}
+Thus, we have shown that $f$ is absolutely continuous.
 \end{proof}
 
 \end{document}
