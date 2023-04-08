@@ -189,6 +189,20 @@ We will use the fact that if $f'(x)$ exists for all $x \in A \subseteq [a, b]$, 
 \begin{align*}
 |f(A)|_e \leq p|A|_e.
 \end{align*}
+Let $\epsilon > 0$, and define $E_k = \{x \in E: (k - 1)\epsilon \leq |f'(x)| < k \epsilon \}$ for each natural $k$. Then, we have
+\begin{align*}
+|f(E)|_e &= \left| f(\bigcup_{k \in \mathbb{N}} E_k) \right|_e\\
+&= \left| \bigcup_{k \in \mathbb{N}} f(E_k) \right|_e\\
+&\leq \sum_{k \in \mathbb{N}} \left|f(E_k) \right|_e\\
+&\leq \sum_{k \in \mathbb{N}} k \epsilon |E_k|\\
+&= \sum_{k \in \mathbb{N}} (k - 1) \epsilon |E_k| + \epsilon |E_k|\\
+&\leq \sum_{k \in \mathbb{N}} \int_{E_k} |f'(x)|dx + \epsilon \sum_{k \in \mathbb{N}} |E_k|\\
+&= \int_{E} |f'(x)|dx + \epsilon \left| \bigcup_{k \in \mathbb{N}} E_k\right|\\
+&= \int_{E} |f'(x)|dx + \epsilon |E|\\
+&\leq \int_{E} |f'(x)|dx + \epsilon |[a, b]|.
+\end{align*}
+Thus, taking the limit as $\epsilon \to 0$, we have
+$|f(E)|_e \leq \int_{E} |f'(x)|dx$, and our proof is complete.
 \end{proof}
 
 \section*{Problem 4}
