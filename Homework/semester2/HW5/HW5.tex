@@ -136,4 +136,71 @@ Now, as we proved in class, the equality holds if and only if $\alpha x^{3/2} = 
 g(x) = \alpha x^\frac{1}{2}
 \end{align*}
 for some nonnegative real number $\alpha$ and for almost every $x$.
+
+\section*{Problem 4}
+Let $f \in L^\infty (0, 1)$ and $||f||_\infty \leq 1$. Show that 
+\begin{align*}
+\int_0^1 \sqrt{1 - f^2(x)} dx \leq \sqrt{1 - \left( \int_0^1 f(x)dx \right)^2},
+\end{align*}
+and describe the class of functions $f$ for which equality takes place.
+
+\subsection*{Solution}
+We have
+\begin{align*}
+\int_0^1 \sqrt{1 - f^2(x)} dx &= \int_0^1 \sqrt{(1 - f)(1 + f)} dx\\
+&= \int_0^1 \sqrt{1 - f} \sqrt{1 + f} dx\\
+&\leq \sqrt{\int_0^1 (1 - f) dx}\sqrt{\int_0^1 (1 + f) dx} && \text{Cauchy-Schwarz's inequality}\\
+&= \sqrt{1 - \int_0^1 f dx}\sqrt{1 + \int_0^1 f dx}\\
+&= \sqrt{1 - \left( \int_0^1 f(x)dx \right)^2}.
+\end{align*}
+From the proof of Holder's Inequality, we know that the equality holds iff there exists some $\alpha \in \mathbb{R}$ such that $1 - f = \alpha(1 + f)$. Thus, 
+\begin{align*}
+1 - f = \alpha(1 + f) &\implies 1 - f = \alpha + \alpha f\\
+&\implies 1 - \alpha = (1 + \alpha)f\\
+&\implies f = \frac{1 - \alpha}{1 + \alpha}.
+\end{align*}
+
+\section*{Problem 5}
+\begin{theorem}
+Prove that 
+\begin{align*}
+\int_0^\infty e^{-x} \sqrt{x^4 + 3x^2 + 2} dx &\leq \sqrt{12},
+\end{align*}
+and that the equality does not hold.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+\int_0^\infty e^{-x} \sqrt{x^4 + 3x^2 + 2} dx &= \int_0^\infty \sqrt{e^{-2x}(x^4 + 3x^2 + 2)} dx\\
+&= \int_0^\infty \sqrt{e^{-x}(x^2 + 2)e^{-x}(x^2 + 1)} dx\\
+&= \int_0^\infty \sqrt{e^{-x}(x^2 + 2)} \sqrt{e^{-x}(x^2 + 1)} dx\\
+&\leq \sqrt{ \int_0^\infty e^{-x}(x^2 + 2)dx} \sqrt{\int_0^\infty e^{-x}(x^2 + 1)dx} dx && \text{Cauchy-Schwarz's inequality}\\
+&= \sqrt{ 2 + 2 } \sqrt{2 + 1} && \text{Apply integration by parts twice}\\
+&= \sqrt{12}.
+\end{align*}
+Assume that the equality holds. Then, there exists some $\alpha \in \mathbb{R}$ such that for almost every $x \in [0, \infty)$, we have
+\begin{align*}
+e^{-x}(x^2 + 2) &= \alpha e^{-x}(x^2 + 1).
+\end{align*}
+With this, we see
+\begin{align*}
+x^2 + 2 = \alpha x^2 + \alpha &\implies x^2(1 - \alpha) = 2 + \alpha\\
+&\implies x^2 = \frac{1 - \alpha}{2 + \alpha}.
+\end{align*}
+Thus, for any given $\alpha$, this can only be true for at most two points in $[0, \infty)$, which contradicts our assumption that this is true almost everywhere. Therefore, we can conclude that the equality does not hold, as desired.
+\end{proof}
+
+\section*{Problem 6}
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be continuous and bounded. Show that 
+\begin{align*}
+||f||_\infty = \sup \{|f(x)| : x \in \mathbb{R}^n \}.
+\end{align*}
+
+\subsection*{Solution}
+Let $M = \sup \{|f(x)| : x \in \mathbb{R}^n \}$, and let $\alpha < M$. Then, by definition of supremum, there exists an $x \in \mathbb{R}^n$ such that 
+\begin{align*}
+\alpha < |f(x)| \leq M.
+\end{align*}
 \end{document}
