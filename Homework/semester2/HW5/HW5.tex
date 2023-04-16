@@ -107,9 +107,9 @@ Let $E \subseteq \mathbb{R}^n$ be measurable with $|E| = 1$. Let $h \geq 0$ be m
 \end{align*}
 
 \subsection*{Solution}
-Show the first inequality here!!!!
+(I've not yet figured out the proof of the first inequality, which would go here.)
 
-Now, we have
+For the second inequality, we have
 \begin{align*}
 \int_E \sqrt{1 + h^2} dx &\leq \int_E \sqrt{1 + h^2 + 2h} dx\\
 &= \int_E \sqrt{(1 + h)^2} dx\\
@@ -199,8 +199,226 @@ Let $f: \mathbb{R}^n \to \mathbb{R}$ be continuous and bounded. Show that
 \end{align*}
 
 \subsection*{Solution}
-Let $M = \sup \{|f(x)| : x \in \mathbb{R}^n \}$, and let $\alpha < M$. Then, by definition of supremum, there exists an $x \in \mathbb{R}^n$ such that 
+Let $M = \sup \{|f(x)| : x \in \mathbb{R}^n \}$, and let $\alpha < M$. Then, by definition of supremum, we have
 \begin{align*}
-\alpha < |f(x)| \leq M.
+\{x \in \mathbb{R}^n : |f(x)| > M \} = \emptyset &\implies |\{x \in \mathbb{R}^n : |f(x)| > M \}| = 0\\
+&\implies M \geq ||f||_\infty.
 \end{align*}
+Thus, we just need to show that $M \leq ||f||_\infty$, and our proof will be complete. To do this, let's suppose for sake of contradiction that $M > ||f||_\infty$. Then, there exists some nonnegative $\alpha < M$ such that 
+\begin{align*}
+|\{x \in \mathbb{R}^n| |f(x)| > \alpha \}| = 0.
+\end{align*}
+We have
+\begin{align*}
+\{x \in \mathbb{R}^n| |f(x)| > \alpha \} &= |f|^{-1}((\alpha, \infty)).
+\end{align*}
+Since $f$ is continuous, $|f|$ is continuous. Thus, since $(\alpha, \infty)$ is open, we can conclude that $|f|^{-1}((\alpha, \infty))$ is open. Now, by definition of supremum, we have that there exists some $x \in \mathbb{R}^n$ such that $\alpha < |f(x)| \leq M$. Thus, $|f|^{-1}((\alpha, \infty))$ is nonempty. Since nonempty open subsets of $\mathbb{R}^n$ have positive measure, we can conclude that
+\begin{align*}
+|\{x \in \mathbb{R}^n| |f(x)| > \alpha \}| > 0
+\end{align*}
+and we have reached a contradiction. Thus, $M \leq ||f||_\infty$, and our proof is complete.
+
+\section*{Problem 7}
+\begin{theorem}
+Let $\{f_k\} \subset L^p(E)$ for some $1 \leq p < \infty$. Assume that $|E| < \infty$, $||f_k||_p \leq A$ for each natural $k$, and that 
+\begin{align*}
+\lim_{k \to \infty} f_k(x) = f(x)
+\end{align*}
+for almost every $x \in E$. Then $f_k \to f$ in $L^1$.
+\end{theorem}
+
+\subsection*{Solution}
+To prove this, we will start by proving an intuitive lemma.
+\begin{lemma}
+Let $E \subseteq \mathbb{R}^n$, and let $f \in L(E)$. Then for any $\epsilon > 0$, there exists a $\delta > 0$ such that if $A \subseteq E$ with $|A| < \delta$, then 
+\begin{align*}
+\int_A |f| < \epsilon.
+\end{align*}
+Informally, this is known as the fact that integrals over small sets are small.
+\end{lemma}
+\begin{proof}
+Let $\epsilon > 0$, and let $A \subseteq E$. Let $g$ be a simple function with $0 \leq g \leq |f|$. Then
+\begin{align*}
+\int_A (|f| - g) \leq \int_E (|f| - g) &\implies \int_A |f| \leq \int_A g + \int_E |f| - \int_E g.
+\end{align*}
+By theorem 4.13 in our textbook, and the monotone convergence theorem, we can choose $g$ such that 
+\begin{align*}
+\int_E |f| - \int_E g < \frac{\epsilon}{2}.
+\end{align*}
+If we define $M = \max g$, then 
+\begin{align*}
+\int_A g &\leq |A|M.
+\end{align*}
+Thus, if we let $\delta = \frac{\epsilon}{2M}$, and $A$ is such that $|A| < \delta$, then we have 
+\begin{align*}
+\int_A |f| &\leq \int_A g + \int_E |f| - \int_E g\\
+&< \frac{\epsilon}{2} + \frac{\epsilon}{2}\\
+&= \epsilon,
+\end{align*}
+and our proof is complete.
+\end{proof}
+Now we are ready for the proof of the main theorem.
+\begin{proof}
+Let $q$ be the conjugate exponent of $p$, and let $F \subseteq E$ be measurable. If $p > 1$, we have
+\begin{align*}
+\int_F |f_k| &\leq \left( \int_F 1 \right)^{1/q} \left( \int_F |f|^p \right)^{1/p} &&\text{By Holder's inequality}\\
+&\leq \left( \int_F 1 \right)^{1/q} \left( \int_E |f|^p \right)^{1/p}\\
+&= |F|^{1/q} ||f_k||_p\\
+&\leq |F|^{1/q} A.
+\end{align*}
+Let $\epsilon > 0$. By Ergorov's theorem, there exists a closed set $F \subseteq E$ such that $f_k$ converges uniformly to $f$ on $F$, and $|E \backslash F| < \epsilon$. We have
+\begin{align*}
+\lim_{k \to \infty} \int_E |f_k - f| &= \lim_{k \to \infty} \int_{F} |f_k - f| + \int_{E \backslash F} |f_k - f|\\
+&= 0 + \lim_{k \to \infty} \int_{E \backslash F} |f_k - f| &&\text{By the uniform convergence theorem}\\
+&\leq \int_{E \backslash F} |f_k| + \int_{E \backslash F} |f|\\
+&\leq |E \backslash F|^{1/q} A + \int_{E \backslash F} \liminf |f_k|\\
+&\leq |E \backslash F|^{1/q} A + \liminf \int_{E \backslash F} |f_k| &&\text{By Fatou's Lemma}\\
+&\leq 2 |E \backslash F|^{1/q} A\\
+&\leq 2|\epsilon|^{1/q} A.
+\end{align*}
+Thus, taking the limit as $\epsilon \to 0$, we have proven that $f_k$ converges to $f$ in $L^1$ if $p > 1$.
+
+Now consider the case of $p = 1$. Then, we have
+\begin{align*}
+\lim_{k \to \infty} \int_E |f_k - f| &= \lim_{k \to \infty} \int_{F} |f_k - f| + \int_{E \backslash F} |f_k - f|\\
+&= 0 + \lim_{k \to \infty} \int_{E \backslash F} |f_k - f| &&\text{By the uniform convergence theorem}\\
+&\leq \int_{E \backslash F} |f_k| + \int_{E \backslash F} |f|\\
+&\leq \int_{E \backslash F} |f_k| + \int_{E \backslash F} \liminf |f_k|\\
+&\leq \int_{E \backslash F} |f_k| + \liminf \int_{E \backslash F} |f_k| &&\text{By Fatou's Lemma}.
+\end{align*}
+Thus, taking the limit as $\epsilon \to 0$, the above lemma allows us to conclude that $f_k$ converges to $f$ in $L^1$, and our proof is complete.
+\end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+Let $1 \leq p < \infty$ and assume that $f \in L^p(\mathbb{R})$. Then
+\begin{align*}
+\lim_{t \to \infty} \int_t^{t + 1} f(x) dx = 0.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+\lim_{t \to \infty} \int_t^{t + 1} |f(x)| dx = 0 &\implies  \lim_{t \to \infty} \left| \int_t^{t + 1} f(x) dx \right| = 0\\
+&\implies \lim_{t \to \infty} \int_t^{t + 1} f(x) dx = 0,
+\end{align*}
+so it will suffice to show that $\lim_{t \to \infty} \int_t^{t + 1} f(x) dx = 0$.
+
+Suppose, for sake of contradiction, that $\lim_{t \to \infty} \int_t^{t + 1} f(x) dx \not = 0$. Then, there exists some $\epsilon > 0$ such that for any natural $N$, there exists an $t \geq N$ such that 
+\begin{align*}
+\int_t^{t + 1} f(x) dx > \epsilon.
+\end{align*}
+Let $t_0$ be any natural number such that 
+\begin{align*}
+\int_{t_0}^{t_0 + 1} f(x) dx > \epsilon,
+\end{align*}
+and define a sequence $\{t_n \}_{n=1}^\infty$ such that $t_n \geq t_{n-1} + 1$, and 
+\begin{align*}
+\int_{t_n}^{t_n + 1} f(x) dx > \epsilon.
+\end{align*}
+Then, the intervals $[t_{n}, t_{n} + 1]$ are non overlapping, and we have
+\begin{align*}
+\int_{\mathbb{R}} |f(x)|dx &\geq \sum_{n = 0}^\infty \int_{t_n}^{t_n + 1} f(x) dx \\
+&> \sum_{n = 0}^\infty \epsilon\\
+&= \infty.
+\end{align*}
+Thus, $f \not \in L^1$ and by theorem 8.2 $f \not \in L^p$, which is a contradiction. Thus, we have proven the theorem.
+\end{proof}
+
+\section*{Problem 9}
+\begin{theorem}
+Let $p,q,r \in [1, \infty)$ such that
+\begin{align*}
+\frac{1}{r} = \frac{1}{p} + \frac{1}{q}.
+\end{align*}
+If $f \in L^p(\mathbb{R}^n)$ and $g \in L^p(\mathbb{R}^n)$, then
+\begin{align*}
+||fg||_r \leq ||f||_p \cdot ||g||_q.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Define $p' = \frac{p}{r}$ and $q' = \frac{q}{r}$. Then $p'$ and $q'$ are conjugate exponents. We have
+\begin{align*}
+||fg||_r &= \left(\int_{\mathbb{R}^n} |fg|^r \right)^{1/r}\\
+&= \left(\int_{\mathbb{R}^n} |f^r g^r| \right)^{1/r}\\
+&\leq \left(\left(\int_{\mathbb{R}^n} |f^r|^{p'} \right)^{1/p'} \left(\int_{\mathbb{R}^n} |g^r|^{q'} \right)^{1/q'} \right)^{1/r} &&\text{By Holder's inequality}\\
+&= \left(\int_{\mathbb{R}^n} |f|^{rp'} \right)^{1/rp'} \left(\int_{\mathbb{R}^n} |g|^{rq'} \right)^{1/rq'}\\
+&= \left(\int_{\mathbb{R}^n} |f|^{p} \right)^{1/p} \left(\int_{\mathbb{R}^n} |g|^{q} \right)^{1/q}\\
+&= ||f||_p \cdot ||g||_q,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 10}
+\begin{theorem}
+Let $1 \leq p < r < q < + \infty$ and define $\theta \in (0, 1)$ by 
+\begin{align*}
+\frac{1}{r} = \frac{\theta}{p} + \frac{1 - \theta}{q}.
+\end{align*}
+Let $f \in L^p \cap L^q$. Prove that 
+\begin{align*}
+||f||_r \leq ||f||_p^\theta \cdot ||f||_q^{1 - \theta}.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Define $p' = \frac{p}{\theta}$ and $q' = \frac{q}{1 - \theta}$. Then, we have
+\begin{align*}
+\frac{1}{r} = \frac{1}{p'} + \frac{1}{q'}.
+\end{align*}
+Utilizing the results of the previous problem, we have
+\begin{align*}
+||f||_r &= ||f^\theta f^{1 - \theta}||_r\\
+&\leq ||f^\theta||_{p'} \cdot ||f^{1- \theta}||_{q'}\\
+&= \left(\int_{\mathbb{R}^n} |f^\theta|^{p'} \right)^{1/p'} \left(\int_{\mathbb{R}^n} |f^{1 - \theta}|^{q'} \right)^{1/q'}\\
+&= \left(\int_{\mathbb{R}^n} |f|^{\theta p'} \right)^{1/p'} \left(\int_{\mathbb{R}^n} |f|^{(1 - \theta)q'} \right)^{1/q'}\\
+&= \left(\int_{\mathbb{R}^n} |f|^{p} \right)^{\theta/p} \left(\int_{\mathbb{R}^n} |f|^{q} \right)^{(1-\theta)/q}\\
+&= ||f||_p^\theta \cdot ||f||_q^{1 - \theta},
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 11}
+\begin{theorem}
+Let $0 < r < \infty$ and $f \in L^r(\mathbb{R}^n) \cap L^\infty(\mathbb{R}^n)$. Then the following statements are true:
+\proofpart{(i)}{} For all $p \in (r, \infty)$, 
+\begin{align*}
+||f||_p \leq ||f||_r^{r/p} \cdot ||f||_\infty^{1 - r/p}.
+\end{align*}
+
+\proofpart{(ii)}{}
+\begin{align*}
+\lim_{p \to \infty} ||f||_p = ||f||_\infty.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+\proofpart{(i)}{} We have
+\begin{align*}
+||f||_p &= ||f^{r/p} f^{1 - r/p}||_p\\
+&= \left( \int_{\mathbb{R}^n} |f^{r/p} f^{1 - r/p}|^p dx \right)^{1/p}\\
+&= \left( \int_{\mathbb{R}^n} |f^{r} f^{p - r}| dx \right)^{1/p}\\
+&\leq \left(||f^{p - r}||_\infty \cdot \int_{\mathbb{R}^n} |f^{r} | dx \right)^{1/p} &&\text{Holder's Inequality}\\
+&= \left(||f||_\infty^{p - r} \cdot \int_{\mathbb{R}^n} |f|^{r} dx \right)^{1/p}\\
+&= \left(||f||_\infty^{p - r} \cdot ||f||_r^r \right)^{1/p}\\
+&= ||f||_r^{r/p} \cdot ||f||_\infty^{1 - r/p},
+\end{align*}
+as desired.
+
+\proofpart{(ii)}{}
+Using the results from the previous part, we have
+\begin{align*}
+\lim_{p \to \infty} ||f||_p &\leq \lim_{p \to \infty} ||f||_r^{r/p} \cdot ||f||_\infty^{1 - r/p}\\
+&= ||f||_r^{0} \cdot ||f||_\infty^{1 - 0}\\
+&= ||f||_\infty.
+\end{align*}
+Thus, all we must do to complete the proof is show that $\lim_{p \to \infty} ||f||_p \geq ||f||_\infty$ (but I've not figured this part out yet).
+\end{proof}
+
 \end{document}
