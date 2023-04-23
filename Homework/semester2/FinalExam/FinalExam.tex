@@ -189,6 +189,169 @@ for some $c < 1$. (Also Estimate $c$).
 
 \subsection*{Solution}
 \begin{proof}
+We have
+\begin{align*}
+||g||_1 &= \int_E |g| dx\\
+&= \int_1^\infty \left|\int_E f(y) e^{-xy} dy \right| dx\\
+&= \int_1^\infty \int_1^\infty f(y) e^{-xy} dy dx\\
+&= \int_1^\infty f(y) \left( \int_0^\infty e^{-xy} dx - \int_0^1 e^{-xy} dx\right) dy\\
+&= \int_1^\infty f(y) \left(\frac{1}{y} - \int_0^1 e^{-xy} dx\right) dy\\
+&= \int_1^\infty f(y)\frac{1}{y} dy - \int_1^\infty \left( \int_0^1 f(y)e^{-xy} dx \right) dy\\
+&\leq ||f||_2 \cdot \sqrt{\int_1^\infty y^{-2} dy} - \int_1^\infty \left( \int_0^1 f(y)e^{-xy} dx \right) dy &&\text{Cauchy-Schwarz's}\\
+&= ||f||_2 - \int_1^\infty \left( \int_0^1 f(y)e^{-xy} dx \right)\\
+&= ||f||_2 \left( 1 - \frac{1}{||f||_2}\int_1^\infty \left( \int_0^1 f(y)e^{-xy} dx \right) dy \right).
+\end{align*}
+Thus, we have shown that there is some $c < 1$ such that $|g||_1 \leq c ||f||_2$.
 
+To estimate $c$, let's find a lower bound on $c$. Finding a lower bound on $c$ can be achieved by finding an upper bound on the integral in that last equation. We have
+\begin{align*}
+\int_1^\infty \left( \int_0^1 f(y)e^{-xy} dx \right) dy &= \int_1^\infty f(y)\frac{1}{y}(1 - e^{-y}) dy\\
+&\leq ||f||_2 \cdot \sqrt{\int_1^\infty \left(\frac{1 - e^{-y}}{y}\right)^2} dy &&\text{Holder's Inequality}\\
+&< ||f||_2 \cdot \sqrt{\frac{3}{4}} &&\text{Wolfram alpha for computing integral}\\
+&= ||f||_2 \cdot \frac{\sqrt{3}}{2}.
+\end{align*}
+Thus, we have
+\begin{align*}
+||g||_1 < \left(1 - \frac{\sqrt{3}}{2}\right) \cdot ||f||_2.
+\end{align*}
+\end{proof}
+
+\section*{Problem 4}
+\begin{theorem}
+Let $f \in L^1(\mathbb{R})$ and 
+\begin{align*}
+g(x) = \int_\mathbb{R} f(y) e^{-(x - y)^2} dy
+\end{align*}
+for $x \in \mathbb{R}$. Then $g \in L^p(\mathbb{R})$ for any $1 \leq p \leq \infty$, and
+\begin{align*}
+||g||_p \leq \left( \frac{\pi}{p} \right)^{1/p} \cdot ||f||_1
+\end{align*}
+for $1 \leq p < \infty$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+From theorem 9.1 in our textbook, we have $g \in L^p(\mathbb{R})$, and
+\begin{align*}
+||g||_p &\leq ||f||_1 \cdot ||e^{-(x - y)^2}||_p\\
+&= ||f||_1 \cdot \left( \int_{\mathbb{R}^2} e^{-p(x - y)^2} \right)^{1/p}\\
+&= ||f||_1 \cdot \left( \int_{\mathbb{R}^2} e^{-px^2} e^{-py^2} \right)^{1/p}\\
+&= ||f||_1 \cdot \left( \int_\mathbb{R} e^{-px^2} dx  \int_\mathbb{R} e^{-py^2} dy \right)^{1/p}\\
+&= ||f||_1 \cdot \left( \sqrt{\frac{\pi}{p}}  \sqrt{\frac{\pi}{p}}  \right)^{1/p}\\
+&= \left( \frac{\pi}{p} \right)^{1/p} \cdot ||f||_1.
+\end{align*}
+\end{proof}
+
+\section*{Problem 5}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be continuous and satisfy the midpoint convexity
+\begin{align*}
+f \left(\frac{x_1 + x_2}{2} \right) \leq \frac{f(x_1) + f(x_2)}{2}.
+\end{align*}
+for any $x_1, x_2 \in [a, b]$. Then $f$ is convex on $[a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We will first prove, that for any $n \in \mathbb{N}$, if $x_1,...,x_{2^n} \in [a, b]$, then
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) \leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}.
+\end{align*}
+To prove this, we note that the base case ($n=1$) is true by midpoint convexity of $f$. Now, suppose for some $n \in \mathbb{N}$ that if $x_1,...,x_{2^n} \in [a, b]$, then
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) \leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}.
+\end{align*}
+Let $x_1,...,x_{2^{n+1}} \in [a, b]$. Then, we have
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^{n+1}}}{2^{n+1}} \right) &= f\left( \frac{\frac{x_1 + ... + x_{2^n}}{2^n} + \frac{x_{2^n + 1} + ... + x_{2^{n+1}}}{2^n}}{2} \right)\\
+&\leq \frac{f\left( \frac{x_1 + ... + x_{2^n}}{2^n}\right) + f \left( \frac{x_{2^n + 1} + ... + x_{2^{n+1}}}{2^n} \right)}{2}\\
+&= \frac{f(x_1) + ... + f(x_{2^{n+1}})}{2^{n+1}},
+\end{align*}
+and our induction is complete.
+
+From elementary analysis, we have that rational numbers of the form $\frac{m}{2^n}$ with $1 \leq m \leq 2^n$ are dense in $[0, 1]$. Let $[a_1, b_2] \subseteq [a, b]$. Fix some $n \in \mathbb{N}$ and some $1 \leq m \leq 2^n$. Setting $x_i = a_i$ for $1 \leq i \leq m$, and $x_i = b_i$ for $m+1 \leq i \leq 2^n$, we see from the above argument that
+\begin{align*}
+f\left( \frac{x_1 + ... + x_{2^n}}{2^n} \right) &\leq \frac{f(x_1) + ... + f(x_{2^n})}{2^n}\\
+&= \frac{mf(a_i) + (2^n - m)f(b_i)}{2^n}\\
+&= \frac{m}{2^n}f(a_i) + (1 - \frac{m}{2^n})f(b_i).
+\end{align*}
+Finally, let $\theta \in [0, 1]$ be a real number. For each $n \in \mathbb{N}$, define $1 \leq m_n \leq 2^n$ to be the largest number such that $\frac{m_n}{2^n} \geq \theta$. Then, $\frac{m_n}{2^n} \to \theta$, and it follows from the continuity of $f$ that 
+\begin{align*}
+f(\theta a_i + (1 - \theta)b_i) \leq \theta f(a_i) + (1 - \theta)f(b_i),
+\end{align*}
+and we have shown that $f$ is convex.
+\end{proof}
+
+
+\section*{Problem 6}
+\begin{theorem}
+If $f_k \to f$ in $L^p(\mathbb{R}^n), 1 < p < \infty$, $g_k \to g$ pointwise, and $||g_k||_\infty \leq M$ for all $k$, then 
+\begin{align*}
+f_k g_k \to fg
+\end{align*}
+in $L^p (\mathbb{R}^n)$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+||fg - f_kg_k||_p &= ||fg - g_kf + g_k f - f_k g_k||_p\\
+&\leq ||fg - g_kf||_p + ||g_k f - f_k g_k||_p\\
+&\leq ||fg - g_kf||_p + ||g_k (f - f_k)||_p\\
+&\leq ||fg - g_kf||_p + ||M (f - f_k)||_p\\
+&= ||fg - g_kf||_p + M||f - f_k||_p.
+\end{align*}
+Since $f_k \to f$ in $L^p(\mathbb{R}^n)$, the second term in the last equation will vanish as $k \to \infty$. Thus, we must show that $||fg - g_kf||_p \to 0$. We have
+\begin{align*}
+||fg - g_kf||_p^p &= ||f(g - g_k)||_p^p\\
+&= \int_\mathbb{R} |f(g - g_k)|^p\\
+&= \int_\mathbb{R} |g - g_k|^p|f|^p.
+\end{align*}
+Now, $|g - g_k|^p|f|^p \leq (2M)^p|f|^p \in L(\mathbb{R}^n)$, thus, by the lebesgue dominated convergence theorem, we have
+\begin{align*}
+\lim_{k \to \infty} \int_{\mathbb{R}^n} |g - g_k|^p|f|^p &=  \int_{\mathbb{R}^n} \lim_{k \to \infty} |g - g_k|^p|f|^p\\
+&= 0,
+\end{align*}
+and our proof is complete.
+\end{proof}
+
+\section*{Problem 7}
+\begin{theorem}
+Suppose $f_k \to f$ a.e. on $\mathbb{R}^n$ and that $f_k, f \in L^p(\mathbb{R}^n)$, for $1 < p < \infty$. If $||f_k||_p \leq M < \infty$, then 
+\begin{align*}
+f_kg \to fg 
+\end{align*}
+in $L^1(\mathbb{R}^n)$ for all $g \in L^{p'}(\mathbb{R}^n)$, with 
+\begin{align*}
+\frac{1}{p} + \frac{1}{p'} = 1.
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+We have
+\begin{align*}
+||f_k g - f g ||_1 &= ||g(f_k - f)||_p\\
+&= ||g||_{p'} \cdot ||f_k - f||_p &&\text{Holder's inequality.}
+\end{align*}
+Thus, it will suffice to show that $||f_k - f||_p \to 0$. We have
+\begin{align*}
+|f_k - f|^p &\leq (2 \max\{|f|, |f_k|\})^p\\
+&= 2^p \max\{|f|^p, |f_k|^p\}\\
+&\leq 2^p (|f|^p + |f_k|^p).
+\end{align*}
+Now, 
+\begin{align*}
+\int_{\mathbb{R}^n} 2^p (|f|^p + |f_k|^p) &= 2^p \int_{\mathbb{R}^n}|f|^p + 2^p \int_{\mathbb{R}^n}|f_k|^p\\
+&= 2^p ||f||_p^p + 2^p ||f_k||_p^p\\
+&\leq 2^p ||f||_p^p + 2^p M^p.
+\end{align*}
+Thus, we can use the Lebesgue dominated convergence theorem to yield
+\begin{align*}
+\lim_{k \to \infty} \int_{\mathbb{R}^n} |f_k - f|^p &= \int_{\mathbb{R}^n} \lim_{k \to \infty} |f_k - f|^p\\
+&= 0,
+\end{align*}
+and our proof is complete.
 \end{proof}
 \end{document}
