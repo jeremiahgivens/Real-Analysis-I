@@ -354,4 +354,42 @@ Thus, we can use the Lebesgue dominated convergence theorem to yield
 \end{align*}
 and our proof is complete.
 \end{proof}
+
+\section*{Problem 8}
+\begin{theorem}
+Let $f \in L^2 (\mathbb{R})$, and $g(x) = x f(x) \in L^2 (\mathbb{R})$. Then $f \in L^1 (\mathbb{R})$ and 
+\begin{align*}
+||f||_1 \leq \sqrt{2}(||f||_2 + ||g||_2).
+\end{align*}
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+
+\end{proof}
+
+\section*{Problem 9}
+\begin{theorem}
+Let 
+\begin{align*}
+f(x) = \begin{cases} 
+      x^2 \sin\frac{1}{x} & x \in (0, 1] \\
+     0 & \text{if } x=0 \\
+\end{cases}
+\end{align*}
+Then $f$ is absolutely continuous on $[0, 1]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+For $x \in (0, 1]$, we have
+\begin{align*}
+f'(x) = 2x \sin \frac{1}{x} + x \cos \frac{1}{x},
+\end{align*}
+and $f'(0) = 0$. Thus, we have for all $x \in [0, 1]$, 
+\begin{align*}
+|f'(x)| \leq 3.
+\end{align*}
+Since every function on a compound interval with a bounded derivative is Lipschitz continuous, we can conclude that $f$ is Lipschitz continuous. Since Lipschitz continuity implies absolute continuity, our proof is complete.
+\end{proof}
 \end{document}
