@@ -1,0 +1,194 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,%
+            left=.75in,right=.75in,top=1in,bottom=1in]{geometry}
+\setlength{\headsep}{0.25in}
+
+\usepackage{amsthm}
+
+\usepackage{graphicx}
+\usepackage{pgfplots}
+            
+\usepackage[english]{babel}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{case}{Case}
+
+\usepackage{amsthm}
+\usepackage{lipsum}
+\usepackage{tikz}
+
+\makeatletter
+\newcommand{\proofpart}[2]{%
+  \par
+  \addvspace{\medskipamount}%
+  \noindent\emph{Part #1: #2}\par\nobreak
+  \addvspace{\smallskipamount}%
+  \@afterheading
+}
+\makeatother
+
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tkz-euclide}
+
+\DeclareMathOperator{\interior}{int}
+
+\newcommand{\Tau}{\mathcal{T}}
+
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+
+\usepackage{calligra}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\newcommand{\scripty}[1]{\ensuremath{\mathcalligra{#1}}}
+
+\pagestyle{fancy}
+\author{Jeremiah Givens}
+\newcommand{\subject}{Real Analysis II}
+\newcommand{\Date}{9/2/2021} 
+\makeatletter
+\rhead{{\small\@author}}
+\lhead{{\small\subject}}
+\chead{{\large Final Exam}}
+\cfoot{}
+\rfoot{\thepage}
+\lfoot{\today}
+
+\renewcommand{\theequation}{\arabic{equation}}
+
+\begin{document}
+\section*{Problem 1}
+\begin{theorem}
+Let $f:[a, b] \to \mathbb{R}$ be absolutely continuous. Then $|f|$ is absolutely continuous on $[a, b]$, and 
+\begin{align*}
+\left| \frac{d}{dx}|f(x)| \right| \leq |f'(x)|
+\end{align*}
+for almost every $x \in [a, b]$.
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+Let $\epsilon > 0$. Since $f$ is absolutely continuous, there exists a $\delta > 0$ such for any collection $\{[a_i, b_i]\}$ of nonoverlapping subintervals of $[a, b]$, we have
+\begin{align*}
+\sum |f(b_i) - f(a_i)| < \epsilon \text{ if } \sum (b_i - a_i) < \delta.
+\end{align*}
+Thus, let $\{[a_i, b_i]\}$ be a collection of nonoverlapping subintervals of $[a, b]$ with $\sum (b_i - a_i) < \delta$. Then, we have
+\begin{align*}
+\sum ||f(b_i)| - |f(a_i)|| &\leq \sum |f(b_i) - f(a_i)| &&\text{The reverse triangle inequality}\\
+&< \epsilon.
+\end{align*}
+Thus, $|f|$ is absolutely continuous.
+
+By theorem 7.29 in our textbook, the derivatives of $f$ and $|f|$ exists almost everywhere in $[a, b]$. Let $Z, Z' \subseteq [a, b]$ be the sets of measure zero where the derivatives of $f$ and $|f|$ respectively do not exist. Then, $Z \cup Z'$ has measure zero, and the derivatives of $|f|$ and $f$ exists on $[a, b] \backslash Z \cup Z'$. If we let $x \in [a, b] \backslash Z \cup Z'$, then we have
+\begin{align*}
+\left| \frac{d}{dx}|f(x)| \right| &= \left| \lim_{n \to 0} \frac{|f(x+n)| - |f(x)|}{n} \right|\\
+&= \lim_{n \to 0} \frac{||f(x+n)| - |f(x)||}{|n|}\\
+&\leq \lim_{n \to 0} \frac{|f(x+n)| - |f(x)|}{|n|} &&\text{Reverse triangle inequality}\\
+&= \left| \lim_{n \to 0} \frac{f(x+n) - f(x)}{n} \right|\\
+&= |f'(x)|,
+\end{align*}
+as desired.
+\end{proof}
+
+\section*{Problem 2}
+Use Fubini's theorem and the relation 
+\begin{align*}
+\frac{1}{x} = \int_0^\infty e^{-xy} dy
+\end{align*}
+to prove that 
+\begin{align*}
+\lim_{A \to \infty} \int_0^A \frac{\sin x}{x}dx &= \frac{\pi}{2}.
+\end{align*}
+
+\subsection*{Solution}
+\begin{proof}
+Consider the function 
+\begin{align*}
+f(x, y) = \sin (x) e^{-xy}. 
+\end{align*}
+We have that $f$ is continuous, which implies that $f$ is initegrable on $(0, A) \times (0, \infty)$. Thus, by Fubini's theorem, we have
+\begin{align*}
+\int_0^A \frac{\sin x}{x}dx &= \int_0^\infty \left( \int_0^A\sin (x) e^{-xy}  dx \right) dy.
+\end{align*}
+By performing integration by parts twice, or by recognizing that 
+\begin{align*}
+\sin (x) e^{-xy} &= - \frac{1}{1 + y^2} \frac{d}{dx} (y \sin (x) e^{-xy} + \cos (x) e^{-xy}),
+\end{align*}
+we have
+\begin{align*}
+\int_0^A\sin (x) e^{-xy}  dx &= \int_0^A \left(- \frac{1}{1 + y^2} \frac{d}{dx} (y \sin (x) e^{-xy} + \cos (x) e^{-xy}) \right)dx\\
+&= \frac{1}{1 + y^2} [1 - e^{-Ay}(y \sin A + \cos A)].
+\end{align*}
+Plugging this into our original integral, we have
+\begin{align*}
+\int_0^\infty \left( \int_0^A\sin (x) e^{-xy}  dx \right) dy &= \int_0^\infty \frac{1}{1 + y^2} [1 - e^{-Ay}(y \sin A + \cos A)] dy\\
+&= \int_0^\infty \frac{1}{1 + y^2}dy  - \int_0^\infty \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy\\
+&= \left. \tan^{-1} (y) \right|_0^\infty - \int_0^\infty \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy\\
+&= \frac{\pi}{2} - \int_0^\infty \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy.
+\end{align*}
+Thus, we have
+\begin{align*}
+\lim_{A \to \infty} \int_0^A \frac{\sin x}{x}dx &= \frac{\pi}{2} - \lim_{A \to \infty}\int_0^\infty \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy.
+\end{align*}
+We can see that 
+\begin{align*}
+\left| \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} \right| &\leq e^{-Ay}(y + 1).
+\end{align*}
+Thus, since 
+\begin{align*}
+\int_0^\infty e^{-Ay}(y + 1) dy = \frac{1}{A} + \frac{1}{A^2},
+\end{align*}
+we have that $e^{-Ay}(y + 1)$ is integrable. By the Lebesgue dominated convergence theorem,
+\begin{align*}
+\lim_{A \to \infty}\int_0^\infty \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy &= \int_0^\infty \lim_{A \to \infty} \frac{e^{-Ay}(y \sin A + \cos A)}{1 + y^2} dy\\
+&= \int_0^\infty (0) dy\\
+&= 0.
+\end{align*}
+With this, our proof is complete.
+\end{proof}
+
+\section*{Problem 3}
+\begin{theorem}
+Let $E = [1, \infty)$ and $f \in L^2(E)$. Assume that $f \geq 0$ almost every where on $E$. Let 
+\begin{align*}
+g(x) = \int_E f(y) e^{-xy} dy
+\end{align*}
+for all $x \in E$. Then $g \in L^1(E)$ and 
+\begin{align*}
+||g||_1 \leq c ||f||_2
+\end{align*}
+for some $c < 1$. (Also Estimate $c$).
+\end{theorem}
+
+\subsection*{Solution}
+\begin{proof}
+
+\end{proof}
+\end{document}
