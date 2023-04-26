@@ -365,7 +365,17 @@ Let $f \in L^2 (\mathbb{R})$, and $g(x) = x f(x) \in L^2 (\mathbb{R})$. Then $f 
 
 \subsection*{Solution}
 \begin{proof}
-
+We have
+\begin{align*}
+||f||_1 &= \int_\mathbb{R} |f|\\
+&= \int_{|x| < 1} |f| + \int_{|x| \geq 1} |f|\\
+&= \int_{|x| < 1} |(1)f| + \int_{|x| \geq 1} \left|\frac{1}{x}g \right|\\
+&\leq \left( \int_{|x| < 1} 1 \right)^{1/2} \cdot \left( \int_{|x| < 1} |f|^2 \right)^{1/2} + \left( \int_{|x| \geq 1} \left| \frac{1}{x} \right|^2 \right)^{1/2} \cdot \left( \int_{|x| \geq 1} |g|^2 \right)^{1/2} &&\text{Cauchy Schwarz's}\\
+&= \sqrt{2} \left( \int_{|x| < 1} |f|^2 \right)^{1/2} + \sqrt{2} \left( \int_{|x| \geq 1} |g|^2 \right)^{1/2}\\
+&= \sqrt{2} \left( \int_{\mathbb{R}} |f|^2 \right)^{1/2} + \sqrt{2} \left( \int_{\mathbb{R}} |g|^2 \right)^{1/2}\\
+&= \sqrt{2}(||f||_2 + ||g||_2),
+\end{align*}
+as desired.
 \end{proof}
 
 \section*{Problem 9}
@@ -373,7 +383,7 @@ Let $f \in L^2 (\mathbb{R})$, and $g(x) = x f(x) \in L^2 (\mathbb{R})$. Then $f 
 Let 
 \begin{align*}
 f(x) = \begin{cases} 
-      x^2 \sin\frac{1}{x} & x \in (0, 1] \\
+      x^{3/2} \sin\frac{1}{x} & x \in (0, 1] \\
      0 & \text{if } x=0 \\
 \end{cases}
 \end{align*}
@@ -384,12 +394,12 @@ Then $f$ is absolutely continuous on $[0, 1]$.
 \begin{proof}
 For $x \in (0, 1]$, we have
 \begin{align*}
-f'(x) = 2x \sin \frac{1}{x} + x \cos \frac{1}{x},
+f'(x) = \frac{3}{2}x^{1/2} \sin \frac{1}{x} + x^{1/2} \cos \frac{1}{x},
 \end{align*}
 and $f'(0) = 0$. Thus, we have for all $x \in [0, 1]$, 
 \begin{align*}
-|f'(x)| \leq 3.
+|f'(x)| \leq \frac{5}{2}.
 \end{align*}
-Since every function on a compound interval with a bounded derivative is Lipschitz continuous, we can conclude that $f$ is Lipschitz continuous. Since Lipschitz continuity implies absolute continuity, our proof is complete.
+Since every function on a compact interval with a bounded derivative is Lipschitz continuous, we can conclude that $f$ is Lipschitz continuous. Since Lipschitz continuity implies absolute continuity, our proof is complete.
 \end{proof}
 \end{document}
